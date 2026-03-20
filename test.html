@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>War Room — Test Suite</title>
+<style>
+body{background:#060e09;color:#eef4f0;font-family:'Share Tech Mono',monospace;padding:24px;font-size:14px}
+h1{color:#00e87a;margin-bottom:16px;font-size:20px;letter-spacing:3px}
+.summary{padding:12px 16px;border-radius:4px;margin-bottom:20px;font-size:16px;font-weight:bold}
+.pass{background:#003d1e;border:1px solid #00e87a;color:#00e87a}
+.fail{background:#3d1010;border:1px solid #ff5555;color:#ff5555}
+.suite{color:#ffd060;margin:16px 0 4px;font-size:13px;letter-spacing:2px}
+.test-ok{color:#7aaa88;margin:2px 0;padding-left:12px}
+.test-fail{color:#ff5555;margin:2px 0;padding-left:12px}
+.err{color:#ff8844;font-size:12px;padding-left:24px;margin-bottom:4px}
+#run-btn{background:transparent;border:1px solid #00e87a;color:#00e87a;padding:8px 24px;cursor:pointer;font-family:inherit;font-size:14px;letter-spacing:2px;border-radius:2px;margin-bottom:20px}
+#run-btn:hover{background:#003d1e}
+a{color:#00d4e8;text-decoration:none}
+a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<h1>⚔ WAR ROOM — TEST SUITE</h1>
+<button id="run-btn" onclick="runTests()">▶ RUN ALL TESTS</button>
+<div id="summary"></div>
+<div id="output"></div>
+<script src="tests.js"></script>
+<script>
+function runTests(){
+  document.getElementById('summary').innerHTML='<div style="color:#ffd060">Running 41 tests...</div>';
+  document.getElementById('output').innerHTML='';
+  // tests.js already ran — use exported report
+  if(typeof report==='undefined'){
+    document.getElementById('summary').innerHTML='<div class="summary fail">tests.js not loaded or report not exported</div>';
+    return;
+  }
+  const {total,passed,failed,results}=report;
+  const ok=failed===0;
+  document.getElementById('summary').innerHTML=
+    `<div class="summary ${ok?'pass':'fail'}">Tests: ${total} | Passed: ${passed} | Failed: ${failed} — ${ok?'All tests passed ✓':'FAILURES DETECTED ✗'}</div>`;
+  // Group by suite
+  let html='',suite='';
+  const suites=['OIL PRICE MODEL','LNG MODEL','US OIL POSITION','CHINA OIL POSITION','IRAN ARSENAL','PROBABILITY ENGINE','WINNER LOGIC','TRADE FLOWS','DATA CONSTANTS VALIDATION'];
+  const suiteMap={
+    'Oil price at day':suites[0],'Oil price with Hormuz':suites[0],'Oil price clamped':suites[0],'Higher escalation':suites[0],
+    'LNG damage':suites[1],'LNG price':suites[1],
+    'US supply':suites[2],'US SPR':suites[2],'US military':suites[2],'US Canada':suites[2],'US GDP':suites[2],
+    'China reserve':suites[3],'China gets':suites[3],'China wartime':suites[3],'China EV':suites[3],'China retains':suites[3],
+    'Iran ballistic':suites[4],'Iran missiles':suites[4],'Iran threat':suites[4],
+    'All probabilities':suites[5],'Ceasefire probability':suites[5],'Ground invasion':suites[5],'Regime collapse':suites[5],'Nuclear':suites[5],
+    'Winner':suites[6],
+    'Gulf→China':suites[7],'All flows':suites[7],'Canada→USA':suites[7],
+    'US production + Canada':suites[8],'China net import':suites[8],'Iran pre-war':suites[8],'Qatar LNG':suites[8],
+  };
+  let curSuite='';
+  results.forEach(r=>{
+    const s=Object.entries(suiteMap).find(([k])=>r.name.startsWith(k));
+    const sName=s?s[1]:'OTHER';
+    if(sName!==curSuite){html+=`<div class="suite">── ${sName} ──</div>`;curSuite=sName;}
+    html+=`<div class="test-${r.ok?'ok':'fail'}">${r.ok?'✓':'✗'} ${r.name}</div>`;
+    if(!r.ok)html+=`<div class="err">${r.err}</div>`;
+  });
+  document.getElementById('output').innerHTML=html;
+}
+window.addEventListener('DOMContentLoaded',runTests);
+</script>
+</body>
+</html>

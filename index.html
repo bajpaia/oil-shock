@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2032%2032%27%3E%0A%20%20%3Crect%20width%3D%2732%27%20height%3D%2732%27%20rx%3D%274%27%20fill%3D%27%2523060e09%27/%3E%0A%20%20%3Ctext%20x%3D%2716%27%20y%3D%2723%27%20font-size%3D%2720%27%20text-anchor%3D%27middle%27%20font-family%3D%27monospace%27%20fill%3D%27%252300e87a%27%3E%26%239889%3B%3C/text%3E%0A%3C/svg%3E">
+<link rel="shortcut icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2032%2032%27%3E%0A%20%20%3Crect%20width%3D%2732%27%20height%3D%2732%27%20rx%3D%274%27%20fill%3D%27%2523060e09%27/%3E%0A%20%20%3Ctext%20x%3D%2716%27%20y%3D%2723%27%20font-size%3D%2720%27%20text-anchor%3D%27middle%27%20font-family%3D%27monospace%27%20fill%3D%27%252300e87a%27%3E%26%239889%3B%3C/text%3E%0A%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OIL SHOCK LIVE — Iran War Energy Simulator 2026 | Real-Time Oil &amp; Gas Crisis Map</title>
+<meta name="description" content="Real-time oil and gas war simulator. Track Brent crude, Qatar LNG crisis, US and China reserves and 31-country GDP impact from the 2026 Iran conflict.">
+<meta property="og:title" content="OIL SHOCK LIVE — Iran War Energy Simulator">
+<meta property="og:description" content="Interactive barrel-by-barrel war room. Brent live, Hormuz status, Qatar LNG offline tracker, 31 countries.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://oilshock.live">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OIL SHOCK LIVE">
+<meta name="twitter:description" content="Real-time Iran war energy simulator — oil, LNG, 31 countries, live markets. Free.">
+<link rel="canonical" href="https://oilshock.live">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060e09;--card:#0a1410;--card2:#0e1c14;
+  --bdr:#1e3c24;--bdr2:#305c38;
+  --g:#00e87a;--g2:#00b85c;--gdim:#003d1e;
+  --r:#ff5555;--rdim:#3d1010;
+  --y:#ffd060;--ydim:#3d2e00;
+  --b:#5ab4ff;--bdim:#0d2a40;
+  --o:#ff9455;--odim:#3d1f08;
+  --cy:#00ddf0;--cydim:#003d45;
+  --pu:#c084fc;--pudim:#2d0d45;
+  --wh:#eef4f0;--mu:#7aaa88;--fa:#1a2e20;
+  --fn:'Share Tech Mono',monospace;
+  --fs:'Rajdhani',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--fs);color:var(--wh);font-size:15px;line-height:1.5}
+a{color:var(--cy)!important;text-decoration:none;font-size:inherit}
+a:hover{text-decoration:underline;color:#80eeff!important}
+
+/* LAYOUT */
+#root{display:flex;flex-direction:column;height:calc(100vh - 44px)}
+#tkbar{height:28px;background:#040a06;border-bottom:1px solid var(--bdr);display:flex;align-items:center;flex-shrink:0;overflow:hidden}
+#tklbl{padding:0 10px;font-family:var(--fn);font-size:11px;color:var(--mu);border-right:1px solid var(--bdr);white-space:nowrap;letter-spacing:1px}
+#tkscroll{overflow:hidden;flex:1;position:relative;height:100%;display: flex;align-items: center; height: 100%; margin-bottom: 8px;}
+#tkinner{display:flex;gap:28px;white-space:nowrap;position:absolute;top:50%;transform:translateY(-50%); margin-bottom: 4px;}
+.tk{display:inline-flex;align-items:center;gap:5px;font-family:var(--fn);font-size:11px}
+.tks{color:var(--mu)}.tkv{color:var(--wh)}.tku{color:var(--g)}.tkd{color:var(--r)}
+#tkst{padding:0 10px;font-family:var(--fn);font-size:11px;border-left:1px solid var(--bdr);color:var(--mu);white-space:nowrap}
+
+#hdr{height:48px;background:#050c07;border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 14px;gap:14px;flex-shrink:0}
+.htitle{font-family:var(--fn);font-size:17px;color:var(--g);letter-spacing:4px}
+.hsep{width:1px;height:24px;background:var(--bdr2)}
+.hsub{font-size:14px;color:var(--mu);letter-spacing:1px}
+.hright{margin-left:auto;display:flex;align-items:center;gap:8px}
+.dlbl{font-family:var(--fn);font-size:13px;color:var(--mu)}
+#daynum{font-family:var(--fn);font-size:28px;color:var(--g)}
+.btn{font-family:var(--fn);background:transparent;border:1px solid;padding:4px 14px;cursor:pointer;font-size:12px;letter-spacing:1px;border-radius:2px;transition:all .12s}
+.br{border-color:var(--g);color:var(--g)}.br:hover{background:var(--gdim)}
+.br.on{border-color:var(--r);color:var(--r)}.br.on:hover{background:var(--rdim)}
+.by{border-color:var(--y);color:var(--y)}.by:hover{background:var(--ydim)}
+.spd{font-family:var(--fn);background:var(--card);border:1px solid var(--bdr);color:var(--wh);padding:3px 8px;font-size:11px;cursor:pointer;border-radius:2px;outline:none}
+
+#main{flex:1;display:grid;grid-template-columns:280px 1fr 300px;overflow:hidden;min-height:0}
+.side{display:flex;flex-direction:column;background:var(--card);overflow-y:auto;overflow-x:hidden}
+#lp{border-right:1px solid var(--bdr)}
+#rp{border-left:1px solid var(--bdr)}
+#ctr{display:flex;flex-direction:column;background:var(--bg);min-width:0;overflow:hidden}
+canvas{display:block;width:100%;flex:1;min-height:0}
+
+/* BOTTOM BAR */
+#bot{height:108px;background:#040a06;border-top:1px solid var(--bdr);display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 180px;flex-shrink:0}
+.bc{border-right:1px solid var(--bdr);padding:7px 12px;overflow:hidden}
+.bc:last-child{border-right:none}
+.bct{font-family:var(--fn);font-size:10px;color:var(--mu);letter-spacing:2px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.bct a{font-family:var(--fn);font-size:9px}
+.bcr{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.bck{font-size:14px;color:var(--mu)}.bcv{font-family:var(--fn);font-size:14px;font-weight:bold}
+.wbox{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;border-right:none}
+.wt{font-family:var(--fn);font-size:10px;color:var(--mu);letter-spacing:2px;margin-bottom:4px}
+.wn{font-family:var(--fn);font-size:24px;font-weight:bold;letter-spacing:3px}
+.ws{font-size:13px;color:var(--mu);margin-top:4px;text-align:center;line-height:1.4}
+
+/* PANEL COMPONENTS */
+.sec{padding:6px 12px 4px;font-family:var(--fn);font-size:10px;color:var(--mu);letter-spacing:2px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;background:var(--card2);flex-shrink:0}
+.chdr{padding:9px 12px 6px;font-size:20px;font-weight:700;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.alarm{font-family:var(--fn);font-size:10px;padding:2px 7px;border:1px solid;border-radius:2px;letter-spacing:1px}
+.aok{color:var(--g);border-color:var(--g)}.awn{color:var(--y);border-color:var(--y)}.acr{color:var(--r);border-color:var(--r)}
+
+/* SLIDERS */
+.sg{padding:7px 12px 3px;flex-shrink:0}
+.slr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+.sln{font-size:15px;color:var(--wh);font-weight:600}
+.slv{font-family:var(--fn);font-size:15px;font-weight:700}
+.slsrc{font-size:13px;color:var(--mu);margin-bottom:3px;line-height:1.4}
+input[type=range]{width:100%;cursor:pointer;margin:3px 0;height:4px}
+
+/* STAT ROWS */
+.srow{display:flex;justify-content:space-between;align-items:center;padding:5px 12px;border-bottom:1px solid var(--fa);gap:8px}
+.sk{font-size:15px;color:var(--mu);flex:1}.sv{font-family:var(--fn);font-size:15px;font-weight:bold;text-align:right}
+
+/* GAUGE */
+.gw{padding:5px 12px 8px}
+.glbl{display:flex;justify-content:space-between;font-size:14px;color:var(--mu);margin-bottom:3px}
+.glbl strong{font-family:var(--fn);font-size:15px;color:var(--wh)}
+.gt{height:7px;background:var(--fa);border-radius:4px;overflow:hidden}
+.gf{height:100%;border-radius:4px;transition:width .5s,background .5s}
+
+/* PRESETS */
+.pbt{display:block;width:calc(100% - 16px);margin:2px 8px;padding:6px 10px;background:transparent;border:1px solid var(--bdr);color:var(--mu);cursor:pointer;font-family:var(--fs);font-size:14px;font-weight:500;text-align:left;border-radius:2px;transition:all .12s}
+.pbt:hover{border-color:var(--g2);color:var(--wh);background:var(--gdim)}
+.pbt.act{border-color:var(--g);color:var(--g);background:var(--gdim)}
+
+/* PROBABILITY BARS */
+.pw{padding:5px 12px}
+.pr{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.pl{font-size:14px;color:var(--wh);min-width:130px;font-weight:500}
+.plsrc{font-size:11px;color:var(--mu);min-width:130px;font-weight:400}
+.pt{flex:1;height:6px;background:var(--fa);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px;transition:width .5s}
+.pp{font-family:var(--fn);font-size:13px;min-width:40px;text-align:right}
+
+/* COUNTRY TABS */
+.ctabs{display:flex;flex-wrap:wrap;gap:2px;padding:5px 8px 0;flex-shrink:0;background:var(--card2);border-bottom:1px solid var(--bdr)}
+.ctab{font-family:var(--fn);font-size:10px;padding:3px 7px;background:transparent;border:1px solid var(--bdr);color:var(--mu);cursor:pointer;border-radius:2px 2px 0 0;transition:all .12s;letter-spacing:.5px}
+.ctab-region{font-family:var(--fn);font-size:9px;color:var(--mu);letter-spacing:2px;padding:4px 8px 2px;width:100%;opacity:0.6;margin-top:2px}
+.ctab:hover{border-color:var(--bdr2);color:var(--wh)}
+.ctab.act{border-color:var(--g2);color:var(--g);background:var(--gdim);border-bottom-color:var(--card)}
+
+/* DAMAGE TRACKER */
+.dmg-row{display:flex;justify-content:space-between;align-items:center;padding:4px 12px;border-bottom:1px solid var(--fa)}
+.dmg-name{font-size:14px;color:var(--wh);font-weight:500}
+.dmg-stat{font-family:var(--fn);font-size:13px}
+.dmg-bar{height:4px;border-radius:2px;margin-top:2px;transition:width .5s}
+
+/* LNG PANEL */
+.lng-alert{margin:5px 12px;padding:8px 10px;background:#0d1c14;border:1px solid var(--y);border-radius:2px}
+.lng-title{font-family:var(--fn);font-size:11px;color:var(--y);letter-spacing:1px;margin-bottom:4px}
+.lng-row{display:flex;justify-content:space-between;margin-bottom:3px}
+.lng-k{font-size:14px;color:var(--mu)}.lng-v{font-family:var(--fn);font-size:14px;font-weight:bold}
+
+.dv{height:1px;background:var(--bdr);margin:4px 0;flex-shrink:0}
+
+/* MAP CONTROLS */
+#mctrl{background:var(--card2);border-top:1px solid var(--bdr);padding:7px 12px;display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;flex-shrink:0}
+#mleg{background:#040a06;border-top:1px solid var(--bdr);padding:4px 12px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;flex-shrink:0}
+.rl{display:flex;align-items:center;gap:4px;font-size:13px}
+.rd{width:14px;height:3px;border-radius:2px}
+
+/* COUNTRY CONTENT */
+.cstat{display:flex;justify-content:space-between;padding:5px 12px;border-bottom:1px solid var(--fa)}
+.csk{font-size:15px;color:var(--mu)}.csv{font-family:var(--fn);font-size:15px;font-weight:bold}
+
+/* KO-FI */
+#kofi-btn{position:fixed;bottom:14px;right:14px;z-index:9999;background:#ff5e5b;border:none;color:#fff;padding:8px 16px;border-radius:20px;cursor:pointer;font-family:var(--fs);font-size:14px;font-weight:700;letter-spacing:.5px;box-shadow:0 2px 8px #0008;transition:all .15s;display:flex;align-items:center;gap:6px}
+#kofi-btn:hover{background:#ff3e3a;transform:scale(1.04)}
+#kofi-btn svg{width:18px;height:18px;fill:#fff}
+/* NEWS PANEL */
+#news-panel{position:fixed;top:76px;right:0;bottom:108px;width:360px;background:#060e09;border-left:1px solid var(--bdr);transform:translateX(100%);transition:transform .25s ease;z-index:900;display:flex;flex-direction:column;overflow:hidden}
+#news-panel.open{transform:translateX(0)}
+#news-toggle{font-family:var(--fn);font-size:11px;background:var(--card2);border:1px solid var(--bdr2);border-right:none;color:var(--g);padding:6px 10px;cursor:pointer;letter-spacing:1px;border-radius:4px 0 0 4px;position:fixed;top:50%;right:0;transform:translateY(-50%);z-index:901;writing-mode:vertical-lr;text-orientation:mixed}
+#news-toggle:hover{background:var(--gdim)}
+#news-header{padding:10px 14px 8px;background:var(--card2);border-bottom:1px solid var(--bdr);font-family:var(--fn);font-size:11px;color:var(--mu);letter-spacing:2px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#news-close{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:16px;padding:0 4px;font-family:inherit}
+#news-close:hover{color:var(--r)}
+#news-filter{display:flex;gap:6px;padding:6px 14px;background:var(--card2);border-bottom:1px solid var(--bdr);flex-shrink:0;flex-wrap:wrap}
+.nf-btn{font-family:var(--fn);font-size:10px;padding:3px 8px;background:transparent;border:1px solid var(--bdr);color:var(--mu);cursor:pointer;border-radius:2px;transition:all .1s;letter-spacing:.5px}
+.nf-btn:hover{border-color:var(--bdr2);color:var(--wh)}
+.nf-btn.act{border-color:var(--cy);color:var(--cy);background:var(--cydim)}
+#news-list{flex:1;overflow-y:auto;padding:0}
+.news-item{padding:10px 14px;border-bottom:1px solid var(--fa);cursor:pointer;transition:background .1s}
+.news-item:hover{background:var(--card2)}
+.news-source{font-family:var(--fn);font-size:10px;color:var(--cy);letter-spacing:1px;margin-bottom:3px}
+.news-title{font-size:14px;color:var(--wh);line-height:1.4;font-weight:500}
+.news-meta{font-size:12px;color:var(--mu);margin-top:3px;display:flex;gap:8px}
+.news-tone{font-family:var(--fn);font-size:10px;padding:1px 5px;border-radius:2px}
+.tone-neutral{background:#0d1c14;color:#7aaa88;border:1px solid #1e3822}
+.tone-pos{background:#0d2240;color:var(--cy);border:1px solid var(--bdr)}
+.tone-neg{background:#3d1010;color:#ff8888;border:1px solid #5a1818}
+#news-loading{padding:20px;text-align:center;font-family:var(--fn);font-size:12px;color:var(--mu)}
+
+/* ═══════ BREAKING NEWS MODAL ═══════ */
+#bn-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+#bn-overlay.show{opacity:1;pointer-events:all}
+#bn-modal{background:#060e09;border:1px solid var(--r);border-top:3px solid var(--r);width:min(560px,92vw);max-height:82vh;display:flex;flex-direction:column;border-radius:3px;box-shadow:0 0 60px #ff555530;transform:translateY(18px) scale(.97);transition:transform .25s}
+#bn-overlay.show #bn-modal{transform:translateY(0) scale(1)}
+#bn-header{padding:10px 16px 8px;display:flex;align-items:center;gap:10px;background:#0d0505;border-bottom:1px solid var(--bdr);flex-shrink:0}
+.bn-badge{font-family:var(--fn);font-size:11px;background:var(--r);color:#fff;padding:3px 8px;border-radius:2px;letter-spacing:2px;animation:bn-pulse 1.2s infinite}
+@keyframes bn-pulse{0%,100%{opacity:1}50%{opacity:.6}}
+#bn-headline{font-size:16px;font-weight:700;color:var(--wh);flex:1}
+#bn-close{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:20px;padding:0 4px;line-height:1;font-family:var(--fn)}
+#bn-close:hover{color:var(--r)}
+#bn-body{flex:1;overflow-y:auto;padding:14px 16px}
+.bn-item{border-bottom:1px solid var(--fa);padding:12px 0;cursor:pointer;transition:background .1s}
+.bn-item:last-child{border-bottom:none}
+.bn-item:hover{background:var(--card2);margin:0 -16px;padding-left:16px;padding-right:16px}
+.bn-item-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.bn-source{font-family:var(--fn);font-size:10px;color:var(--cy);letter-spacing:1px}
+.bn-time{font-family:var(--fn);font-size:10px;color:var(--mu)}
+.bn-dot{width:6px;height:6px;border-radius:50%;background:var(--r);flex-shrink:0;animation:bn-pulse 1.2s infinite}
+.bn-dot.read{background:var(--mu);animation:none}
+.bn-title{font-size:15px;color:var(--wh);line-height:1.45;font-weight:500}
+.bn-summary{font-size:13px;color:var(--mu);margin-top:4px;line-height:1.5}
+.bn-tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.bn-tag{font-family:var(--fn);font-size:10px;padding:1px 6px;border-radius:2px;border:1px solid;letter-spacing:.5px}
+.bn-tag.oil{color:var(--y);border-color:var(--y);background:#3d2f0020}
+.bn-tag.lng{color:var(--pu);border-color:var(--pu);background:#2d0d4520}
+.bn-tag.mil{color:var(--r);border-color:var(--r);background:#3d101020}
+.bn-tag.dip{color:var(--g);border-color:var(--g);background:#003d1e20}
+.bn-tag.eco{color:var(--cy);border-color:var(--cy);background:#003d4520}
+#bn-footer{padding:10px 16px;background:#0a0505;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#bn-footer-left{font-family:var(--fn);font-size:11px;color:var(--mu)}
+#bn-read-all{font-family:var(--fn);font-size:11px;background:transparent;border:1px solid var(--bdr);color:var(--mu);padding:4px 10px;cursor:pointer;border-radius:2px}
+#bn-read-all:hover{border-color:var(--g);color:var(--g)}
+/* NOTIFICATION BELL */
+#bn-bell{position:fixed;top:58px;right:14px;z-index:1900;background:var(--card);border:1px solid var(--bdr);color:var(--mu);width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s}
+#bn-bell:hover{border-color:var(--r);color:var(--r)}
+#bn-bell.has-news{border-color:var(--r);color:var(--r);animation:bn-bell-shake .5s ease}
+@keyframes bn-bell-shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-15deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(5deg)}}
+#bn-count{position:absolute;top:-4px;right:-4px;background:var(--r);color:#fff;font-family:var(--fn);font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;display:none}
+#bn-count.show{display:flex}
+/* TOAST snackbar */
+#bn-toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d0505;border:1px solid var(--r);border-left:3px solid var(--r);color:var(--wh);padding:10px 16px;border-radius:3px;font-size:14px;z-index:1800;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;max-width:min(480px,90vw);white-space:normal;cursor:pointer}
+#bn-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#bn-toast-badge{font-family:var(--fn);font-size:10px;color:var(--r);letter-spacing:1px;display:block;margin-bottom:3px}
+
+/* DYNAMIC SIM DATE */
+#sim-date-label{font-family:var(--fn);font-size:13px;color:var(--mu)}
+#sim-date-label .sd-today{color:var(--wh);font-weight:bold}
+#sim-date-label .sd-simday{color:var(--g);font-size:16px;font-weight:bold}
+#sim-date-label .sd-arrow{color:var(--mu);font-size:11px;margin:0 4px}
+#sim-date-label .sd-projected{color:var(--cy)}
+
+/* ═══════ COMPLIANCE MODAL ═══════ */
+#comp-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+#comp-overlay.show{opacity:1;pointer-events:all}
+#comp-modal{background:#060e09;border:1px solid var(--bdr2);border-top:3px solid var(--g);width:min(600px,94vw);max-height:88vh;display:flex;flex-direction:column;border-radius:3px;box-shadow:0 0 80px #00ff9d18;transform:translateY(24px);transition:transform .3s}
+#comp-overlay.show #comp-modal{transform:translateY(0)}
+#comp-top{padding:20px 22px 14px;background:#040c07;border-bottom:1px solid var(--bdr)}
+#comp-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.comp-icon{width:36px;height:36px;border:1px solid var(--g);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.comp-title{font-family:var(--fn);font-size:15px;color:var(--g);letter-spacing:3px}
+.comp-subtitle{font-size:13px;color:var(--mu);margin-top:2px}
+#comp-body{flex:1;overflow-y:auto;padding:18px 22px;font-size:14px;line-height:1.7;color:var(--mu)}
+#comp-body h3{font-family:var(--fn);font-size:11px;color:var(--g);letter-spacing:2px;margin:16px 0 6px}
+#comp-body h3:first-child{margin-top:0}
+#comp-body p{margin-bottom:10px}
+#comp-body strong{color:var(--wh);font-weight:600}
+#comp-body a{color:var(--cy)!important}
+.comp-warning{background:#0d0505;border:1px solid var(--r);border-left:3px solid var(--r);padding:10px 14px;border-radius:2px;margin:12px 0}
+.comp-warning-title{font-family:var(--fn);font-size:10px;color:var(--r);letter-spacing:2px;margin-bottom:5px}
+.comp-note{background:#0a1410;border:1px solid var(--bdr);border-left:3px solid var(--g);padding:10px 14px;border-radius:2px;margin:10px 0}
+.comp-sources{display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;margin-top:6px}
+.comp-src{font-size:12px}
+#comp-footer{padding:14px 22px;background:#040c07;border-top:1px solid var(--bdr);display:flex;align-items:center;gap:12px;flex-shrink:0}
+#comp-checkbox-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;flex:1}
+#comp-checkbox{width:15px;height:15px;accent-color:var(--g);cursor:pointer;flex-shrink:0}
+#comp-checkbox-label{font-size:13px;color:var(--mu);cursor:pointer;user-select:none}
+#comp-accept{font-family:var(--fn);background:var(--g);border:none;color:#030d05;padding:9px 22px;cursor:pointer;font-size:13px;font-weight:bold;letter-spacing:2px;border-radius:2px;transition:all .12s;opacity:.4;pointer-events:none}
+#comp-accept.ready{opacity:1;pointer-events:all}
+#comp-accept.ready:hover{background:var(--g2);transform:scale(1.02)}
+/* persistent footer badge */
+#comp-badge{position:fixed;bottom:14px;left:14px;z-index:1000;font-family:var(--fn);font-size:9px;color:var(--muted);color:#2a5535;border:1px solid #1a3520;padding:3px 8px;border-radius:2px;cursor:pointer;background:#040c07;letter-spacing:1px;transition:all .15s}
+#comp-badge:hover{border-color:var(--g);color:var(--g)}
+
+/* ═══ DONATE STRIP ═══ */
+#donate-strip{position:fixed;bottom:0;left:0;right:0;z-index:1100;background:linear-gradient(90deg,#040c07 0%,#071409 60%,#040c07 100%);border-top:1px solid var(--g);display:flex;align-items:center;justify-content:center;gap:0;height:44px;padding:0 16px}
+#donate-strip::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,232,122,.03) 60px,rgba(0,232,122,.03) 61px);pointer-events:none}
+.ds-label{font-family:var(--fn);font-size:11px;color:var(--mu);letter-spacing:2px;margin-right:16px;white-space:nowrap}
+.ds-btn{display:flex;align-items:center;gap:8px;padding:0 20px;height:30px;border:1px solid;border-radius:2px;cursor:pointer;font-family:var(--fn);font-size:12px;font-weight:bold;letter-spacing:1px;transition:all .14s;position:relative;white-space:nowrap;text-decoration:none}
+.ds-kofi{background:transparent;border-color:#ff5e5b;color:#ff5e5b}.ds-kofi:hover{background:#ff5e5b;color:#fff;box-shadow:0 0 12px #ff5e5b40}
+.ds-pp{background:transparent;border-color:#00b4ff;color:#00b4ff;margin-left:10px}.ds-pp:hover{background:#00b4ff;color:#040c07;box-shadow:0 0 12px #00b4ff40}
+.ds-divider{width:1px;height:20px;background:var(--bdr);margin:0 14px}
+.ds-btn svg{flex-shrink:0}
+/* shift bottom UI elements up so they sit above the strip */
+#bn-bell{bottom:54px!important;top:auto!important}
+#bn-toast{bottom:64px!important}
+#kofi-btn{display:none}  /* hide old kofi btn if present */
+#comp-badge{bottom:54px!important}
+</style>
+</head>
+<body>
+<div id="root">
+<div id="tkbar">
+  <div id="tklbl">LIVE MARKETS</div>
+  <div id="tkscroll"><div id="tkinner"></div></div>
+  <div id="tkst">LOADING...</div>
+</div>
+<div id="hdr">
+  <span class="htitle">&#9889; OIL SHOCK LIVE</span>
+  <div class="hsep"></div>
+  <span class="hsub">EPIC FURY vs True Promise SIMULATOR</span>
+  <div class="hsep"></div>
+  <span class="dlbl" id="sim-date-label">Loading...</span>
+  <div class="hright">
+    <button class="btn br" id="runbtn" onclick="toggleRun()">&#9654; RUN</button>
+    <select class="spd" id="spdsel"><option value="3">3x</option><option value="5" selected>5x</option><option value="10">10x</option><option value="30">30x</option><option value="60">60x</option></select>
+    <button class="btn by" onclick="resetSim()">&#8635; RESET</button>
+  </div>
+</div>
+<div id="main">
+  <!-- LEFT PANEL: Controls + Iran Arsenal -->
+  <div class="side" id="lp">
+    <div class="sec">SCENARIO PRESETS</div>
+    <div id="presets" style="padding:4px 0"></div>
+    <div class="dv"></div>
+    <div class="sec">SHARED VARIABLES</div>
+    <div id="sh-sl"></div>
+    <div class="dv"></div>
+    <div class="sec">IRAN MILITARY STATUS &nbsp;<a href="https://www.jpost.com/defense-and-tech/article-889435" target="_blank" style="font-size:10px">JPost Mar 10</a></div>
+    <div id="arsenal"></div>
+    <div class="dv"></div>
+    <div class="sec">ENERGY INFRASTRUCTURE &nbsp;<a href="https://www.cnbc.com/2026/03/19/oil-jumps-iran-strikes-qatar-lng-facility-supply-worries.html" target="_blank" style="font-size:10px">CNBC Mar 19</a></div>
+    <div id="infra"></div>
+    <div class="dv"></div>
+    <div class="sec">OUTCOME PROBABILITIES</div>
+    <div class="pw" id="probs"></div>
+  </div>
+
+  <!-- CENTER: Map -->
+  <div id="ctr">
+    <canvas id="mapcanvas"></canvas>
+    <div id="mctrl">
+      <div class="sg" style="padding:0">
+        <div class="slr"><span class="sln">HORMUZ OPEN %</span><span class="slv" id="sv-h" style="color:var(--cy)">20%</span></div>
+        <input type="range" min="0" max="100" step="5" value="20" id="sl-h" oninput="setSH('h',+this.value)" style="accent-color:var(--cy)">
+        <div class="slsrc"><a href="https://www.aljazeera.com/news/2026/3/15/iran-war-what-is-happening-on-day-16-of-us-israel-attacks" target="_blank">Al Jazeera Mar 15 — Hormuz "open to non-allies"</a></div>
+      </div>
+      <div class="sg" style="padding:0">
+        <div class="slr"><span class="sln">COOPERABILITY %</span><span class="slv" id="sv-c" style="color:#88ff44">35%</span></div>
+        <input type="range" min="0" max="100" step="5" value="35" id="sl-c" oninput="setSH('c',+this.value)" style="accent-color:#88ff44">
+        <div class="slsrc">Global coordination — IEA release, allied naval, ceasefire diplomacy</div>
+      </div>
+      <div class="sg" style="padding:0">
+        <div class="slr"><span class="sln">ESCALATION %</span><span class="slv" id="sv-e" style="color:var(--o)">65%</span></div>
+        <input type="range" min="0" max="100" step="5" value="65" id="sl-e" oninput="setSH('e',+this.value)" style="accent-color:var(--o)">
+        <div class="slsrc"><a href="https://www.cnn.com/2026/03/04/politics/missiles-weapons-stockpile-iran-us-war" target="_blank">CNN Mar 4 — missile math</a></div>
+      </div>
+      <div class="sg" style="padding:0">
+        <div class="slr"><span class="sln">WAR DURATION (days)</span><span class="slv" id="sv-d" style="color:var(--y)">150</span></div>
+        <input type="range" min="30" max="365" step="10" value="150" id="sl-d" oninput="setSH('d',+this.value)" style="accent-color:var(--y)">
+        <div class="slsrc"><a href="https://www.nbcnews.com/politics/donald-trump/iran-negotiate-ceasefire-deal-trump-kharg-hormuz-oil-rcna263474" target="_blank">NBC Mar 15 — Trump 4-week initial timetable</a></div>
+      </div>
+    </div>
+    <div id="mleg"></div>
+  </div>
+
+  <!-- RIGHT PANEL: Country tabs -->
+  <div class="side" id="rp">
+    <div style="padding:7px 12px 4px;font-size:12px;color:var(--mu);background:var(--card2);border-bottom:1px solid var(--bdr);letter-spacing:2px;font-family:var(--fn)">SELECT COUNTRY</div>
+    <div class="ctabs" id="ctabs"></div>
+    <div id="country-panel"></div>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div id="bot">
+  <div class="bc"><div class="bct">OIL &amp; GAS &nbsp;<a href="https://www.cnbc.com/2026/03/19/oil-jumps-iran-strikes-qatar-lng-facility-supply-worries.html" target="_blank">CNBC</a></div><div id="b-oil"></div></div>
+  <div class="bc"><div class="bct">LNG CRISIS &nbsp;<a href="https://www.cnn.com/2026/03/19/business/oil-gas-prices-surge-qatar-attacks-intl" target="_blank">CNN Mar 19</a></div><div id="b-lng"></div></div>
+  <div class="bc"><div class="bct">USA vs CHINA &nbsp;<a href="https://foreignpolicy.com/2026/03/17/iran-middle-east-war-china-strait-hormuz-oil-energy-exports" target="_blank">FP Mar 17</a></div><div id="b-vc"></div></div>
+  <div class="bc"><div class="bct">IRAN ARSENAL &nbsp;<a href="https://www.jpost.com/defense-and-tech/article-889435" target="_blank">JPost</a></div><div id="b-ars"></div></div>
+  <div class="bc"><div class="bct">GLOBAL ECONOMY</div><div id="b-gdp"></div></div>
+  <div class="bc wbox"><div class="wt">ADVANTAGE</div><div class="wn" id="wn">--</div><div class="ws" id="ws">Day 0</div></div>
+</div>
+</div>
+<script>
+// ═══════════════ CONSTANTS (all March 2026 sourced) ═══════════════
+const K={
+  // US oil — EIA STEO Mar 2026
+  US_PROD:13.59,US_CONS:20.25,US_CA:4.30,US_VZ:0.34,US_GULF:1.80,
+  US_SPR:244,US_SPR_R:4.4,US_MIL:41,US_GDP:2.10,
+  // China — Worldometer/EIA + Bruegel Mar 2026
+  CN_PROD:5.33,CN_CONS:16.37,CN_IMP:11.04,CN_RU:2.10,
+  CN_GULF_PRE:5.37,CN_GULF_W:1.22,CN_OTH:4.08,CN_RES:1440,CN_GDP:4.75,
+  // Iran arsenal — JPost Mar 10 2026 / Bloomberg Mar 11
+  IR_BAL_START:1500,    // IDF estimate remaining ballistic msls
+  IR_SHAD_START:75000,  // Israeli estimate pre-war; Bloomberg: 2100+ fired
+  IR_PROD_DAY:400,      // Defence Security Asia Jan 2026 Shahed/day
+  IR_CRU_START:250,     // houseofsaud.com Mar 2026
+  // LNG — CNN/CNBC/Fox Business Mar 19 2026
+  LNG_QATAR_SHARE:20,   // Qatar % global LNG (EIA via CNN)
+  LNG_DAMAGE_PCT:17,    // QatarEnergy CEO: Fox Business Mar 19
+  LNG_REPAIR_YRS:5,     // Bloomberg Mar 19 — 3-5 years
+  LNG_EUROPE_DBL:2.0,   // CNN: European gas prices doubled since Feb 28
+  LNG_ASIA_PRICE:26,    // Bloomberg: Asian prices >$26/MMBtu
+  LNG_PRE_PRICE:11.5,   // pre-war Asian spot
+  // Oil price levels — Fortune/CNBC
+  OIL_BASE:67,OIL_NOW:113.71,OIL_PEAK:126,
+  // GDP elasticity (IMF model) per country — GDP % change per 10% oil rise
+  GDP_US:-0.15,GDP_CN:-0.20,GDP_EU:-0.18,GDP_DE:-0.20,
+  GDP_JP:-0.25,GDP_KR:-0.28,GDP_IN:-0.22,GDP_UK:-0.12,
+  GDP_TR:-0.20,GDP_SA:+0.35,GDP_AE:+0.28,
+  // LNG additional drag per 50% LNG price rise
+  LNG_DRAG_JP:-0.30,LNG_DRAG_KR:-0.25,LNG_DRAG_EU:-0.15,
+  LNG_DRAG_IN:-0.08,LNG_DRAG_UK:-0.12,
+  // Probability baselines — as of Day 20, sourced
+  P_CF:0.12,    // Time/NPR Mar 15: Iran "never asked"
+  P_GI:0.08,    // Quinnipiac: 75% oppose ground troops
+  P_NATO:0.10,  // JPost Mar 10: Article 5 invocation 10%
+  P_REG:0.15,   // IRGC chain disrupted; Jan 2026 protests
+  P_ISR:0.35,   // Active Lebanon front; Al Jazeera Mar 15
+  P_NUC:0.03,   // Remote but non-zero — Iran HEU "under rubble"
+  P_LONG:0.45,  // War dragging past 90d given current stalemate
+};
+
+// Live data (Yahoo overwrite on load)
+let LV={brent:113.71,wti:108.78,ng:28.50,spx:6716,nik:35400,ssc:3148,ftse:8340,
+         dax:21850,tasi:12480,hsi:23100,kos:2440};
+
+// Shared sliders
+let SH={h:20,c:35,e:65,d:150,sc:'MEDIUM'};
+// US per-country vars
+let UV={prod:13.59,ca:4.30,vz:0.34,gulf:1.80,spr:244,sprR:4.4,mil:41,dem:20.25,iea:80,isr:50};
+// China vars
+let CV={prod:5.33,ru:2.10,oth:4.08,res:1440,ev:1.0,flt:40,dem:16.37,irn:85};
+
+let day=0,run=false,dtmr=null,frm=0,parts=[];
+let toff=0,stks=[],curCountry='US';
+
+// Country definitions
+const COUNTRIES={
+  US:{name:'United States',flag:'🇺🇸',gdp:27.0,oilImp:false,lngDep:0.05,oilElast:K.GDP_US,lngDrag:0,
+    src:'EIA/IMF',srcUrl:'https://www.eia.gov/outlooks/steo/',color:'var(--b)'},
+  CN:{name:'China',flag:'🇨🇳',gdp:18.5,oilImp:true,lngDep:0.25,oilElast:K.GDP_CN,lngDrag:0.05,
+    src:'Worldometer/EIA',srcUrl:'https://www.worldometers.info/oil/china-oil/',color:'var(--r)'},
+  JP:{name:'Japan',flag:'🇯🇵',gdp:4.4,oilImp:true,lngDep:0.97,oilElast:K.GDP_JP,lngDrag:K.LNG_DRAG_JP,
+    src:'IEA/METI',srcUrl:'https://www.aljazeera.com/economy/2026/3/19/why-are-irans-south-pars-gasfield-qatars-ras-laffan-so-significant',color:'var(--r)'},
+  KR:{name:'South Korea',flag:'🇰🇷',gdp:1.7,oilImp:true,lngDep:0.95,oilElast:K.GDP_KR,lngDrag:K.LNG_DRAG_KR,
+    src:'IEA/EIA',srcUrl:'https://www.bloomberg.com/news/articles/2026-03-19/gas-traders-weigh-attacks-at-world-s-largest-lng-plant-in-qatar',color:'var(--b)'},
+  DE:{name:'Germany / EU',flag:'🇩🇪',gdp:4.1,oilImp:true,lngDep:0.40,oilElast:K.GDP_DE,lngDrag:K.LNG_DRAG_EU,
+    src:'IEA / Bruegel',srcUrl:'https://www.aljazeera.com/news/2026/3/18/qatar-says-iran-missile-attack-sparks-fire-causes-damage-at-gas-facility',color:'var(--b)'},
+  IN:{name:'India',flag:'🇮🇳',gdp:3.7,oilImp:true,lngDep:0.20,oilElast:K.GDP_IN,lngDrag:K.LNG_DRAG_IN,
+    src:'IEA/Platts',srcUrl:'https://www.aljazeera.com/news/2026/3/18/qatar-says-iran-missile-attack-sparks-fire-causes-damage-at-gas-facility',color:'var(--o)'},
+  SA:{name:'Saudi Arabia',flag:'🇸🇦',gdp:1.1,oilImp:false,lngDep:0.0,oilElast:K.GDP_SA,lngDrag:0,
+    src:'Aramco/IMF',srcUrl:'https://www.cnbc.com/2026/03/19/iran-israel-us-war-energy-facilities-south-pars-global-reactions.html',color:'var(--y)'},
+  AE:{name:'UAE',flag:'🇦🇪',gdp:0.5,oilImp:false,lngDep:0.0,oilElast:K.GDP_AE,lngDrag:0,
+    src:'ADNOC/IMF',srcUrl:'https://www.cnbc.com/2026/03/19/iran-israel-us-war-energy-facilities-south-pars-global-reactions.html',color:'var(--y)'},
+  UK:{name:'United Kingdom',flag:'🇬🇧',gdp:3.1,oilImp:true,lngDep:0.30,oilElast:K.GDP_UK,lngDrag:K.LNG_DRAG_UK,
+    src:'BEIS/IEA',srcUrl:'https://www.cnn.com/2026/03/19/middleeast/iran-qatar-south-pars-gas-field-explainer-intl',color:'var(--b)'},
+  TR:{name:'Turkey',flag:'🇹🇷',gdp:1.2,oilImp:true,lngDep:0.35,oilElast:K.GDP_TR,lngDrag:-0.20,
+    src:'EPDK/IEA',srcUrl:'https://www.aljazeera.com/news/2026/3/18/qatar-says-iran-missile-attack-sparks-fire-causes-damage-at-gas-facility',color:'var(--r)'},
+  RU:{name:'Russia',flag:'🇷🇺',gdp:2.2,oilImp:false,lngDep:0.0,oilElast:0.30,lngDrag:0,
+    src:'Rosstat/IMF',srcUrl:'https://bruegel.org/analysis/what-war-iran-means-china',color:'var(--r)'},
+
+  // ── NEW COUNTRIES ──────────────────────────────────
+  // EUROPE
+  FR:{name:'France',flag:'🇫🇷',gdp:3.05,oilImp:true,lngDep:0.32,oilElast:-0.17,lngDrag:-0.13,
+    src:'IEA/INSEE',srcUrl:'https://think.ing.com/articles/oil-shock-for-asia-identifying-the-first-pressure-points/',color:'var(--b)'},
+  IT:{name:'Italy',flag:'🇮🇹',gdp:2.25,oilImp:true,lngDep:0.38,oilElast:-0.18,lngDrag:-0.15,
+    src:'IEA/ISTAT',srcUrl:'https://ieefa.org/resources/asias-falling-lng-demand-2025-defies-investor-optimism-rapid-growth',color:'var(--b)'},
+  ES:{name:'Spain',flag:'🇪🇸',gdp:1.58,oilImp:true,lngDep:0.28,oilElast:-0.16,lngDrag:-0.11,
+    src:'CNMC/IEA',srcUrl:'https://ieefa.org/resources/asias-falling-lng-demand-2025-defies-investor-optimism-rapid-growth',color:'var(--b)'},
+  NO:{name:'Norway',flag:'🇳🇴',gdp:0.49,oilImp:false,lngDep:0.0,oilElast:0.28,lngDrag:0.20,
+    src:'Equinor/SSB — LNG exporter, major beneficiary',srcUrl:'https://think.ing.com/articles/oil-shock-for-asia-identifying-the-first-pressure-points/',color:'var(--g)'},
+
+  // ASIA-PACIFIC
+  SG:{name:'Singapore',flag:'🇸🇬',gdp:0.47,oilImp:true,lngDep:0.65,oilElast:-0.22,lngDrag:-0.28,
+    src:'MAS/EMA — 70% Gulf oil, 45% Qatar LNG (The Diplomat Mar 16)',srcUrl:'https://thediplomat.com/2026/03/southeast-asia-reels-from-middle-east-oil-supply-shortages/',color:'var(--cy)'},
+  TW:{name:'Taiwan',flag:'🇹🇼',gdp:0.78,oilImp:true,lngDep:0.97,oilElast:-0.26,lngDrag:-0.32,
+    src:'MOEA — nuclear phaseout = near-total LNG dependence',srcUrl:'https://ieefa.org/resources/asias-falling-lng-demand-2025-defies-investor-optimism-rapid-growth',color:'var(--cy)'},
+  TH:{name:'Thailand',flag:'🇹🇭',gdp:0.51,oilImp:true,lngDep:0.50,oilElast:-0.24,lngDrag:-0.22,
+    src:'ING Think Mar 2026 — most exposed SEA',srcUrl:'https://think.ing.com/articles/oil-shock-for-asia-identifying-the-first-pressure-points/',color:'var(--o)'},
+  PH:{name:'Philippines',flag:'🇵🇭',gdp:0.44,oilImp:true,lngDep:0.18,oilElast:-0.28,lngDrag:-0.08,
+    src:'The Diplomat Mar 16 — 96% Gulf oil',srcUrl:'https://thediplomat.com/2026/03/southeast-asia-reels-from-middle-east-oil-supply-shortages/',color:'var(--o)'},
+  ID:{name:'Indonesia',flag:'🇮🇩',gdp:1.42,oilImp:true,lngDep:0.08,oilElast:-0.15,lngDrag:-0.03,
+    src:'ING Think — 25% Gulf oil, coal buffer',srcUrl:'https://think.ing.com/articles/oil-shock-for-asia-identifying-the-first-pressure-points/',color:'var(--o)'},
+  AU:{name:'Australia',flag:'🇦🇺',gdp:1.72,oilImp:false,lngDep:0.0,oilElast:0.15,lngDrag:0.12,
+    src:'IEEFA — LNG exporter, benefits from price surge',srcUrl:'https://ieefa.org/australian-gas-and-lng-tracker',color:'var(--g)'},
+  PK:{name:'Pakistan',flag:'🇵🇰',gdp:0.34,oilImp:true,lngDep:0.38,oilElast:-0.30,lngDrag:-0.25,
+    src:'Seala Q3 2025 — all LNG contracts with Qatar',srcUrl:'https://www.seala.ai/analytics/lng-2025q3',color:'var(--r)'},
+  BD:{name:'Bangladesh',flag:'🇧🇩',gdp:0.45,oilImp:true,lngDep:0.30,oilElast:-0.28,lngDrag:-0.20,
+    src:'IEEFA 2025 — price sensitive, Qatar-dependent',srcUrl:'https://ieefa.org/resources/asias-falling-lng-demand-2025-defies-investor-optimism-rapid-growth',color:'var(--r)'},
+
+  // MIDDLE EAST
+  QA:{name:'Qatar',flag:'🇶🇦',gdp:0.22,oilImp:false,lngDep:0.0,oilElast:-0.80,lngDrag:-0.50,
+    src:'QatarEnergy — ATTACKED Mar 18-19, force majeure declared',srcUrl:'https://www.foxbusiness.com/economy/iranian-strikes-cut-17-qatar-lng-output-threatening-global-supply',color:'var(--pu)',warZone:true},
+  IL:{name:'Israel',flag:'🇮🇱',gdp:0.53,oilImp:true,lngDep:0.10,oilElast:-0.18,lngDrag:-0.05,
+    src:'CBS Israel — Haifa refinery struck (Times of Israel Mar 19)',srcUrl:'https://www.timesofisrael.com/iran-fm-claims-tehran-never-sought-ceasefire-or-talks-with-us-amid-war/',color:'var(--b)',warZone:true},
+  IQ:{name:'Iraq',flag:'🇮🇶',gdp:0.27,oilImp:false,lngDep:0.08,oilElast:0.25,lngDrag:-0.30,
+    src:'Iraq MoE — Iran gas supply cut (Al Jazeera Mar 19)',srcUrl:'https://www.aljazeera.com/economy/2026/3/19/why-are-irans-south-pars-gasfield-qatars-ras-laffan-so-significant',color:'var(--y)',warZone:true},
+  EG:{name:'Egypt',flag:'🇪🇬',gdp:0.38,oilImp:false,lngDep:0.0,oilElast:0.08,lngDrag:0.0,
+    src:'CAPMAS/IMF — Suez Canal revenue impacted',srcUrl:'https://thediplomat.com/2026/03/southeast-asia-reels-from-middle-east-oil-supply-shortages/',color:'var(--y)'},
+
+  // AMERICAS & AFRICA
+  CA:{name:'Canada',flag:'🇨🇦',gdp:2.14,oilImp:false,lngDep:0.0,oilElast:0.22,lngDrag:0.10,
+    src:'NRCan — major oil exporter, immune supply to US',srcUrl:'https://www.eia.gov/todayinenergy/detail.php?id=64544',color:'var(--g)'},
+  BR:{name:'Brazil',flag:'🇧🇷',gdp:2.17,oilImp:false,lngDep:0.05,oilElast:0.10,lngDrag:-0.02,
+    src:'ANP/IMF — Petrobras benefits, partial LNG importer',srcUrl:'https://ieefa.org/resources/asias-falling-lng-demand-2025-defies-investor-optimism-rapid-growth',color:'var(--g)'},
+  NG:{name:'Nigeria',flag:'🇳🇬',gdp:0.47,oilImp:false,lngDep:0.0,oilElast:0.18,lngDrag:0.0,
+    src:'NNPC/IMF — major oil exporter, windfall',srcUrl:'https://ieefa.org/resources/asias-falling-lng-demand-2025-defies-investor-optimism-rapid-growth',color:'var(--g)'},
+  ZA:{name:'South Africa',flag:'🇿🇦',gdp:0.38,oilImp:true,lngDep:0.12,oilElast:-0.20,lngDrag:-0.05,
+    src:'DMRE/IEA — coal buffer reduces impact',srcUrl:'https://ieefa.org/resources/asias-falling-lng-demand-2025-defies-investor-optimism-rapid-ground',color:'var(--o)'},
+};
+
+// Shared sliders definition
+const SHD=[
+  {k:'h',n:'Hormuz Open %',min:0,max:100,s:5,u:'%',c:'var(--cy)',
+   src:'Al Jazeera Mar 15 — "open to non-allies"',url:'https://www.aljazeera.com/news/2026/3/15/iran-war-what-is-happening-on-day-16-of-us-israel-attacks'},
+  {k:'c',n:'Cooperability',min:0,max:100,s:5,u:'%',c:'#88ff44',
+   src:'IEA coordinated release active',url:'https://www.iea.org/news/iea-member-countries-release-oil-from-emergency-reserves'},
+  {k:'e',n:'Escalation Index',min:0,max:100,s:5,u:'%',c:'var(--o)',
+   src:'CNN Mar 4 — missile stockpile analysis',url:'https://www.cnn.com/2026/03/04/politics/missiles-weapons-stockpile-iran-us-war'},
+  {k:'d',n:'War Duration',min:30,max:365,s:10,u:'d',c:'var(--y)',
+   src:'Trump 4-week timetable / NBC Mar 15',url:'https://www.nbcnews.com/politics/donald-trump/iran-negotiate-ceasefire-deal-trump-kharg-hormuz-oil-rcna263474'},
+];
+
+const SCENS={
+  CEASEFIRE:{n:'CEASEFIRE (45d)',h:65,c:80,e:25,d:45},
+  SHORT:{n:'SHORT WAR (60d)',h:40,c:55,e:60,d:60},
+  MEDIUM:{n:'MEDIUM WAR (150d)',h:20,c:35,e:65,d:150},
+  LONG:{n:'LONG WAR (365d)',h:10,c:20,e:75,d:365},
+  ESCALATION:{n:'ESCALATION (180d)',h:3,c:15,e:95,d:180},
+  REGIME:{n:'REGIME COLLAPSE (90d)',h:55,c:60,e:68,d:90},
+};
+
+// ══════════ LIVE DATA FETCH ══════════
+const YH={brent:'BZ=F',wti:'CL=F',ng:'NG=F',spx:'^GSPC',nik:'^N225',ssc:'000001.SS',
+           ftse:'^FTSE',dax:'^GDAXI',tasi:'2222.SR',hsi:'^HSI',kos:'^KS11'};
+async function fetchLive(){
+  try{
+    const syms=Object.values(YH).join(',');
+    const res=await Promise.race([
+      fetch('https://query1.finance.yahoo.com/v8/finance/spark?symbols='+encodeURIComponent(syms)+'&range=1d&interval=1d'),
+      new Promise((_,r)=>setTimeout(()=>r('timeout'),4500))
+    ]);
+    const d=await res.json();
+    (d?.spark?.result||[]).forEach(item=>{
+      const p=item?.response?.[0]?.meta?.regularMarketPrice;
+      if(!p)return;
+      Object.entries(YH).forEach(([k,s])=>{if(s===item.symbol)LV[k]=+p;});
+    });
+    document.getElementById('tkst').textContent='LIVE ✓';
+    document.getElementById('tkst').style.color='var(--g)';
+  }catch(e){
+    document.getElementById('tkst').textContent='MAR 20 2026 VERIFIED CONSTANTS';
+    document.getElementById('tkst').style.color='var(--y)';
+  }
+  initStocks();
+}
+function initStocks(){
+  stks=[
+    {s:'BRENT',v:LV.brent,b:1.9},{s:'WTI',v:LV.wti,b:1.7},{s:'NAT GAS',v:LV.ng,b:2.2},
+    {s:'S&P 500',v:LV.spx,b:-1.2},{s:'NIKKEI',v:LV.nik,b:-2.0},
+    {s:'SHANGHAI',v:LV.ssc,b:-0.7},{s:'FTSE',v:LV.ftse,b:-0.9},
+    {s:'DAX',v:LV.dax,b:-1.1},{s:'TADAWUL',v:LV.tasi,b:1.5},
+    {s:'HANG SENG',v:LV.hsi,b:-0.6},{s:'KOSPI',v:LV.kos,b:-1.6},
+  ].map(s=>({...s,cur:s.v,pct:0}));
+  renderTick();
+  setInterval(tickTick,1300);
+  setInterval(()=>{const h=document.getElementById('tkinner');const w=h.scrollWidth/2;if(w>0){toff=(toff+1.4)%w;h.style.transform='translateX(-'+toff+'px)';}},30);
+}
+function tickTick(){
+  const ef=SH.e/100,hf=SH.h/100;
+  stks=stks.map(s=>{
+    const oil=s.s==='BRENT'||s.s==='WTI';
+    const gas=s.s==='NAT GAS';
+    let bias;
+    if(oil)bias=(1-hf)*ef*.005+(Math.random()-.47)*.003;
+    else if(gas)bias=(1-hf)*ef*.008+(Math.random()-.45)*.004;
+    else bias=(1-hf)*ef*(s.b||0)*.001+(Math.random()-.5)*.003;
+    const nv=Math.max(s.v*.4,s.cur*(1+bias));
+    return{...s,cur:nv,pct:(nv-s.v)/s.v*100};
+  });
+  renderTick();
+}
+function renderTick(){
+  const h=document.getElementById('tkinner');
+  h.innerHTML=[...stks,...stks].map(s=>{
+    const f=s.cur>500?s.cur.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,','):s.cur.toFixed(2);
+    const up=s.pct>=0;
+    return`<span class="tk"><span class="tks">${s.s}</span><span class="tkv">${f}</span><span class="${up?'tku':'tkd'}">${up?'▲':'▼'}${Math.abs(s.pct).toFixed(2)}%</span></span>`;
+  }).join('');
+}
+
+// ══════════ BUILD UI ══════════
+function fmtV(v,s){return s.s<1?parseFloat(v).toFixed(s.s<.1?2:1)+s.u:Math.round(v)+s.u;}
+function buildSharedSliders(){
+  document.getElementById('sh-sl').innerHTML=SHD.map(s=>
+    `<div class="sg"><div class="slr"><span class="sln">${s.n}</span><span class="slv" id="sv-${s.k}" style="color:${s.c}">${fmtV(SH[s.k],s)}</span></div>
+    <input type="range" min="${s.min}" max="${s.max}" step="${s.s}" value="${SH[s.k]}" oninput="setSH('${s.k}',+this.value)" style="accent-color:${s.c}">
+    <div class="slsrc"><a href="${s.url}" target="_blank">${s.src}</a></div></div>`
+  ).join('');
+}
+function buildPresets(){
+  document.getElementById('presets').innerHTML=Object.entries(SCENS).map(([k,s])=>
+    `<button class="pbt${SH.sc===k?' act':''}" onclick="apScen('${k}')">${s.n}</button>`
+  ).join('');
+}
+function buildCountryTabs(){
+  const REGIONS = {
+    'AMERICAS':['US','CA','BR','NG'],
+    'EUROPE':['UK','DE','FR','IT','ES','NO','TR'],
+    'MID EAST':['SA','AE','QA','IL','IQ','EG'],
+    'ASIA':['CN','JP','KR','IN','RU','SG','TW','TH','PH','ID','AU','PK','BD'],
+  };
+  let html = '';
+  Object.entries(REGIONS).forEach(([region, codes]) => {
+    html += `<div class="ctab-region">${region}</div>`;
+    codes.filter(k=>COUNTRIES[k]).forEach(k => {
+      const c = COUNTRIES[k];
+      const isWar = c.warZone;
+      const isExporter = c.oilElast > 0;
+      const clr = isWar ? 'color:var(--r)' : isExporter ? 'color:var(--g)' : '';
+      html += `<button class="ctab${curCountry===k?' act':''}" onclick="selectCountry('${k}')" style="${clr}" title="${c.name}">${c.flag} ${k}</button>`;
+    });
+  });
+  document.getElementById('ctabs').innerHTML = html;
+}
+function buildMapLegend(){
+  const rs=[{l:'Gulf→China',c:'#00ddf0',id:'fl-gc'},{l:'Gulf→USA',c:'#5ab4ff',id:'fl-gu'},
+            {l:'Russia→China',c:'#ff7070',id:'fl-rc'},{l:'Vzla→USA',c:'#ffd060',id:'fl-vu'},
+            {l:'Canada→USA',c:'#88ff44',id:'fl-cu'}];
+  document.getElementById('mleg').innerHTML=rs.map(r=>
+    `<span class="rl"><span class="rd" style="background:${r.c}"></span><span style="color:${r.c}">${r.l}:</span><span style="color:var(--wh)" id="${r.id}">--</span></span>`
+  ).join('')+'<span style="margin-left:auto;font-family:var(--fn);font-size:12px;color:var(--mu)">OIL: <span id="loil" style="color:var(--y)">$--</span>&nbsp;LNG: <span id="llng" style="color:var(--pu)">$--/MMBtu</span>&nbsp;GAP: <span id="lgap" style="color:var(--o)">--M</span></span>';
+}
+
+// ══════════ COMPUTE ══════════
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function compute(d){
+  const hf=SH.h/100,cf=SH.c/100,ef=SH.e/100,pct=Math.min(1,d/Math.max(SH.d,1));
+  const isrF=UV.isr/100;
+  // Oil price
+  const oilP=clamp(K.OIL_BASE+(1-hf)*ef*62+ef*22+pct*ef*20+isrF*13,67,180);
+  const oilR=(oilP-K.OIL_BASE)/K.OIL_BASE*100;
+  // LNG price — Qatar damage 17% + Hormuz closure
+  const lngDmg=0.17+Math.max(0,(1-hf)*.1);
+  const lngPriceAsia=K.LNG_PRE_PRICE*(1+lngDmg*3.5+ef*.8+pct*.3);
+  const lngPriceEU=K.LNG_PRE_PRICE*(1+lngDmg*2.8+ef*.6+pct*.2);
+  // US
+  const usGulf=UV.gulf*hf*(1-ef*.15);
+  const usSupp=UV.prod+UV.ca+UV.vz+usGulf;
+  const usDem=UV.dem*(1-Math.max(0,oilP-100)*UV.iea/10000*Math.max(0,oilP-80)/80);
+  const usRaw=Math.max(0,usDem-usSupp);
+  const ieaB=UV.sprR*cf*(UV.iea/100)*.55;
+  const usDef=Math.max(0,usRaw-ieaB);
+  const usDrw=Math.min(usDef,UV.sprR);
+  const usSPRu=Math.min(usDrw*d,UV.spr);
+  const usSPRl=Math.max(0,UV.spr-usSPRu);
+  const usSPRp=usSPRl/UV.spr*100;
+  const usExD=usDrw>.001?Math.ceil(UV.spr/usDrw):9999;
+  const usMilT=(UV.mil*d)/1000;
+  const usGdp=K.US_GDP+(oilR/10*K.GDP_US)-(isrF*.4);
+  const usAl=usSPRp<20?'CRITICAL':usSPRp<50?'WARNING':'NOMINAL';
+  // China
+  const cniF=CV.irn/100;
+  const cnGulf=K.CN_GULF_W*cniF+(K.CN_GULF_PRE-K.CN_GULF_W)*hf*.88;
+  const cnSupp=CV.prod+CV.ru+CV.oth+cnGulf;
+  const cnDem=Math.max(8,CV.dem-CV.ev);
+  const cnDef=Math.max(0,cnDem-cnSupp);
+  const cnRu=Math.min(Math.max(0,cnDef*d-CV.flt),CV.res);
+  const cnRl=Math.max(0,CV.res-cnRu);
+  const cnRp=cnRl/CV.res*100;
+  const cnExD=cnDef>.001?Math.ceil((CV.res+CV.flt)/cnDef):9999;
+  const cnGdp=K.CN_GDP+(oilR/10*K.GDP_CN);
+  const cnAl=cnRp<20?'CRITICAL':cnRp<50?'WARNING':'NOMINAL';
+  // Iran arsenal
+  const irBal=Math.max(0,K.IR_BAL_START*(1-pct*(ef*.7+.05)));
+  const irSh=Math.max(0,K.IR_SHAD_START-(2100+d*Math.max(5,(1-pct)*ef*280))+K.IR_PROD_DAY*.4*d);
+  const irThr=clamp((irBal/K.IR_BAL_START*.6+Math.min(1,irSh/20000)*.4)*ef,0,1);
+  // Infrastructure damage
+  const rasLaffanDmg=clamp(0.17+ef*.05+pct*.03,0.17,0.45);
+  const s_rasLaffanDmg=rasLaffanDmg; // alias for closure
+  const hormuzMine=clamp(ef*.3+pct*.1,0,0.8);
+  const saudi=clamp(ef*.15+isrF*.1,0,0.5);
+  // Probabilities
+  const pCF=clamp(K.P_CF+cf*.35-(1-hf)*.08+pct*ef*.05,0,.95);
+  const pGI=clamp(K.P_GI+ef*.2+isrF*.18-cf*.12,0,.65);
+  const pNATO=clamp(K.P_NATO+ef*.15+isrF*.12,0,.5);
+  const pReg=clamp(K.P_REG+(1-irBal/K.IR_BAL_START)*.3+pct*.12,0,.65);
+  const pIsr=clamp(K.P_ISR+isrF*.3+ef*.1,0,.88);
+  const pNuc=clamp(K.P_NUC+ef*.08+pct*.05,0,.25);
+  const pLong=clamp(K.P_LONG+(1-cf)*.2+pct*.1,0,.9);
+  // Flows
+  const flows={gc:Math.max(.05,cnGulf),gu:Math.max(0,usGulf),rc:CV.ru,vu:UV.vz,cu:UV.ca};
+  const gap=((K.CN_GULF_PRE-cnGulf)+Math.max(0,UV.gulf*hf-usGulf)).toFixed(1);
+  // GDP per country
+  const cGDP={};
+  Object.entries(COUNTRIES).forEach(([k,c])=>{
+    const lngFrac=c.lngDep;
+    const lngRise=(lngPriceAsia-K.LNG_PRE_PRICE)/K.LNG_PRE_PRICE;
+    const lngEffect=lngFrac*c.lngDrag*lngRise*10;
+    let base = c.gdp*(1+(oilR/10*c.oilElast/100)+lngEffect/100);
+    // War-zone special cases
+    if(k==='QA') base = c.gdp*(1-0.35-s_rasLaffanDmg*0.8);  // Qatar: LNG revenue collapse
+    if(k==='IL') base = c.gdp*(1-ef*0.06-isrF*0.05);         // Israel: war direct cost
+    if(k==='IQ') base = c.gdp*(1-0.15*ef);                   // Iraq: Iran gas cut + war proximity
+    // Oil exporters get windfall
+    if(k==='NO'||k==='CA'||k==='AU'||k==='BR'||k==='NG') base = c.gdp*(1+oilR/10*c.oilElast/100);
+    // Hormuz-dependent importers get extra hit from Hormuz closure
+    const hormuzHit = (1-hf)*ef*0.01*lngFrac;
+    cGDP[k]=parseFloat(Math.max(0, base*(1-hormuzHit)).toFixed(3));
+  });
+  // Winner
+  const usS=usSPRp*.6+(usGdp>0?20:0)+(usDef<.5?20:0);
+  const cnS=cnRp*.6+(cnGdp>0?20:0)+(cnDef<2?20:0);
+  const winner=cnS>usS+5?'CHINA':usS>cnS+5?'USA':'CLOSE';
+  const glGdp=3.2+(oilR/10*.075*-1);
+  return{oilP,oilR,lngPriceAsia,lngPriceEU,lngDmg,
+    usGulf,usSupp,usDem,usDef,usSPRl,usSPRp,usExD,usMilT,usGdp,usAl,usSPRu,
+    cnGulf,cnSupp,cnDem,cnDef,cnRl,cnRp,cnExD,cnGdp,cnAl,
+    irBal,irSh,irThr,rasLaffanDmg,hormuzMine,saudi,
+    pCF,pGI,pNATO,pReg,pIsr,pNuc,pLong,
+    flows,gap,winner,glGdp,cGDP};
+}
+
+// ══════════ DOM UPDATE ══════════
+function q(id,t){const e=document.getElementById(id);if(e)e.textContent=t;}
+function qs(id,p,v){const e=document.getElementById(id);if(e)e.style[p]=v;}
+const ff=(v,d)=>typeof v==='number'?v.toFixed(d==null?1:d):String(v);
+const ac=a=>a==='CRITICAL'?'var(--r)':a==='WARNING'?'var(--y)':'var(--g)';
+const acl=a=>a==='CRITICAL'?'alarm acr':a==='WARNING'?'alarm awn':'alarm aok';
+const pclr=p=>p>.6?'var(--r)':p>.35?'var(--y)':'var(--g)';
+
+function updateDOM(s){
+  q('daynum',day);
+  updateSimDate(day);
+  // Arsenal
+  document.getElementById('arsenal').innerHTML=`
+    <div class="srow"><span class="sk">Ballistic missiles</span><span class="sv" style="color:${s.irBal<400?'var(--g)':s.irBal<900?'var(--y)':'var(--r)'}">${Math.max(0,Math.round(s.irBal)).toLocaleString()} remaining</span></div>
+    <div class="srow"><span class="sk">Shahed drones</span><span class="sv" style="color:var(--o)">${Math.max(0,Math.round(s.irSh)).toLocaleString()}</span></div>
+    <div class="srow"><span class="sk">Threat level</span><span class="sv" style="color:${pclr(s.irThr)}">${(s.irThr*100).toFixed(0)}%</span></div>
+    <div class="srow"><span class="sk">Missile rate vs Day 1</span><span class="sv" style="color:var(--g)">-92% <a href="https://www.jpost.com/defense-and-tech/article-889435" target="_blank" style="font-size:11px">JPost</a></span></div>`;
+  // Infrastructure
+  document.getElementById('infra').innerHTML=`
+    <div class="lng-alert">
+      <div class="lng-title">&#9888; LNG CRISIS — RAS LAFFAN STRUCK MAR 18-19</div>
+      <div class="lng-row"><span class="lng-k">Qatar LNG capacity offline</span><span class="lng-v" style="color:var(--r)">${(s.rasLaffanDmg*100).toFixed(0)}%</span></div>
+      <div class="lng-row"><span class="lng-k">Global LNG supply lost</span><span class="lng-v" style="color:var(--r)">~${(K.LNG_QATAR_SHARE*s.rasLaffanDmg).toFixed(1)}%</span></div>
+      <div class="lng-row"><span class="lng-k">Repair timeline</span><span class="lng-v" style="color:var(--y)">3–5 years</span></div>
+      <div class="lng-row"><span class="lng-k">Asian LNG price</span><span class="lng-v" style="color:var(--pu)">$${ff(s.lngPriceAsia,1)}/MMBtu</span></div>
+      <div style="font-size:12px;color:var(--mu);margin-top:4px"><a href="https://www.cnn.com/2026/03/19/middleeast/iran-qatar-south-pars-gas-field-explainer-intl" target="_blank">CNN Mar 19</a> · <a href="https://www.bloomberg.com/news/articles/2026-03-19/gas-traders-weigh-attacks-at-world-s-largest-lng-plant-in-qatar" target="_blank">Bloomberg</a> · <a href="https://mecouncil.org/blog_posts/israels-strike-on-north-field-south-pars-energy-war-and-global-risk/" target="_blank">MECGA Analysis</a></div>
+    </div>
+    <div class="srow"><span class="sk">Hormuz mines laid</span><span class="sv" style="color:var(--r)">${(s.hormuzMine*100).toFixed(0)}% risk</span></div>
+    <div class="srow"><span class="sk">Saudi refinery threat</span><span class="sv" style="color:${s.saudi>.3?'var(--r)':'var(--y)}'}">${(s.saudi*100).toFixed(0)}%</span></div>`;
+  // Probabilities
+  const pbData=[
+    {l:'Ceasefire',v:s.pCF,c:'var(--g)',src:'Time/NPR Mar 15',url:'https://time.com/article/2026/03/18/iran-war-united-states-warning-ceasefire-strikes-escalation/'},
+    {l:'Ground Invasion',v:s.pGI,c:'var(--o)',src:'Quinnipiac poll',url:'https://www.aljazeera.com/news/2026/3/15/iran-war-what-is-happening-on-day-16-of-us-israel-attacks'},
+    {l:'NATO Article 5',v:s.pNATO,c:'var(--y)',src:'JPost Mar 10',url:'https://www.jpost.com/defense-and-tech/article-889435'},
+    {l:'Regime Collapse',v:s.pReg,c:'var(--r)',src:'IRGC disrupted',url:'https://www.britannica.com/event/2026-Iran-Conflict'},
+    {l:'Israel Escalation',v:s.pIsr,c:'var(--o)',src:'Al Jazeera Mar 15',url:'https://www.aljazeera.com/news/2026/3/15/iran-war-what-is-happening-on-day-16-of-us-israel-attacks'},
+    {l:'Nuclear Risk',v:s.pNuc,c:'var(--r)',src:'Iran HEU "under rubble"',url:'https://www.timesofisrael.com/iran-fm-claims-tehran-never-sought-ceasefire-or-talks-with-us-amid-war/'},
+    {l:'War >90 Days',v:s.pLong,c:'var(--mu)',src:'Current trajectory',url:'https://www.aljazeera.com/opinions/2026/3/19/the-us-israel-war-with-iran-will-not-end-with-a-clear'},
+  ];
+  document.getElementById('probs').innerHTML=pbData.map(p=>
+    `<div class="pr">
+      <span class="pl"><a href="${p.url}" target="_blank" style="color:var(--wh)!important;font-size:14px">${p.l}</a></span>
+      <div class="pt"><div class="pf" style="width:${(p.v*100).toFixed(0)}%;background:${p.c}"></div></div>
+      <span class="pp" style="color:${p.c}">${(p.v*100).toFixed(0)}%</span>
+    </div>`
+  ).join('');
+  // Bottom bar
+  document.getElementById('b-oil').innerHTML=[
+    ['Brent crude','$'+ff(s.oilP,1)+'/bbl',s.oilP>130?'var(--r)':s.oilP>100?'var(--y)':'var(--g)'],
+    ['WTI','$'+ff(s.oilP-5,1)+'/bbl','var(--wh)'],
+    ['vs pre-war','+$'+ff(s.oilP-K.OIL_BASE,1)+'/bbl','var(--o)'],
+  ].map(([k,v,c])=>`<div class="bcr"><span class="bck">${k}</span><span class="bcv" style="color:${c}">${v}</span></div>`).join('');
+  document.getElementById('b-lng').innerHTML=[
+    ['Asian spot','$'+ff(s.lngPriceAsia,1)+'/MMBtu',s.lngPriceAsia>20?'var(--r)':'var(--y)'],
+    ['EU gas','$'+ff(s.lngPriceEU,1)+'/MMBtu',s.lngPriceEU>18?'var(--r)':'var(--y)'],
+    ['Qatar offline',(s.rasLaffanDmg*100).toFixed(0)+'%','var(--r)'],
+  ].map(([k,v,c])=>`<div class="bcr"><span class="bck">${k}</span><span class="bcv" style="color:${c}">${v}</span></div>`).join('');
+  document.getElementById('b-vc').innerHTML=[
+    ['US SPR left',ff(s.usSPRp,0)+'%',ac(s.usAl)],
+    ['China res left',ff(s.cnRp,0)+'%',ac(s.cnAl)],
+    ['US exh day',s.usExD>2000?'–':'Day '+s.usExD,s.usExD<180?'var(--r)':'var(--g)'],
+  ].map(([k,v,c])=>`<div class="bcr"><span class="bck">${k}</span><span class="bcv" style="color:${c}">${v}</span></div>`).join('');
+  document.getElementById('b-ars').innerHTML=[
+    ['Ballistic msls',Math.max(0,Math.round(s.irBal)).toLocaleString(),s.irBal<400?'var(--g)':'var(--r)'],
+    ['Shaheds',Math.max(0,Math.round(s.irSh)).toLocaleString(),'var(--o)'],
+    ['Threat',+(s.irThr*100).toFixed(0)+'%',pclr(s.irThr)],
+  ].map(([k,v,c])=>`<div class="bcr"><span class="bck">${k}</span><span class="bcv" style="color:${c}">${v}</span></div>`).join('');
+  document.getElementById('b-gdp').innerHTML=[
+    ['Global GDP',ff(s.glGdp,2)+'%',s.glGdp<2?'var(--r)':s.glGdp<2.5?'var(--y)':'var(--g)'],
+    ['USA',ff(s.usGdp,2)+'%',s.usGdp<0?'var(--r)':s.usGdp<1?'var(--y)':'var(--g)'],
+    ['China',ff(s.cnGdp,2)+'%',s.cnGdp<0?'var(--r)':s.cnGdp<2?'var(--y)':'var(--g)'],
+  ].map(([k,v,c])=>`<div class="bcr"><span class="bck">${k}</span><span class="bcv" style="color:${c}">${v}</span></div>`).join('');
+  // Winner
+  const wn=document.getElementById('wn');
+  if(s.winner==='CHINA'){wn.textContent='CHINA';wn.style.color='var(--r)';document.getElementById('ws').textContent='Reserve advantage Day '+s.cnExD;}
+  else if(s.winner==='USA'){wn.textContent='USA';wn.style.color='var(--b)';document.getElementById('ws').textContent='Self-supply insulation';}
+  else{wn.textContent='CLOSE';wn.style.color='var(--y)';document.getElementById('ws').textContent='Tipping Day ~'+Math.min(s.usExD,s.cnExD);}
+  // flows
+  q('fl-gc',ff(s.flows.gc,2)+'M');
+  q('fl-gu',ff(s.flows.gu,2)+'M');
+  q('fl-ge',ff(Math.max(0,1.2*(SH.h/100)),1)+'M');
+  q('fl-gi',ff(Math.max(0,1.4*(SH.h/100)),1)+'M');
+  q('fl-rc',ff(CV.ru,2)+'M');
+  q('fl-qt',ff(Math.max(0,2*(1-s.rasLaffanDmg)),1)+'M '+(s.rasLaffanDmg>.3?'⚠OFFLINE':''));
+  q('fl-vu',ff(UV.vz,2)+'M');
+  q('fl-cu',ff(UV.ca,2)+'M');
+  q('loil','$'+ff(s.oilP,1));q('llng','$'+ff(s.lngPriceAsia,1));q('lgap',s.gap+'M');
+  // Update shared labels
+  SHD.forEach(sd=>{q('sv-'+sd.k,fmtV(SH[sd.k],sd));});
+  // Country panel
+  updateCountryPanel(s);
+}
+
+function updateCountryPanel(s){
+  const cc=COUNTRIES[curCountry];if(!cc)return;
+  // War zone special content
+  const warAlerts = {
+    QA: `<div class="lng-alert" style="margin:5px 12px;border-color:var(--r);background:#0d0505"><div class="lng-title" style="color:var(--r)">🔴 ACTIVE WAR ZONE — RAS LAFFAN STRUCK MAR 18-19</div><div style="font-size:14px;color:var(--mu);line-height:1.6">Iranian missiles hit Ras Laffan LNG hub. 17% capacity offline. Force majeure declared. QatarEnergy CEO: $20B annual revenue loss, 3-5 year repair timeline.<br><a href="https://www.foxbusiness.com/economy/iranian-strikes-cut-17-qatar-lng-output-threatening-global-supply" target="_blank">Fox Business Mar 19</a> · <a href="https://www.bloomberg.com/news/articles/2026-03-19/gas-traders-weigh-attacks-at-world-s-largest-lng-plant-in-qatar" target="_blank">Bloomberg Mar 19</a></div></div>`,
+    IL: `<div class="lng-alert" style="margin:5px 12px;border-color:var(--r);background:#0d0505"><div class="lng-title" style="color:var(--r)">🔴 ACTIVE COMBATANT — CO-ATTACKER</div><div style="font-size:14px;color:var(--mu);line-height:1.6">Israel launched Operation Epic Fury with US on Feb 28. Haifa oil refinery hit by Iranian missile Mar 19. Lebanon front active — 826 killed since Feb 28.<br><a href="https://www.timesofisrael.com/iran-fm-claims-tehran-never-sought-ceasefire-or-talks-with-us-amid-war/" target="_blank">Times of Israel Mar 15</a></div></div>`,
+    IQ: `<div class="lng-alert" style="margin:5px 12px;border-color:var(--y);background:#0d0a00"><div class="lng-title" style="color:var(--y)">⚠ IRAN GAS SUPPLY CUT — POWER CRISIS</div><div style="font-size:14px;color:var(--mu);line-height:1.6">Iran supplies ~33% of Iraq's gas & power needs. Supply halted due to war. Sharp power production cuts ongoing. US embassy Baghdad compound hit by Iranian strike.<br><a href="https://www.aljazeera.com/economy/2026/3/19/why-are-irans-south-pars-gasfield-qatars-ras-laffan-so-significant" target="_blank">Al Jazeera Mar 19</a></div></div>`,
+  };
+  const gdpNow=s.cGDP[curCountry]||cc.gdp;
+  const gdpBase=cc.gdp;
+  const gdpChg=((gdpNow-gdpBase)/gdpBase*100);
+  const oilR=s.oilR;
+  const lngImpact=cc.lngDep*(s.lngPriceAsia-K.LNG_PRE_PRICE)/K.LNG_PRE_PRICE*100;
+  const isExporter=cc.oilElast>0;
+  let rows=[];
+  if(curCountry==='US'){
+    rows=[
+      ['Daily supply',ff(s.usSupp,2)+' M bpd','var(--wh)'],
+      ['Daily demand',ff(s.usDem,2)+' M bpd','var(--wh)'],
+      ['Gulf inflow',ff(s.usGulf,2)+' M bpd','var(--cy)'],
+      ['Daily deficit',ff(s.usDef,2)+' M bpd',s.usDef>.5?'var(--o)':'var(--g)'],
+      ['SPR remaining',ff(s.usSPRl,0)+' / '+Math.round(UV.spr)+'M bbl',ac(s.usAl)],
+      ['SPR runway',s.usExD>2000?'No deficit':'Day '+s.usExD,s.usExD<180?'var(--r)':s.usExD<400?'var(--y)':'var(--g)'],
+      ['Military fuel total',ff(s.usMilT,1)+'M bbl','var(--o)'],
+      ['Effective GDP 2026',ff(s.usGdp,2)+'%',s.usGdp<0?'var(--r)':s.usGdp<1?'var(--y)':'var(--g)'],
+    ];
+  } else if(curCountry==='CN'){
+    rows=[
+      ['Total supply',ff(s.cnSupp,2)+' M bpd','var(--wh)'],
+      ['Demand (EV adj)',ff(s.cnDem,2)+' M bpd','var(--wh)'],
+      ['Gulf inflow',ff(s.cnGulf,2)+' M bpd','var(--cy)'],
+      ['Daily deficit',ff(s.cnDef,2)+' M bpd',s.cnDef>2?'var(--o)':'var(--g)'],
+      ['Reserves left',ff(s.cnRl,0)+' / '+Math.round(CV.res)+'M bbl',ac(s.cnAl)],
+      ['Reserve runway',s.cnExD>2000?'No deficit':'Day '+s.cnExD,s.cnExD<200?'var(--r)':s.cnExD<400?'var(--y)':'var(--g)'],
+      ['EV diesel saving',ff(CV.ev,1)+'M bpd','#44ff88'],
+      ['GDP 2026',ff(s.cnGdp,2)+'%',s.cnGdp<0?'var(--r)':s.cnGdp<2?'var(--y)':'var(--g)'],
+    ];
+  } else {
+    const lngStr=cc.lngDep>0.8?'CRITICAL':cc.lngDep>0.4?'HIGH':cc.lngDep>0.1?'MODERATE':'LOW';
+    const lngColor=cc.lngDep>0.8?'var(--r)':cc.lngDep>0.4?'var(--y)':cc.lngDep>0.1?'var(--o)':'var(--g)';
+    rows=[
+      ['GDP (PPP)',('$'+gdpBase.toFixed(1)+'T'),'var(--wh)'],
+      ['Oil importer',isExporter?'NO — EXPORTER':'YES','var(--wh)'],
+      ['LNG dependence',(cc.lngDep*100).toFixed(0)+'%  '+lngStr,lngColor],
+      ['Oil price impact',ff(oilR/10*cc.oilElast,2)+'pp/10% rise','var(--mu)'],
+      ['LNG shock impact',lngImpact>0?'-'+ff(lngImpact,2)+'pp GDP drag':'+0.0pp','var(--pu)'],
+      ['GDP impact total',ff(gdpChg,2)+'% change vs base',gdpChg<-2?'var(--r)':gdpChg<-0.5?'var(--y)':'var(--g)'],
+    ];
+  }
+  const alarm=gdpChg<-3?'CRITICAL':gdpChg<-1?'WARNING':'NOMINAL';
+  let extra='';
+  if(curCountry==='JP')extra=`<div class="lng-alert" style="margin:5px 12px;border-color:var(--r)"><div class="lng-title" style="color:var(--r)">CRITICAL — JAPAN LNG DEPENDENCY</div><div style="font-size:14px;color:var(--mu);line-height:1.6">Japan imports ~97% of gas as LNG. Qatar supplies ~40MT/yr. Ras Laffan offline = power grid risk.<br><a href="https://www.aljazeera.com/economy/2026/3/19/why-are-irans-south-pars-gasfield-qatars-ras-laffan-so-significant" target="_blank">Al Jazeera Mar 19 analysis</a></div></div>`;
+  if(curCountry==='KR')extra=`<div class="lng-alert" style="margin:5px 12px;border-color:var(--r)"><div class="lng-title" style="color:var(--r)">HIGH RISK — SOUTH KOREA LNG</div><div style="font-size:14px;color:var(--mu);line-height:1.6">Korea imports ~95% of gas as LNG. Heavy Qatar dependence.<br><a href="https://www.bloomberg.com/news/articles/2026-03-19/gas-traders-weigh-attacks-at-world-s-largest-lng-plant-in-qatar" target="_blank">Bloomberg Mar 19 — $26+/MMBtu forecast</a></div></div>`;
+  if(curCountry==='DE')extra=`<div class="lng-alert" style="margin:5px 12px;border-color:var(--y)"><div class="lng-title">WARNING — EU/GERMANY LNG</div><div style="font-size:14px;color:var(--mu);line-height:1.6">Post-Nord Stream Germany is LNG-dependent. EU gas prices doubled since Feb 28.<br><a href="https://www.cnn.com/2026/03/19/business/oil-gas-prices-surge-qatar-attacks-intl" target="_blank">CNN Mar 19 — EU gas +50%</a></div></div>`;
+  if(curCountry==='SA')extra=`<div class="lng-alert" style="margin:5px 12px;border-color:var(--g);"><div class="lng-title" style="color:var(--g)">OIL WINDFALL — BUT UNDER ATTACK</div><div style="font-size:14px;color:var(--mu);line-height:1.6">Saudi benefits from oil at $${ff(s.oilP,0)}/bbl. But SAMREF refinery and Yanbu port targeted.<br><a href="https://www.cnbc.com/2026/03/19/iran-israel-us-war-energy-facilities-south-pars-global-reactions.html" target="_blank">CNBC Mar 19 — Saudi under fire</a></div></div>`;
+  const warAlert = warAlerts[curCountry] || '';
+  document.getElementById('country-panel').innerHTML=`
+    <div class="chdr" style="color:${cc.color};font-size:18px">${cc.flag} ${cc.name}<span class="${acl(alarm)}">${alarm}</span></div>
+    <div class="sec">GDP &amp; OIL IMPACT &nbsp;<a href="${cc.srcUrl}" target="_blank" style="font-size:10px">${cc.src}</a></div>
+    ${rows.map(([k,v,c])=>`<div class="srow"><span class="sk">${k}</span><span class="sv" style="color:${c}">${v}</span></div>`).join('')}
+    ${warAlert}
+    ${extra}
+    ${(curCountry==='US')?`<div class="gw"><div class="glbl"><span>SPR LEVEL</span><strong id="cs-sp">${ff(s.usSPRp,1)}%</strong></div><div class="gt"><div class="gf" style="width:${Math.max(1,s.usSPRp)}%;background:${ac(s.usAl)}"></div></div></div>`:
+      (curCountry==='CN')?`<div class="gw"><div class="glbl"><span>RESERVES</span><strong>${ff(s.cnRp,1)}%</strong></div><div class="gt"><div class="gf" style="width:${Math.max(1,s.cnRp)}%;background:${ac(s.cnAl)}"></div></div></div>`:
+      `<div class="gw"><div class="glbl"><span>GDP IMPACT</span><strong style="color:${gdpChg<-1?'var(--r)':'var(--g)'}">${gdpChg>=0?'+':''}${ff(gdpChg,2)}%</strong></div><div class="gt"><div class="gf" style="width:${Math.min(100,Math.abs(gdpChg/5*100))}%;background:${gdpChg<-2?'var(--r)':gdpChg<-0.5?'var(--y)':'var(--g)'}"></div></div></div>`}
+    ${(curCountry==='US')?`<div class="dv"></div><div class="sec">US SUPPLY VARIABLES</div>
+    ${[{k:'prod',n:'Domestic Prod',min:11,max:16,s:.1,u:' M bpd',c:'var(--b)',url:'https://www.eia.gov/outlooks/steo/'},{k:'ca',n:'Canada Pipeline',min:3,max:5.5,s:.1,u:' M bpd',c:'#88ff44',url:'https://www.eia.gov/todayinenergy/detail.php?id=64544'},{k:'vz',n:'Venezuela',min:0,max:.8,s:.05,u:' M bpd',c:'var(--y)',url:'https://www.cnbc.com/2026/02/11/us-issues-license-facilitating-oil-gas-exploration'},{k:'spr',n:'SPR Level',min:200,max:350,s:5,u:'M bbl',c:'var(--b)',url:'https://fortune.com/2026/03/09/us-oil-reserve-60-percent-full-despite-trump-pledge-to-refill'},{k:'isr',n:'Israel ESC %',min:0,max:100,s:10,u:'%',c:'var(--o)',url:'https://www.aljazeera.com/news/2026/3/15/iran-war-what-is-happening-on-day-16-of-us-israel-attacks'},{k:'mil',n:'Mil Fuel K bpd',min:15,max:80,s:5,u:'K bpd',c:'var(--o)',url:'https://apps.dtic.mil/sti/trecms/pdf/AD1150419.pdf'},{k:'iea',n:'IEA Part %',min:0,max:100,s:10,u:'%',c:'#88ff44',url:'https://www.iea.org/news/iea-member-countries-release-oil-from-emergency-reserves'}].map(s=>`<div class="sg"><div class="slr"><span class="sln">${s.n}</span><span class="slv" id="sv-us-${s.k}" style="color:${s.c}">${fmtV(UV[s.k],s)}</span></div><input type="range" min="${s.min}" max="${s.max}" step="${s.s}" value="${UV[s.k]}" oninput="svUS('${s.k}',+this.value)" style="accent-color:${s.c}"><div class="slsrc"><a href="${s.url}" target="_blank">${s.url.replace('https://','').split('/')[0]}</a></div></div>`).join('')}`:
+      (curCountry==='CN')?`<div class="dv"></div><div class="sec">CHINA SUPPLY VARIABLES</div>
+    ${[{k:'prod',n:'Domestic Prod',min:4.5,max:7,s:.1,u:' M bpd',c:'var(--r)',url:'https://www.worldometers.info/oil/china-oil/'},{k:'ru',n:'Russia Pipeline',min:1.5,max:3.5,s:.1,u:' M bpd',c:'#ff8888',url:'https://www.bruegel.org/analysis/what-war-iran-means-china'},{k:'res',n:'Reserves',min:1200,max:1600,s:10,u:'M bbl',c:'var(--r)',url:'https://discoveryalert.com.au/china-crude-stockpiling-strategic-reserve-framework-2025'},{k:'ev',n:'EV Diesel Disp',min:0,max:2,s:.1,u:' M bpd',c:'#44ff88',url:'https://ieefa.org/resources/surging-electric-truck-sales-stall-chinas-lng-trucking-boom-0'},{k:'irn',n:'Iran Access %',min:0,max:100,s:10,u:'%',c:'var(--y)',url:'https://jinsa.org/wp-content/uploads/2026/03/Operations-Epic-Fury-and-Roaring-Lion-03-01-26.pdf'}].map(s=>`<div class="sg"><div class="slr"><span class="sln">${s.n}</span><span class="slv" id="sv-cn-${s.k}" style="color:${s.c}">${fmtV(CV[s.k],s)}</span></div><input type="range" min="${s.min}" max="${s.max}" step="${s.s}" value="${CV[s.k]}" oninput="svCN('${s.k}',+this.value)" style="accent-color:${s.c}"><div class="slsrc"><a href="${s.url}" target="_blank">${s.url.replace('https://','').split('/')[0]}</a></div></div>`).join('')}`:''
+    }`;
+}
+
+// ══════════ MAP ══════════
+let cv,cx,CW,CH;
+function initCv(){cv=document.getElementById('mapcanvas');cx=cv.getContext('2d');resize();new ResizeObserver(()=>{resize();parts=[];}).observe(document.getElementById('ctr'));}
+function resize(){const ctr=document.getElementById('ctr');const mc=document.getElementById('mctrl');const ml=document.getElementById('mleg');CW=ctr.offsetWidth||700;CH=Math.max(160,ctr.offsetHeight-(mc?mc.offsetHeight:76)-(ml?ml.offsetHeight:30));cv.width=CW;cv.height=CH;}
+function merc(lat,lng){const x=((lng+180)/360)*CW;const lr=Math.max(-1.47,Math.min(1.47,lat*Math.PI/180));const y=CH/2-(CW/(2*Math.PI))*Math.log(Math.tan(Math.PI/4+lr/2));return[x,y];}
+const CONTS=[[[72,-140],[72,-60],[48,-53],[37,-76],[25,-80],[8,-77],[8,-82],[23,-110],[32,-117],[48,-124],[60,-140]],[[12,-73],[5,-62],[5,-35],[-23,-43],[-55,-68],[-55,-66],[-40,-62],[-10,-75],[0,-78],[10,-75]],[[72,28],[55,27],[52,14],[43,15],[37,15],[36,8],[40,-8],[51,2],[58,5],[70,26]],[[37,10],[37,37],[22,37],[0,42],[-35,18],[-10,15],[0,-5],[15,-17],[30,-10]],[[37,37],[30,32],[22,38],[12,44],[22,58],[26,56],[28,48]],[[72,28],[72,140],[58,140],[55,120],[50,80],[55,60],[65,32]],[[50,80],[50,105],[45,135],[40,130],[35,118],[25,112],[20,100],[28,96],[40,73],[47,80]],[[-12,128],[-18,148],[-30,152],[-38,147],[-38,136],[-32,126],[-25,114],[-18,122]]];
+const NDS=[
+  // Core conflict nodes
+  {ll:[26.5,56.5],k:'HORMUZ',l:'HORMUZ',c:'#ff8844',sz:6,pulse:true},
+  {ll:[24,50],k:'GULF',l:'GULF',c:'#ffd060',sz:5,pulse:false},
+  {ll:[25.3,51.5],k:'QATAR',l:'QATAR',c:'#c084fc',sz:4,pulse:true},
+  {ll:[24,45],k:'SAUDI',l:'SAUDI',c:'#ffd060',sz:5,pulse:false},
+  {ll:[24.5,54.5],k:'UAE',l:'UAE',c:'#ffd060',sz:3,pulse:false},
+  // Major powers
+  {ll:[38,-97],k:'USA',l:'USA',c:'#5ab4ff',sz:7,pulse:false},
+  {ll:[35,105],k:'CHINA',l:'CHINA',c:'#ff5555',sz:7,pulse:false},
+  {ll:[62,90],k:'RUSSIA',l:'RUSSIA',c:'#ff7070',sz:5,pulse:false},
+  // Asia
+  {ll:[36,138],k:'JAPAN',l:'JAPAN',c:'#5ab4ff',sz:4,pulse:false},
+  {ll:[37,127],k:'S.KOREA',l:'S.KOREA',c:'#5ab4ff',sz:3,pulse:false},
+  {ll:[20,77],k:'INDIA',l:'INDIA',c:'#ff9455',sz:5,pulse:false},
+  {ll:[1.3,104],k:'SINGAP',l:'SINGAP',c:'#00ddf0',sz:3,pulse:false},
+  {ll:[13,101],k:'THAILAND',l:'THAI',c:'#ff9455',sz:3,pulse:false},
+  {ll:[14,121],k:'PHILIPP',l:'PHIL',c:'#ff9455',sz:3,pulse:false},
+  {ll:[-6,107],k:'INDONES',l:'INDONS',c:'#ff9455',sz:3,pulse:false},
+  {ll:[30,70],k:'PAKISTAN',l:'PAKIST',c:'#ff5555',sz:3,pulse:false},
+  {ll:[23,90],k:'BANGLA',l:'BANGLA',c:'#ff5555',sz:3,pulse:false},
+  {ll:[25,121],k:'TAIWAN',l:'TAIWAN',c:'#5ab4ff',sz:3,pulse:false},
+  // Europe
+  {ll:[51,-0.5],k:'UK',l:'UK',c:'#5ab4ff',sz:4,pulse:false},
+  {ll:[51,10],k:'EUROPE',l:'EUROPE',c:'#5ab4ff',sz:5,pulse:false},
+  {ll:[55,23],k:'NORDICS',l:'NORDICS',c:'#88ff44',sz:3,pulse:false},
+  {ll:[39,35],k:'TURKEY',l:'TURKEY',c:'#ff9455',sz:3,pulse:false},
+  // Americas
+  {ll:[56,-106],k:'CANADA',l:'CANADA',c:'#88ff44',sz:4,pulse:false},
+  {ll:[-10,-53],k:'BRAZIL',l:'BRAZIL',c:'#88ff44',sz:4,pulse:false},
+  {ll:[10,-67],k:'VZLA',l:'VZLA',c:'#ffd060',sz:3,pulse:false},
+  // Middle East + Africa
+  {ll:[33,44],k:'IRAQ',l:'IRAQ',c:'#ffd060',sz:3,pulse:false},
+  {ll:[32,35],k:'ISRAEL',l:'ISRAEL',c:'#5ab4ff',sz:3,pulse:true},
+  {ll:[26,50],k:'BAHRAIN',l:'BAHRAIN',c:'#ffd060',sz:2,pulse:false},
+  {ll:[30,31],k:'EGYPT',l:'EGYPT',c:'#ffd060',sz:3,pulse:false},
+  {ll:[9,8],k:'NIGERIA',l:'NIGERIA',c:'#88ff44',sz:3,pulse:false},
+  {ll:[-29,25],k:'S.AFRIC',l:'S.AFR',c:'#ff9455',sz:3,pulse:false},
+  {ll:[-25,133],k:'AUSTRAL',l:'AUSTRAL',c:'#88ff44',sz:4,pulse:false},
+];
+
+function getRts(){
+  // Oil/LNG sea routes
+  const seaRoutes = {
+    gc:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(20,78),merc(5,104),merc(30,118)],c:'#00ddf0',k:'gc',label:'Gulf\u2192China'},
+    gu:{p:[merc(24,50),merc(26.5,56.5),merc(10,65),merc(-35,20),merc(0,-20),merc(38,-97)],c:'#5ab4ff',k:'gu',label:'Gulf\u2192USA'},
+    ge:{p:[merc(24,50),merc(26.5,56.5),merc(15,43),merc(30,31),merc(36,14),merc(51,10)],c:'#8888ff',k:'ge',label:'Gulf\u2192Europe'},
+    gi:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(20,77)],c:'#ff9455',k:'gi',label:'Gulf\u2192India'},
+    gj:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(1.3,104),merc(36,138)],c:'#aaddff',k:'gj',label:'Gulf\u2192Japan'},
+    vu:{p:[merc(10,-67),merc(22,-80),merc(38,-97)],c:'#ffd060',k:'vu',label:'Vzla\u2192USA'},
+    cu:{p:[merc(56,-106),merc(47,-100),merc(38,-97)],c:'#88ff44',k:'cu',label:'Canada\u2192USA'},
+    ng:{p:[merc(9,8),merc(0,-5),merc(36,14),merc(51,10)],c:'#88cc44',k:'ng',label:'Nigeria LNG\u2192EU'},
+    au:{p:[merc(-25,133),merc(1.3,104),merc(35,105)],c:'#88ff44',k:'au',label:'Austral LNG\u2192Asia'},
+    qt:{p:[merc(25.3,51.5),merc(15,68),merc(5,104),merc(36,138)],c:'#c084fc',k:'qt',label:'Qatar LNG\u2192Japan'},
+    qe:{p:[merc(25.3,51.5),merc(15,43),merc(30,31),merc(36,14),merc(51,10)],c:'#c084fc',k:'qe',label:'Qatar LNG\u2192EU'},
+  };
+  // Pipeline routes (dashed style)
+  const pipeRoutes = {
+    rc:{p:[merc(62,90),merc(55,100),merc(50,110),merc(35,105)],c:'#ff7070',k:'rc',pipe:true,label:'Russia\u2192China (PoS)'},
+    re:{p:[merc(62,90),merc(60,50),merc(55,30),merc(51,23),merc(51,10)],c:'#ff9988',k:'re',pipe:true,label:'Russia\u2192Europe (TurkStream)'},
+    tapi:{p:[merc(38,57),merc(33,62),merc(30,70),merc(23,90)],c:'#ffcc66',k:'tapi',pipe:true,label:'Iran\u2192Iraq\u2192Pak gas'},
+  };
+  return {...seaRoutes,...pipeRoutes};
+}
+
+function drawMap(s){
+  cx.clearRect(0,0,CW,CH);
+  cx.fillStyle='#030b05';cx.fillRect(0,0,CW,CH);
+  // scanlines
+  cx.fillStyle='rgba(0,0,0,.04)';for(let y=0;y<CH;y+=2)cx.fillRect(0,y,CW,1);
+  // grid
+  cx.strokeStyle='rgba(0,255,120,.022)';cx.lineWidth=1;
+  for(let x=0;x<CW;x+=48){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,CH);cx.stroke();}
+  for(let y=0;y<CH;y+=48){cx.beginPath();cx.moveTo(0,y);cx.lineTo(CW,y);cx.stroke();}
+
+  // Continents
+  CONTS.forEach(poly=>{
+    const pts=poly.map(([la,ln])=>merc(la,ln));
+    cx.beginPath();cx.moveTo(...pts[0]);pts.slice(1).forEach(p=>cx.lineTo(...p));cx.closePath();
+    cx.fillStyle='#0a1c0d';cx.fill();cx.strokeStyle='#142a16';cx.lineWidth=.7;cx.stroke();
+  });
+
+  // ── COUNTRY GLOW: fill based on GDP impact from compute ────────
+  const oilR=s.oilR||0;
+  const lngAsia=s.lngPriceAsia||11.5;
+  const lngRise=(lngAsia-11.5)/11.5;
+  // Map country keys to node keys for coloring
+  const nodeImpact={
+    'USA':s.usGdp,'CHINA':s.cnGdp,
+    'JAPAN': 4.4*(1+(oilR/10*(-0.25)/100)+lngRise*(0.97)*(-0.30)/100),
+    'S.KOREA':1.7*(1+(oilR/10*(-0.28)/100)+lngRise*(0.95)*(-0.25)/100),
+    'INDIA': 3.7*(1+(oilR/10*(-0.22)/100)),
+    'UK':    3.1*(1+(oilR/10*(-0.12)/100)),
+    'EUROPE':4.1*(1+(oilR/10*(-0.20)/100)+lngRise*0.4*(-0.15)/100),
+    'SINGAP':0.47*(1+(oilR/10*(-0.22)/100)+lngRise*0.65*(-0.28)/100),
+    'TAIWAN':0.78*(1+(oilR/10*(-0.26)/100)+lngRise*0.97*(-0.32)/100),
+    'THAI':  0.51*(1+(oilR/10*(-0.24)/100)),
+    'PAKIST':0.34*(1+(oilR/10*(-0.30)/100)),
+    'TURKEY':1.2*(1+(oilR/10*(-0.20)/100)),
+    'SAUDI': 1.1*(1+(oilR/10*0.35/100)),
+    'CANADA':2.14*(1+(oilR/10*0.22/100)),
+    'BRAZIL':2.17*(1+(oilR/10*0.10/100)),
+    'NIGERIA':0.47*(1+(oilR/10*0.18/100)),
+    'AUSTRAL':1.72*(1+(oilR/10*0.15/100)),
+    'RUSSIA': 2.2*(1+(oilR/10*0.30/100)),
+    'QATAR': s.rasLaffanDmg>0.2 ? 0.22*(1-0.6) : 0.22,  // disaster
+    'ISRAEL': 0.53*(1-s.rasLaffanDmg*0.3),
+    'IRAQ':  0.27*(1-(s.hormuzMine||0)*0.3),
+    'EGYPT': 0.38*(1+(oilR/10*0.08/100)),
+  };
+  const pulse=.5+.5*Math.sin(frm*.09);
+
+  // Draw country glow circles proportional to GDP magnitude and impact
+  NDS.forEach(nd=>{
+    const gdp=nodeImpact[nd.k];
+    const base=Object.values(nodeImpact).reduce((a,b)=>a+b,0)/Object.keys(nodeImpact).length;
+    if(gdp===undefined)return;
+    const [x,y]=merc(...nd.ll);
+    const isExporter=nd.c==='#88ff44';
+    const isWarZone=nd.k==='QATAR'||nd.k==='ISRAEL'||nd.k==='IRAQ'||nd.k==='BAHRAIN';
+    const relChange=gdp/base;
+    let glowCol, glowAlpha;
+    if(isExporter){glowCol='#00ff88';glowAlpha=Math.min(.22,relChange*.15);}
+    else if(isWarZone){glowCol='#ff3030';glowAlpha=.20+pulse*.10;}
+    else{
+      const impact=relChange-1;
+      if(impact<-.02){glowCol='#ff5555';glowAlpha=Math.min(.20,Math.abs(impact)*3);}
+      else if(impact>.02){glowCol='#00ff88';glowAlpha=Math.min(.20,impact*3);}
+      else{glowAlpha=0;}
+    }
+    if(glowAlpha>.01){
+      // Glow radius proportional to GDP significance
+      const gR=Math.max(10, Math.min(38, (nd.sz||3)*6+8));
+      cx.beginPath();cx.arc(x,y,gR*(1+pulse*.12),0,Math.PI*2);
+      cx.fillStyle=glowCol+Math.round(glowAlpha*255).toString(16).padStart(2,'0');
+      cx.fill();
+    }
+  });
+
+  // Hormuz zone
+  const hz=merc(26.5,56.5),hf=SH.h/100,hc=hf<.1?'#ff4040':hf<.4?'#ffd060':'#00ddf0';
+  cx.beginPath();cx.arc(hz[0],hz[1],22*(1+pulse*.3),0,Math.PI*2);cx.fillStyle=hc+'18';cx.fill();
+  cx.beginPath();cx.arc(hz[0],hz[1],9,0,Math.PI*2);cx.fillStyle=hc+'35';cx.fill();
+  // Qatar LNG
+  const qt=merc(25.3,51.5);
+  if(s.rasLaffanDmg>.1){
+    cx.beginPath();cx.arc(qt[0],qt[1],18*(1+pulse*.4),0,Math.PI*2);cx.fillStyle='#c084fc20';cx.fill();
+    cx.beginPath();cx.arc(qt[0],qt[1],7,0,Math.PI*2);cx.fillStyle='#c084fc50';cx.fill();
+  }
+
+  // ── ROUTES ──────────────────────────────────────────────
+  const rts=getRts();
+  Object.values(rts).forEach(r=>{
+    const isPipe=!!r.pipe;
+    const isGulf=r.k==='gc'||r.k==='gu'||r.k==='ge'||r.k==='gi'||r.k==='gj';
+    const isLNG=r.k==='qt'||r.k==='qe';
+    const isRuEu=r.k==='re';
+    let fv=0;
+    if(r.k in (s.flows||{})) fv=s.flows[r.k];
+    else if(r.k==='ge') fv=Math.max(0,1.2*hf);      // Gulf→Europe
+    else if(r.k==='gi') fv=Math.max(0,1.4*hf);      // Gulf→India
+    else if(r.k==='gj') fv=Math.max(0,0.8*hf);      // Gulf→Japan
+    else if(r.k==='qt') fv=Math.max(0,2*(1-s.rasLaffanDmg)); // Qatar LNG
+    else if(r.k==='qe') fv=Math.max(0,1.5*(1-s.rasLaffanDmg));
+    else if(r.k==='ng') fv=0.6;                     // Nigeria LNG
+    else if(r.k==='au') fv=0.8;                     // Australia LNG
+    else if(r.k==='re') fv=Math.max(0,1.0*(SH.c/100)); // Russia→EU via cooperation
+    else if(r.k==='rc') fv=CV.ru;
+    else if(r.k==='tapi') fv=Math.max(0,0.4*(1-SH.e/100));
+    const mx=isPipe?3:6,I=Math.min(1,fv/mx);
+    const blocked=(isGulf||isLNG)&&SH.h<8;
+    cx.save();
+    if(isPipe) cx.setLineDash([6,5]);
+    else if(blocked) cx.setLineDash([8,8]);
+    cx.strokeStyle=r.c+Math.round((.08+I*.48)*255).toString(16).padStart(2,'0');
+    cx.lineWidth=isPipe?1.2:Math.max(.4,I*3.2);
+    cx.beginPath();cx.moveTo(...r.p[0]);r.p.slice(1).forEach(p=>cx.lineTo(...p));cx.stroke();
+    cx.setLineDash([]);cx.restore();
+  });
+
+  // Particles on sea routes only
+  parts.forEach(p=>{
+    const pts=p.path,segs=pts.length-1,si=Math.min(Math.floor(p.t*segs),segs-1),st=p.t*segs-si;
+    const[x1,y1]=pts[si],[x2,y2]=pts[Math.min(si+1,pts.length-1)];
+    cx.beginPath();cx.arc(x1+(x2-x1)*st,y1+(y2-y1)*st,p.sz,0,Math.PI*2);cx.fillStyle=p.col;cx.fill();
+  });
+
+  // ── NODES ───────────────────────────────────────────────
+  NDS.forEach(nd=>{
+    const[x,y]=merc(...nd.ll),r=nd.pulse?nd.sz*(1+pulse*.45):nd.sz;
+    cx.beginPath();cx.arc(x,y,r*2.8,0,Math.PI*2);cx.fillStyle=nd.c+'22';cx.fill();
+    cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);cx.fillStyle=nd.c;cx.fill();
+    cx.fillStyle=nd.c;
+    cx.font=`bold ${Math.max(8,Math.min(11,nd.sz*1.8))}px "Share Tech Mono",monospace`;
+    cx.textAlign='center';cx.fillText(nd.l,x,y-r-4);
+  });
+
+  // ── US & CHINA IMPACT RINGS ─────────────────────────────
+  // US: ring size = SPR health
+  const [ux,uy]=merc(38,-97);
+  const uRingR=18+s.usSPRp*0.18;
+  cx.beginPath();cx.arc(ux,uy,uRingR,0,Math.PI*2);
+  cx.strokeStyle=s.usAl==='CRITICAL'?'#ff4040':s.usAl==='WARNING'?'#ffd060':'#5ab4ff';
+  cx.lineWidth=1.5;cx.globalAlpha=0.5;cx.stroke();cx.globalAlpha=1;
+  // US military arc (clockwise from top)
+  const uMilFrac=Math.min(1,(s.usMilT||0)/20);
+  cx.beginPath();cx.arc(ux,uy,uRingR+4,-Math.PI/2,-Math.PI/2+uMilFrac*2*Math.PI);
+  cx.strokeStyle='#ff8844';cx.lineWidth=3;cx.globalAlpha=0.7;cx.stroke();cx.globalAlpha=1;
+  // SPR label
+  cx.font='9px "Share Tech Mono",monospace';cx.textAlign='center';
+  cx.fillStyle='#5ab4ff';cx.fillText('SPR '+s.usSPRp.toFixed(0)+'%',ux,uy+uRingR+12);
+
+  // CHINA: ring = reserve health
+  const [cnx,cny]=merc(35,105);
+  const cRingR=18+s.cnRp*0.12;
+  cx.beginPath();cx.arc(cnx,cny,cRingR,0,Math.PI*2);
+  cx.strokeStyle=s.cnAl==='CRITICAL'?'#ff4040':s.cnAl==='WARNING'?'#ffd060':'#ff5555';
+  cx.lineWidth=1.5;cx.globalAlpha=0.5;cx.stroke();cx.globalAlpha=1;
+  cx.font='9px "Share Tech Mono",monospace';cx.textAlign='center';
+  cx.fillStyle='#ff5555';cx.fillText('RES '+s.cnRp.toFixed(0)+'%',cnx,cny+cRingR+12);
+
+  // ── HORMUZ STATUS ───────────────────────────────────────
+  cx.font='11px "Share Tech Mono",monospace';cx.textAlign='center';cx.fillStyle=hc;
+  cx.fillText(hf<.08?'CLOSED':SH.h+'% OPEN',hz[0],hz[1]+24);
+  if(s.rasLaffanDmg>.05){cx.fillStyle='#c084fc';cx.fillText((s.rasLaffanDmg*100).toFixed(0)+'% OFFLINE',qt[0],qt[1]+22);}
+
+  // ── PIPELINE LEGEND ─────────────────────────────────────
+  cx.font='9px "Share Tech Mono",monospace';cx.textAlign='left';
+  cx.setLineDash([5,4]);
+  cx.strokeStyle='#ff707060';cx.lineWidth=1.2;
+  cx.beginPath();cx.moveTo(CW-150,CH-36);cx.lineTo(CW-128,CH-36);cx.stroke();
+  cx.setLineDash([]);
+  cx.fillStyle='#ff7070';cx.fillText('pipeline',CW-124,CH-32);
+  cx.strokeStyle='#5ab4ff60';cx.lineWidth=2;
+  cx.beginPath();cx.moveTo(CW-150,CH-22);cx.lineTo(CW-128,CH-22);cx.stroke();
+  cx.fillStyle='#5ab4ff';cx.fillText('sea route',CW-124,CH-18);
+
+  // ── DAY WATERMARK ────────────────────────────────────────
+  cx.font='bold 20px "Share Tech Mono",monospace';cx.textAlign='right';
+  cx.fillStyle='rgba(0,232,122,.07)';cx.fillText('DAY '+day,CW-14,CH-10);
+}
+
+function updParts(flows){
+  const rts=getRts();
+  // Only animate sea routes (not pipelines)
+  Object.values(rts).filter(r=>!r.pipe).forEach(r=>{
+    let fv=flows[r.k]||0;
+    if(r.k==='ge') fv=Math.max(0,1.2*(SH.h/100));
+    if(r.k==='gi') fv=Math.max(0,1.4*(SH.h/100));
+    if(r.k==='gj') fv=Math.max(0,0.8*(SH.h/100));
+    if(r.k==='qt'||r.k==='qe') fv=0;  // LNG offline - no particles
+    if(r.k==='ng'||r.k==='au') fv=0.5;
+    if(Math.random()<fv/6*.4){
+      const isG=['gc','gu','ge','gi','gj'].includes(r.k);
+      parts.push({path:r.p,t:0,speed:.002+Math.random()*.002,sz:1.5+Math.random()*.8,
+        col:isG&&SH.h<12?'#ff6633':r.c,isG,k:r.k});
+    }
+  });
+  const hf=SH.h/100;
+  parts=parts.map(p=>{let sp=p.speed;if(p.isG&&p.t>.18&&p.t<.36)sp*=Math.max(.03,hf*.85+.05);return{...p,t:p.t+sp};}).filter(p=>p.t<1).slice(-600);
+}
+
+
+
+// ══════════ CONTROLS ══════════
+function setSH(k,v){SH[k]=v;SH.sc=null;buildPresets();}
+function svUS(k,v){UV[k]=v;const e=document.getElementById('sv-us-'+k);if(e)e.textContent=v;}
+function svCN(k,v){CV[k]=v;const e=document.getElementById('sv-cn-'+k);if(e)e.textContent=v;}
+function selectCountry(k){curCountry=k;buildCountryTabs();const s=compute(day);updateCountryPanel(s);}
+function apScen(k){
+  const sc=SCENS[k];SH={h:sc.h,c:sc.c,e:sc.e,d:sc.d,sc:k};
+  day=0;parts=[];
+  document.getElementById('sl-h').value=sc.h;document.getElementById('sl-c').value=sc.c;
+  document.getElementById('sl-e').value=sc.e;document.getElementById('sl-d').value=sc.d;
+  buildSharedSliders();
+  if(run){clearInterval(dtmr);startTmr();}
+  buildPresets();
+}
+function toggleRun(){run=!run;const btn=document.getElementById('runbtn');if(run){btn.innerHTML='&#9646;&#9646; PAUSE';btn.classList.add('on');startTmr();}else{btn.innerHTML='&#9654; RUN';btn.classList.remove('on');clearInterval(dtmr);}}
+function resetSim(){run=false;day=0;parts=[];clearInterval(dtmr);document.getElementById('runbtn').innerHTML='&#9654; RUN';document.getElementById('runbtn').classList.remove('on');}
+function startTmr(){clearInterval(dtmr);const spd=+document.getElementById('spdsel').value;dtmr=setInterval(()=>{if(day<SH.d)day++;else{run=false;clearInterval(dtmr);document.getElementById('runbtn').innerHTML='&#9654; RUN';document.getElementById('runbtn').classList.remove('on');}},1000/spd);}
+document.getElementById('spdsel').addEventListener('change',()=>{if(run){clearInterval(dtmr);startTmr();}});
+function loop(){frm++;const s=compute(day);drawMap(s);updParts(s.flows);if(frm%3===0)updateDOM(s);requestAnimationFrame(loop);}
+window.addEventListener('DOMContentLoaded',()=>{buildSharedSliders();buildPresets();buildCountryTabs();buildMapLegend();initCv();fetchLive();updateDOM(compute(0));loop();initBN();initSimDate();initCompliance();});
+
+// ═══════════════════════════════════════════════════════
+// NEWS FEED — GDELT Doc API (neutral, tone-filtered)
+// Source: https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/
+// ═══════════════════════════════════════════════════════
+let allNews = [];
+let newsOpen = false;
+let newsFilter = 'all';
+
+const GDELT_QUERIES = {
+  all: 'Iran war oil LNG Hormuz',
+  oil: 'Iran oil Hormuz Strait supply',
+  lng: 'Qatar LNG Ras Laffan gas energy',
+  iran: 'Iran war Epic Fury ceasefire',
+  ceasefire: 'Iran ceasefire negotiations diplomacy',
+  china: 'China oil energy Iran war',
+  israel: 'Israel Iran South Pars strikes',
+};
+
+async function fetchNews(filter = 'all') {
+  const el = document.getElementById('news-list');
+  el.innerHTML = '<div id="news-loading">Fetching world news...</div>';
+  const query = encodeURIComponent(GDELT_QUERIES[filter] || GDELT_QUERIES.all);
+  // GDELT API - toneabs<3 for near-neutral articles
+  const gdeltStart = window._gdeltStartDate ||
+    (() => { const d=new Date(); const p=n=>String(n).padStart(2,'0'); return `${d.getUTCFullYear()}${p(d.getUTCMonth()+1)}${p(d.getUTCDate())}000000`; })();
+  const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=${query}&mode=artlist&maxrecords=25&format=json&startdatetime=${gdeltStart}&sourcelang=english&toneabs=3`;
+  try {
+    const r = await Promise.race([
+      fetch(url),
+      new Promise((_,rj)=>setTimeout(()=>rj('timeout'),5000))
+    ]);
+    const d = await r.json();
+    allNews = (d.articles || []).slice(0, 25);
+    renderNews(allNews);
+  } catch(e) {
+    // Fallback: curated static links if GDELT unavailable
+    allNews = FALLBACK_NEWS;
+    renderNews(allNews);
+    document.getElementById('news-loading') &&
+      (document.getElementById('news-list').innerHTML +=
+        '<div style="padding:6px 14px;font-size:11px;color:var(--y);font-family:var(--fn)">GDELT unavailable — showing verified sources</div>');
+  }
+}
+
+const FALLBACK_NEWS = [
+  {title:"Iran's FM: 'We never asked for a ceasefire'",url:"https://time.com/article/2026/03/18/iran-war-united-states-warning-ceasefire-strikes-escalation/",seendate:"20260318",domain:"time.com",tone:"-2.1"},
+  {title:"Iranian strikes cut 17% of Qatar LNG output",url:"https://www.foxbusiness.com/economy/iranian-strikes-cut-17-qatar-lng-output-threatening-global-supply",seendate:"20260319",domain:"foxbusiness.com",tone:"-1.8"},
+  {title:"Brent briefly tops $119 after Qatar LNG strikes",url:"https://www.cnbc.com/2026/03/19/oil-jumps-iran-strikes-qatar-lng-facility-supply-worries.html",seendate:"20260319",domain:"cnbc.com",tone:"-1.2"},
+  {title:"Asian LNG prices may surpass $26 after Qatar attack",url:"https://www.bloomberg.com/news/articles/2026-03-19/gas-traders-weigh-attacks-at-world-s-largest-lng-plant-in-qatar",seendate:"20260319",domain:"bloomberg.com",tone:"-0.9"},
+  {title:"What is South Pars and why is Israel's attack an escalation?",url:"https://www.cnn.com/2026/03/19/middleeast/iran-qatar-south-pars-gas-field-explainer-intl",seendate:"20260319",domain:"cnn.com",tone:"-1.5"},
+  {title:"Iran's missile fire rate collapsed 92% — what's next?",url:"https://www.jpost.com/defense-and-tech/article-889435",seendate:"20260310",domain:"jpost.com",tone:"-2.1"},
+  {title:"US-Israel war with Iran will not end with a clear victor",url:"https://www.aljazeera.com/opinions/2026/3/19/the-us-israel-war-with-iran-will-not-end-with-a-clear",seendate:"20260319",domain:"aljazeera.com",tone:"-0.4"},
+  {title:"Iran war: Strikes on Qatar's LNG crown jewel reshape gas markets",url:"https://www.bloomberg.com/news/features/2026-03-19/iran-war-strikes-on-qatar-s-lng-crown-jewel-reshape-the-future-of-gas",seendate:"20260319",domain:"bloomberg.com",tone:"-0.8"},
+  {title:"Trump warns US will 'blow up' South Pars if Qatar strikes continue",url:"https://www.cnbc.com/2026/03/19/iran-israel-us-war-energy-facilities-south-pars-global-reactions.html",seendate:"20260319",domain:"cnbc.com",tone:"-1.3"},
+  {title:"U.S. eases Venezuela oil sanctions to boost supply during Iran war",url:"https://www.pbs.org/newshour/world/u-s-eases-sanctions-on-venezuelan-oil-as-trump-seeks-to-boost",seendate:"20260319",domain:"pbs.org",tone:"0.2"},
+  {title:"Don't count launches: misreading Iran's drone capacity",url:"https://warontherocks.com/2026/03/dont-count-launches-misreading-irans-drone-capacity/",seendate:"20260317",domain:"warontherocks.com",tone:"-0.1"},
+  {title:"China's electric trucks now displace over 1M bpd diesel demand",url:"https://ieefa.org/resources/surging-electric-truck-sales-stall-chinas-lng-trucking-boom-0",seendate:"20251201",domain:"ieefa.org",tone:"0.5"},
+];
+
+function renderNews(articles) {
+  const el = document.getElementById('news-list');
+  if (!articles.length) {
+    el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--mu);font-size:13px">No articles found</div>';
+    return;
+  }
+  el.innerHTML = articles.map(a => {
+    const tone = parseFloat(a.tone || 0);
+    const toneClass = Math.abs(tone) < 1 ? 'neutral' : tone > 0 ? 'pos' : 'neg';
+    const toneLabel = Math.abs(tone) < 1 ? '◉ NEUTRAL' : tone > 0 ? '▲ POS' : '▼ NEG';
+    const date = a.seendate ? a.seendate.replace(/(\d{4})(\d{2})(\d{2}).*/, '$2/$3/$1') : '';
+    const domain = a.domain || (a.url ? new URL(a.url).hostname.replace('www.','') : 'source');
+    return `<div class="news-item" onclick="window.open('${a.url}','_blank')">
+      <div class="news-source">${domain.toUpperCase()} &nbsp;·&nbsp; ${date}</div>
+      <div class="news-title">${a.title}</div>
+      <div class="news-meta">
+        <span class="news-tone tone-${toneClass}">${toneLabel} ${Math.abs(tone).toFixed(1)}</span>
+        <span style="color:var(--cy);font-size:11px">↗ read</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleNews() {
+  newsOpen = !newsOpen;
+  document.getElementById('news-panel').classList.toggle('open', newsOpen);
+  if (newsOpen && !allNews.length) fetchNews(newsFilter);
+}
+
+function filterNews(f, btn) {
+  newsFilter = f;
+  document.querySelectorAll('.nf-btn').forEach(b => b.classList.remove('act'));
+  btn.classList.add('act');
+  fetchNews(f);
+}
+
+
+// ═══════════════════════════════════════════════════════
+// BREAKING NEWS ENGINE
+// ═══════════════════════════════════════════════════════
+
+// Curated breaking news — updated as conflict evolves
+// Tags: oil | lng | mil | dip | eco
+const BREAKING_NEWS = [
+  {
+    id:'bn20260319c',
+    time:'Mar 19 22:41 UTC',
+    source:'CNBC',
+    sourceUrl:'https://www.cnbc.com/2026/03/19/oil-jumps-iran-strikes-qatar-lng-facility-supply-worries.html',
+    title:'Brent briefly tops $119 after Iran strikes Qatar LNG facility',
+    summary:'QatarEnergy reports "extensive damage" at Ras Laffan. Emergency crews deployed. Brent reversed lower after Netanyahu said Israel is helping reopen Hormuz.',
+    tags:['oil','lng'],
+    url:'https://www.cnbc.com/2026/03/19/oil-jumps-iran-strikes-qatar-lng-facility-supply-worries.html',
+    read:false,
+    impact:{oilDelta:+12,lngDelta:+40}
+  },
+  {
+    id:'bn20260319b',
+    time:'Mar 19 18:30 UTC',
+    source:'Fox Business',
+    sourceUrl:'https://www.foxbusiness.com/economy/iranian-strikes-cut-17-qatar-lng-output-threatening-global-supply',
+    title:'Iran strikes cut 17% of Qatar LNG capacity — QatarEnergy declares force majeure',
+    summary:'QatarEnergy CEO: damage to 2 LNG trains and 1 GTL facility. Estimated $20B annual revenue loss. 12.8MT/yr offline for 3–5 years.',
+    tags:['lng','eco'],
+    url:'https://www.foxbusiness.com/economy/iranian-strikes-cut-17-qatar-lng-output-threatening-global-supply',
+    read:false,
+    impact:{lngDelta:+35,gdpDrag:'JP:-0.3pp KR:-0.25pp EU:-0.15pp'}
+  },
+  {
+    id:'bn20260319a',
+    time:'Mar 19 14:15 UTC',
+    source:'CNN',
+    sourceUrl:'https://www.cnn.com/2026/03/19/middleeast/iran-qatar-south-pars-gas-field-explainer-intl',
+    title:'Israel strikes Iran\'s South Pars gas field — Iran retaliates against Qatar\'s Ras Laffan',
+    summary:'South Pars feeds 80% of Iran\'s domestic gas. Ras Laffan is 20% of global LNG supply. Wood Mackenzie: "fundamentally alters the global gas market outlook."',
+    tags:['mil','lng','oil'],
+    url:'https://www.cnn.com/2026/03/19/middleeast/iran-qatar-south-pars-gas-field-explainer-intl',
+    read:false,
+    impact:{oilDelta:+8,escalation:'+5%'}
+  },
+  {
+    id:'bn20260319d',
+    time:'Mar 19 08:00 UTC',
+    source:'PBS NewsHour',
+    sourceUrl:'https://www.pbs.org/newshour/world/u-s-eases-sanctions-on-venezuelan-oil-as-trump-seeks-to-boost',
+    title:'US eases Venezuela sanctions — PDVSA allowed to sell directly to US companies',
+    summary:'Treasury issues broad authorization. Jones Act waiver to "mitigate short-term oil market disruptions." Part of Trump strategy to offset Hormuz closure.',
+    tags:['oil','dip'],
+    url:'https://www.pbs.org/newshour/world/u-s-eases-sanctions-on-venezuelan-oil-as-trump-seeks-to-boost',
+    read:false,
+    impact:{usVzDelta:'+0.20 M bpd'}
+  },
+  {
+    id:'bn20260318a',
+    time:'Mar 18 20:00 UTC',
+    source:'Time',
+    sourceUrl:'https://time.com/article/2026/03/18/iran-war-united-states-warning-ceasefire-strikes-escalation/',
+    title:'Iran FM: "We never asked for a ceasefire and never asked for negotiation"',
+    summary:'Araghchi tells CBS Face the Nation Tehran is "ready to defend as long as it takes." Rejects Trump claim Iran sought deal. Says HEU stockpile is "under the rubble."',
+    tags:['dip','mil'],
+    url:'https://time.com/article/2026/03/18/iran-war-united-states-warning-ceasefire-strikes-escalation/',
+    read:false,
+    impact:{ceasefireProbDelta:'-3pp'}
+  },
+  {
+    id:'bn20260317a',
+    time:'Mar 17 16:00 UTC',
+    source:'Foreign Policy',
+    sourceUrl:'https://foreignpolicy.com/2026/03/17/iran-middle-east-war-china-strait-hormuz-oil-energy-exports',
+    title:'China receiving only 1.22M bpd via Hormuz — down from 5.37M bpd pre-war',
+    summary:'Foreign Policy analysis: Chinese tankers given preferential Hormuz access but down 77%. China drawing strategic reserves at 3–4M bpd. Yuan-for-oil deals emerging.',
+    tags:['oil','eco'],
+    url:'https://foreignpolicy.com/2026/03/17/iran-middle-east-war-china-strait-hormuz-oil-energy-exports',
+    read:false,
+    impact:{cnGulfFlow:'1.22M bpd confirmed'}
+  },
+  {
+    id:'bn20260315a',
+    time:'Mar 15 12:00 UTC',
+    source:'Al Jazeera',
+    sourceUrl:'https://www.aljazeera.com/opinions/2026/3/19/the-us-israel-war-with-iran-will-not-end-with-a-clear',
+    title:'Al Jazeera analysis: This war will not end with a clear victor',
+    summary:'Most realistic path is phased ceasefire — not decisive victory. Phase 1: halt attacks on Gulf civilian infrastructure. Phase 2: direct Iran-Israel de-escalation.',
+    tags:['dip'],
+    url:'https://www.aljazeera.com/opinions/2026/3/19/the-us-israel-war-with-iran-will-not-end-with-a-clear',
+    read:false,
+    impact:{ceasefirePath:'Phased de-escalation most likely'}
+  },
+  {
+    id:'bn20260310a',
+    time:'Mar 10 09:00 UTC',
+    source:'Jerusalem Post',
+    sourceUrl:'https://www.jpost.com/defense-and-tech/article-889435',
+    title:'Iran missile launches down 92% from Day 1 — IDF estimates 1,300–1,700 ballistic missiles remain',
+    summary:'From 480 launches on Feb 28 to 40 on Mar 9. Over 60% of launchers destroyed. Navy combat ineffective. 43 vessels destroyed. NATO Article 5 probability: 10%.',
+    tags:['mil'],
+    url:'https://www.jpost.com/defense-and-tech/article-889435',
+    read:false,
+    impact:{iranMissiles:'1300-1700 remaining',launchRate:'-92%'}
+  },
+];
+
+let bnUnread = 0;
+let bnQueue = [];
+let bnToastTimer = null;
+let bnCheckInterval = null;
+
+function initBN() {
+  // Load read state from sessionStorage
+  const readIds = JSON.parse(sessionStorage.getItem('bn_read') || '[]');
+  BREAKING_NEWS.forEach(n => { if(readIds.includes(n.id)) n.read = true; });
+  bnUnread = BREAKING_NEWS.filter(n => !n.read).length;
+  updateBell();
+  // Show first unread as toast after 2s
+  const firstUnread = BREAKING_NEWS.find(n => !n.read);
+  if (firstUnread) {
+    setTimeout(() => showToast(firstUnread), 2000);
+  }
+  // Poll GDELT for truly new articles every 5 minutes
+  bnCheckInterval = setInterval(checkGDELTBreaking, 5 * 60 * 1000);
+}
+
+async function checkGDELTBreaking() {
+  // Check GDELT for articles in last 30 mins with negative tone (real breaking news)
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const dt = `${now.getUTCFullYear()}${pad(now.getUTCMonth()+1)}${pad(now.getUTCDate())}${pad(now.getUTCHours())}0000`;
+  const thirtyAgo = new Date(now - 30*60*1000);
+  const dt2 = `${thirtyAgo.getUTCFullYear()}${pad(thirtyAgo.getUTCMonth()+1)}${pad(thirtyAgo.getUTCDate())}${pad(thirtyAgo.getUTCHours())}${pad(thirtyAgo.getUTCMinutes())}00`;
+  const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=Iran+war+oil+LNG+Hormuz&mode=artlist&maxrecords=5&format=json&startdatetime=${dt2}&endDateTime=${dt}&sourcelang=english`;
+  try {
+    const r = await Promise.race([fetch(url), new Promise((_,rj)=>setTimeout(()=>rj('to'),4000))]);
+    const d = await r.json();
+    const arts = d.articles || [];
+    arts.forEach(a => {
+      const id = 'gdelt_' + btoa(a.url || '').slice(0,12);
+      if (!BREAKING_NEWS.find(n => n.id === id)) {
+        const item = {
+          id, time: 'Just now', source: a.domain || 'World News',
+          sourceUrl: a.url, title: a.title, summary: '',
+          tags: inferTags(a.title), url: a.url, read: false,
+          impact: {}
+        };
+        BREAKING_NEWS.unshift(item);
+        bnUnread++;
+        updateBell();
+        showToast(item);
+      }
+    });
+  } catch(e) { /* silently fail */ }
+}
+
+function inferTags(title) {
+  const t = (title||'').toLowerCase();
+  const tags = [];
+  if(/oil|brent|wti|barrel|opec|crude/.test(t)) tags.push('oil');
+  if(/lng|gas|qatar|ras laffan|liquef/.test(t)) tags.push('lng');
+  if(/missile|drone|strike|attack|bomb|military|irgc/.test(t)) tags.push('mil');
+  if(/ceasefire|negotiat|deal|diplomat|peace/.test(t)) tags.push('dip');
+  if(/gdp|economy|price|market|sanction|trade/.test(t)) tags.push('eco');
+  return tags.length ? tags : ['mil'];
+}
+
+function openBN() {
+  renderBNList();
+  document.getElementById('bn-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  // Dismiss toast if open
+  hideBNToast();
+}
+
+function closeBN() {
+  document.getElementById('bn-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+  markAllRead();
+}
+
+function bnOverlayClick(e) {
+  if(e.target === document.getElementById('bn-overlay')) closeBN();
+}
+
+function renderBNList() {
+  const body = document.getElementById('bn-body');
+  const TAG_COLOR = {oil:'oil',lng:'lng',mil:'mil',dip:'dip',eco:'eco'};
+  body.innerHTML = BREAKING_NEWS.map((n,i) => `
+    <div class="bn-item" onclick="bnItemClick('${n.id}','${n.url.replace(/'/g,"\\'")}')">
+      <div class="bn-item-meta">
+        <span class="bn-dot ${n.read ? 'read' : ''}"></span>
+        <span class="bn-source"><a href="${n.sourceUrl}" target="_blank" onclick="e=>e.stopPropagation()" style="color:var(--cy)">${n.source.toUpperCase()}</a></span>
+        <span class="bn-time">${n.time}</span>
+      </div>
+      <div class="bn-title">${n.title}</div>
+      ${n.summary ? `<div class="bn-summary">${n.summary}</div>` : ''}
+      ${n.tags.length ? `<div class="bn-tags">${n.tags.map(t=>`<span class="bn-tag ${TAG_COLOR[t]||''}">${t.toUpperCase()}</span>`).join('')}</div>` : ''}
+      ${Object.keys(n.impact).length ? `<div style="font-family:var(--fn);font-size:11px;color:var(--mu);margin-top:6px">
+        ${Object.entries(n.impact).map(([k,v])=>`<span style="margin-right:10px;color:var(--wh)">${k}: <span style="color:${String(v).startsWith('+')||String(v).startsWith('▲')?'var(--r)':'var(--g)'}">${v}</span></span>`).join('')}
+      </div>` : ''}
+    </div>`).join('');
+  document.getElementById('bn-headline').textContent = `${bnUnread} Breaking Update${bnUnread!==1?'s':''}`;
+  document.getElementById('bn-footer-left').textContent = `${bnUnread} unread · ${BREAKING_NEWS.length} total`;
+}
+
+function bnItemClick(id, url) {
+  const item = BREAKING_NEWS.find(n => n.id === id);
+  if(item) { item.read = true; saveReadState(); }
+  bnUnread = BREAKING_NEWS.filter(n => !n.read).length;
+  updateBell();
+  renderBNList();
+  if(url) window.open(url, '_blank');
+}
+
+function markAllRead() {
+  BREAKING_NEWS.forEach(n => n.read = true);
+  bnUnread = 0;
+  saveReadState();
+  updateBell();
+  const footer = document.getElementById('bn-footer-left');
+  if(footer) footer.textContent = '0 unread · ' + BREAKING_NEWS.length + ' total';
+}
+
+function saveReadState() {
+  const ids = BREAKING_NEWS.filter(n=>n.read).map(n=>n.id);
+  try { sessionStorage.setItem('bn_read', JSON.stringify(ids)); } catch(e){}
+}
+
+function updateBell() {
+  const bell = document.getElementById('bn-bell');
+  const count = document.getElementById('bn-count');
+  if(!bell || !count) return;
+  if(bnUnread > 0) {
+    bell.classList.add('has-news');
+    count.classList.add('show');
+    count.textContent = bnUnread > 9 ? '9+' : String(bnUnread);
+  } else {
+    bell.classList.remove('has-news');
+    count.classList.remove('show');
+  }
+}
+
+function showToast(item) {
+  const toast = document.getElementById('bn-toast');
+  const text = document.getElementById('bn-toast-text');
+  if(!toast || !text) return;
+  text.textContent = item.title;
+  toast.classList.add('show');
+  clearTimeout(bnToastTimer);
+  bnToastTimer = setTimeout(hideBNToast, 6000);
+}
+
+function hideBNToast() {
+  const toast = document.getElementById('bn-toast');
+  if(toast) toast.classList.remove('show');
+}
+
+// Keyboard: Escape closes modal
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeBN();
+});
+
+
+// ═══════════════════════════════════════════════════════
+// DYNAMIC SIMULATION DATE ENGINE
+// ═══════════════════════════════════════════════════════
+
+// War started Feb 28 2026 — this is the "Day 0" of the conflict
+const WAR_START = new Date('2026-02-28T00:00:00Z');
+
+// TODAY = the actual current date when user loads the page
+const TODAY = new Date();
+
+// How many days have elapsed since the war started (real-world offset)
+const REAL_ELAPSED = Math.max(0, Math.floor((TODAY - WAR_START) / (1000 * 60 * 60 * 24)));
+
+// Simulation projected date = TODAY + simulation days the user has run
+function getSimDate(simDays) {
+  const d = new Date(TODAY);
+  d.setDate(d.getDate() + simDays);
+  return d;
+}
+
+function formatDate(d) {
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+function formatDateShort(d) {
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2,'0')} ${d.getFullYear()}`;
+}
+
+function updateSimDate(simDays) {
+  const el = document.getElementById('sim-date-label');
+  if (!el) return;
+  const projected = getSimDate(simDays);
+  const totalConflictDays = REAL_ELAPSED + simDays;
+
+  if (simDays === 0) {
+    // At rest — show today's date and real conflict elapsed
+    el.innerHTML = `
+      <span class="sd-today">TODAY ${formatDateShort(TODAY)}</span>
+      <span class="sd-arrow">·</span>
+      <span style="color:var(--mu);font-size:12px">Conflict Day ${REAL_ELAPSED}</span>`;
+  } else {
+    // Running simulation
+    el.innerHTML = `
+      <span class="sd-today">${formatDateShort(TODAY)}</span>
+      <span class="sd-arrow">+${simDays}d →</span>
+      <span class="sd-projected">${formatDateShort(projected)}</span>
+      <span style="color:var(--mu);font-size:11px;margin-left:6px">Conflict Day ${totalConflictDays}</span>`;
+  }
+}
+
+// Also set the initial label immediately on load (before loop starts)
+function initSimDate() {
+  updateSimDate(0);
+  // Update the GDELT news queries to use today's date
+  const ymd = n => String(n).padStart(2,'0');
+  const td = TODAY;
+  const gdeltDate = `${td.getUTCFullYear()}${ymd(td.getUTCMonth()+1)}${ymd(td.getUTCDate())}000000`;
+  // Patch the GDELT query start date dynamically
+  if (typeof fetchNews === 'function') {
+    window._gdeltStartDate = gdeltDate;
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════
+// COMPLIANCE / DISCLAIMER ENGINE
+// ═══════════════════════════════════════════════════════
+const COMP_STORAGE_KEY = 'warroom_compliance_accepted';
+
+function initCompliance() {
+  // Check if user has already accepted (session only — re-show each browser session)
+  const accepted = sessionStorage.getItem(COMP_STORAGE_KEY);
+  if (!accepted) {
+    // Show after tiny delay so page renders first
+    setTimeout(() => {
+      document.getElementById('comp-overlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }, 180);
+  }
+}
+
+function compCheckChange() {
+  const checked = document.getElementById('comp-checkbox').checked;
+  const btn = document.getElementById('comp-accept');
+  btn.classList.toggle('ready', checked);
+  btn.disabled = !checked;
+}
+
+function acceptCompliance() {
+  const overlay = document.getElementById('comp-overlay');
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+  try { sessionStorage.setItem(COMP_STORAGE_KEY, '1'); } catch(e) {}
+}
+
+function reopenCompliance() {
+  // Reset checkbox
+  document.getElementById('comp-checkbox').checked = false;
+  document.getElementById('comp-accept').classList.remove('ready');
+  document.getElementById('comp-accept').disabled = true;
+  document.getElementById('comp-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+// Prevent closing by clicking overlay background (must tick checkbox)
+document.getElementById('comp-overlay')
+  .addEventListener('click', e => { if (e.target === document.getElementById('comp-overlay')) e.stopPropagation(); });
+
+// Also block Escape key while compliance is open
+const _origKeyHandler = document.onkeydown;
+document.addEventListener('keydown', e => {
+  const overlay = document.getElementById('comp-overlay');
+  if (e.key === 'Escape' && overlay && overlay.classList.contains('show')) {
+    e.stopImmediatePropagation();
+  }
+});
+
+</script>
+
+<!-- ═══ COMPLIANCE / DISCLAIMER MODAL ═══ -->
+<div id="comp-overlay" role="dialog" aria-modal="true" aria-labelledby="comp-heading">
+  <div id="comp-modal">
+    <div id="comp-top">
+      <div id="comp-logo">
+        <div class="comp-icon">&#9876;</div>
+        <div>
+          <div class="comp-title" id="comp-heading">OIL SHOCK LIVE</div>
+          <div class="comp-subtitle">Iran War Energy Simulator — oilshock.live — Important Notice</div>
+        </div>
+      </div>
+    </div>
+    <div id="comp-body">
+      <div class="comp-warning">
+        <div class="comp-warning-title">WARNING: SIMULATION DISCLAIMER</div>
+        <p>This is a <strong>computational model and educational tool only</strong>. All scenarios, projections, outcomes, and strategic assessments are <strong>simulated estimates</strong> — not predictions, intelligence assessments, or financial advice.</p>
+      </div>
+      <h3>WHAT THIS IS</h3>
+      <p>An interactive barrel-by-barrel economic simulation of the 2026 US-Iran conflict and its global energy market impact. Variables are seeded from verified public sources (EIA, IEA, Bruegel, Bloomberg, Reuters, Al Jazeera, CNBC) but the model outputs are inherently uncertain projections based on simplified economic relationships.</p>
+      <h3>WHAT THIS IS NOT</h3>
+      <p><strong>Not intelligence.</strong> This contains no classified, restricted, or proprietary data. All constants are derived from publicly available journalism and research.<br>
+      <strong>Not financial advice.</strong> Nothing here constitutes investment, trading, or financial advice. Energy market forecasts carry high uncertainty, especially during active conflicts.<br>
+      <strong>Not journalism.</strong> The news feed surfaces third-party articles. We do not verify, endorse, or take editorial responsibility for linked content.</p>
+      <h3>DATA SOURCES</h3>
+      <div class="comp-sources">
+        <span class="comp-src">&#8226; <a href="https://www.eia.gov/outlooks/steo/" target="_blank">EIA STEO Mar 2026</a> — US production</span>
+        <span class="comp-src">&#8226; <a href="https://www.bruegel.org/analysis/what-war-iran-means-china" target="_blank">Bruegel Mar 2026</a> — China supply</span>
+        <span class="comp-src">&#8226; <a href="https://foreignpolicy.com/2026/03/17/iran-middle-east-war-china-strait-hormuz-oil-energy-exports" target="_blank">Foreign Policy Mar 17</a> — Hormuz flows</span>
+        <span class="comp-src">&#8226; <a href="https://www.cnbc.com/2026/03/19/oil-jumps-iran-strikes-qatar-lng-facility-supply-worries.html" target="_blank">CNBC Mar 19</a> — LNG crisis</span>
+        <span class="comp-src">&#8226; <a href="https://discoveryalert.com.au/china-crude-stockpiling-strategic-reserve-framework-2025" target="_blank">Kpler/DiscoveryAlert</a> — China reserves</span>
+        <span class="comp-src">&#8226; <a href="https://think.ing.com/articles/oil-shock-for-asia-identifying-the-first-pressure-points/" target="_blank">ING Think Mar 2026</a> — Asia GDP</span>
+      </div>
+      <h3>GEOPOLITICAL SENSITIVITY</h3>
+      <p>This models an <strong>active, ongoing armed conflict</strong>. Casualty figures, territorial control, and political developments are not represented here. This tool focuses exclusively on <strong>energy economics</strong> — not military strategy or human cost.</p>
+      <div class="comp-note">
+        <strong>News feed:</strong> Uses GDELT Doc API with a tone filter (toneabs &lt; 3) to surface near-neutral international coverage. Articles reflect their own publications editorial positions, not ours.
+      </div>
+      <h3>LIMITATIONS</h3>
+      <p>GDP elasticity models are simplified linear approximations. Real-world responses involve lags, policy reactions, and non-linear dynamics not captured here. China SPR figures carry high uncertainty. All probabilities shown are illustrative estimates, not actuarial calculations.</p>
+      <p style="font-size:12px;color:var(--mu);margin-top:8px">Built March 2026 &#183; MIT License &#183; <a href="https://ko-fi.com/warroomiransim" target="_blank">Ko-fi</a> · <a href="https://paypal.me/YOUR_PAYPALME" target="_blank">PayPal</a></p>
+    </div>
+    <div id="comp-footer">
+      <label id="comp-checkbox-wrap">
+        <input type="checkbox" id="comp-checkbox" onchange="compCheckChange()">
+        <span id="comp-checkbox-label">I understand this is a simulation — not financial, intelligence, or journalistic advice</span>
+      </label>
+      <button id="comp-accept" onclick="acceptCompliance()" disabled>ENTER &#8594;</button>
+    </div>
+  </div>
+</div>
+<button id="comp-badge" onclick="reopenCompliance()" title="View disclaimer">&#9878; SIMULATION DISCLAIMER</button>
+
+
+<!-- DONATE STRIP -->
+<div id="donate-strip">
+  <span class="ds-label">&#9889; FREE TOOL &mdash; SUPPORT THE PROJECT</span>
+  <a class="ds-btn ds-kofi" href="https://ko-fi.com/warroomiransim" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-.846 4.363.67zm4.112 3.521c-.214.33-.48.609-.782.804-.303.196-.634.309-.975.309-.302 0-.59-.083-.854-.251-.265-.168-.517-.415-.757-.742-.24-.327-.453-.73-.638-1.208-.185-.478-.327-1.016-.427-1.615-.099-.598-.149-1.23-.149-1.896 0-.666.05-1.298.149-1.896.1-.599.242-1.137.427-1.615.185-.478.398-.881.638-1.208.24-.327.492-.574.757-.742.264-.168.552-.251.854-.251.341 0 .672.113.975.309.303.196.568.474.782.804.214.33.388.72.518 1.169.13.45.195.944.195 1.482v.929c0 .538-.065 1.032-.195 1.482-.13.449-.304.839-.518 1.169z"/></svg>
+    BUY ME A COFFEE &nbsp;&mdash;&nbsp; https://ko-fi.com/oilshock
+  </a>
+  <!-- <div class="ds-divider"></div>
+  <a class="ds-btn ds-pp" href="https://paypal.me/YOUR_PAYPALME" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 4.643-5.813 4.643h-2.189a1.56 1.56 0 0 0-1.54 1.319L9.927 19.48l-.332 2.108a.569.569 0 0 0 .563.651h3.932c.46 0 .85-.335.924-.788l.038-.196.734-4.652.047-.257a.934.934 0 0 1 .924-.788h.581c3.768 0 6.717-1.53 7.578-5.955.36-1.847.174-3.39-.694-4.476z"/></svg>
+    DONATE &nbsp;&mdash;&nbsp; paypal.me/YOUR_PAYPALME
+  </a> -->
+</div>
+</body>
+</html>
