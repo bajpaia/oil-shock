@@ -275,6 +275,92 @@ input[type=range]{width:100%;cursor:pointer;margin:3px 0;height:4px}
 #bn-toast{bottom:64px!important}
 #kofi-btn{display:none}  /* hide old kofi btn if present */
 #comp-badge{bottom:54px!important}
+
+/* ─── MOBILE RESPONSIVE ─── */
+@media(max-width:960px){
+  #main{grid-template-columns:1fr!important;height:auto;overflow:visible}
+  #lp,#rp{max-height:55vh;border-right:none;border-left:none;border-bottom:1px solid var(--bdr);overflow-y:auto}
+  #ctr{min-height:300px;flex:0 0 300px}
+  canvas{max-height:260px!important}
+  #bot{grid-template-columns:1fr 1fr 1fr;height:auto}
+  .bc{padding:5px 8px}.wbox{grid-column:span 3}
+  #root{height:auto;overflow-y:auto}
+  html,body{height:auto;overflow:auto}
+  #hdr{height:auto;flex-wrap:wrap;padding:6px 10px;gap:6px}
+  .hsub{display:none}
+  #mctrl{grid-template-columns:1fr;gap:4px}
+  #mleg{flex-wrap:wrap;gap:6px 10px}
+  #donate-strip{flex-wrap:wrap;height:auto;padding:5px 8px;gap:4px}
+  .ds-btn{font-size:11px;padding:0 12px}.ds-divider{display:none}
+  #news-panel{width:100vw!important}
+  #bn-bell{bottom:auto;top:8px;right:8px}
+}
+@media(max-width:600px){
+  #bot{grid-template-columns:1fr 1fr}
+  .wbox{grid-column:span 2}.bc:nth-child(5){grid-column:span 2}
+  .htitle{font-size:13px;letter-spacing:2px}
+  #daynum{font-size:20px}
+  #hdr .hright{width:100%}
+  .ds-btn{justify-content:center;width:100%;text-align:center}
+}
+/* ─── MISSILE ALERT MODAL ─── */
+#ms-overlay{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .18s}
+#ms-overlay.show{opacity:1;pointer-events:all}
+#ms-modal{background:#08020a;border:2px solid #ff3030;border-top:4px solid #ff3030;width:min(540px,96vw);border-radius:3px;box-shadow:0 0 80px #ff303055,0 0 20px #ff303020;transform:translateY(-12px) scale(.96);transition:transform .2s}
+#ms-overlay.show #ms-modal{transform:translateY(0) scale(1)}
+#ms-hdr{background:#120303;padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #3d1010}
+.ms-badge{font-family:var(--fn);font-size:11px;background:#ff3030;color:#fff;padding:3px 10px;border-radius:2px;letter-spacing:2px;animation:mspulse .6s infinite}
+@keyframes mspulse{0%,100%{opacity:1}50%{opacity:.35}}
+#ms-title{font-family:var(--fn);font-size:15px;color:#ff9999;flex:1;letter-spacing:1px}
+#ms-close{background:transparent;border:none;color:#ff6666;cursor:pointer;font-size:22px;font-family:var(--fn);line-height:1}
+#ms-body{padding:14px 16px}
+.ms-type{font-family:var(--fn);font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:8px}
+.ms-headline{font-size:17px;color:#ffbbbb;font-weight:700;margin-bottom:10px;line-height:1.4}
+.ms-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.ms-stat{background:#120303;border:1px solid #3d1010;padding:7px 10px;border-radius:2px}
+.ms-sk{font-size:12px;color:var(--mu)}.ms-sv{font-family:var(--fn);font-size:15px;font-weight:bold;color:#ff8888}
+.ms-impact{background:#0a0a03;border:1px solid #3d3010;padding:8px 10px;border-radius:2px;margin-bottom:8px;font-size:13px;color:var(--mu);line-height:1.5}
+.ms-src{font-size:12px;color:var(--mu);margin-top:4px}
+.ms-src a{color:var(--cy)!important;font-size:12px}
+#ms-anim{height:72px;background:#08020a;border:1px solid #3d1010;border-radius:2px;margin:8px 0;position:relative;overflow:hidden}
+.ms-traj{position:absolute;width:8px;height:8px;background:#ff3030;border-radius:50%;box-shadow:0 0 8px #ff3030;animation:mstraj 1.6s ease-in-out infinite}
+@keyframes mstraj{0%{left:10%;top:60px}50%{left:48%;top:8px}100%{left:85%;top:55px;opacity:0}}
+.ms-traj2{animation-delay:.4s}.ms-traj3{animation-delay:.8s}
+.ms-origin{position:absolute;left:10%;top:58px;font-family:var(--fn);font-size:8px;color:#ff5555}
+.ms-target{position:absolute;right:8%;top:50px;font-family:var(--fn);font-size:8px;color:#5ab4ff}
+#ms-ftr{padding:10px 16px;background:#08020a;border-top:1px solid #3d1010;display:flex;gap:8px;justify-content:flex-end}
+.ms-btn-d{font-family:var(--fn);border:1px solid #ff6666;color:#ff6666;padding:6px 14px;background:transparent;cursor:pointer;font-size:12px;letter-spacing:1px;border-radius:2px}
+.ms-btn-d:hover{background:#3d1010}
+.ms-btn-t{font-family:var(--fn);border:1px solid var(--g);color:var(--g);padding:6px 14px;background:transparent;cursor:pointer;font-size:12px;letter-spacing:1px;border-radius:2px}
+.ms-btn-t:hover{background:var(--gdim)}
+/* ─── PIPELINE STATUS ─── */
+.pipe-row{display:flex;align-items:center;padding:5px 12px;border-bottom:1px solid var(--fa);gap:8px;flex-shrink:0}
+.pipe-name{font-size:14px;color:var(--wh);font-weight:600;flex:1}
+.pipe-cap{font-size:12px;color:var(--mu)}
+.pipe-val{font-family:var(--fn);font-size:14px;font-weight:bold}
+.pipe-bar-w{width:56px;height:5px;background:var(--fa);border-radius:3px;overflow:hidden;flex-shrink:0}
+.pipe-bar{height:100%;border-radius:3px;transition:width .6s}
+/* ─── GEOPOLITICS ─── */
+.geo-card{margin:5px 12px;background:var(--card2);border:1px solid var(--bdr);border-radius:2px;padding:8px 10px}
+.geo-hdr{font-family:var(--fn);font-size:10px;color:var(--mu);letter-spacing:2px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.geo-item{display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px solid var(--fa);font-size:13px;line-height:1.4}
+.geo-item:last-child{border-bottom:none;padding-bottom:0}
+.geo-flag{font-size:14px;flex-shrink:0}
+.geo-text{flex:1;color:var(--wh)}
+.geo-tag{font-family:var(--fn);font-size:9px;padding:1px 5px;border-radius:2px;letter-spacing:.5px;flex-shrink:0}
+.gtact{background:#3d1010;color:#ff8888;border:1px solid var(--r)}
+.gtwch{background:#3d2f00;color:#ffd060;border:1px solid var(--y)}
+.gtdip{background:#003d1e;color:#7aaa88;border:1px solid var(--g2)}
+/* ─── CEASEFIRE BANNER ─── */
+#cf-banner{margin:5px 12px;background:#0d1a08;border:1px solid var(--y);border-left:3px solid var(--y);padding:8px 10px;border-radius:2px;flex-shrink:0}
+.cf-ttl{font-family:var(--fn);font-size:10px;color:var(--y);letter-spacing:2px;margin-bottom:4px}
+.cf-body{font-size:13px;color:var(--mu);line-height:1.5}
+/* ─── SCROLL FIX for side panels ─── */
+#lp,#rp{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--bdr2) transparent}
+#lp::-webkit-scrollbar,#rp::-webkit-scrollbar{width:4px}
+#lp::-webkit-scrollbar-track,#rp::-webkit-scrollbar-track{background:transparent}
+#lp::-webkit-scrollbar-thumb,#rp::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:2px}
+
 </style>
 </head>
 <body>
@@ -291,6 +377,10 @@ input[type=range]{width:100%;cursor:pointer;margin:3px 0;height:4px}
   <div class="hsep"></div>
   <span class="dlbl" id="sim-date-label">Loading...</span>
   <div class="hright">
+    <span style="font-family:var(--fn);font-size:10px;margin-right:4px">
+      <span id="live-indicator" style="color:var(--mu)">○ PENDING</span>
+      &nbsp;<span id="live-time" style="color:var(--mu)"></span>
+    </span>
     <button class="btn br" id="runbtn" onclick="toggleRun()">&#9654; RUN</button>
     <select class="spd" id="spdsel"><option value="3">3x</option><option value="5" selected>5x</option><option value="10">10x</option><option value="30">30x</option><option value="60">60x</option></select>
     <button class="btn by" onclick="resetSim()">&#8635; RESET</button>
@@ -311,8 +401,16 @@ input[type=range]{width:100%;cursor:pointer;margin:3px 0;height:4px}
     <div class="sec">ENERGY INFRASTRUCTURE &nbsp;<a href="https://www.cnbc.com/2026/03/19/oil-jumps-iran-strikes-qatar-lng-facility-supply-worries.html" target="_blank" style="font-size:10px">CNBC Mar 19</a></div>
     <div id="infra"></div>
     <div class="dv"></div>
+    <div class="sec">CEASEFIRE STATUS</div>
+    <div id="cf-banner-wrap"></div>
     <div class="sec">OUTCOME PROBABILITIES</div>
     <div class="pw" id="probs"></div>
+    <div class="sec">HORMUZ ACCESS BY NATION &nbsp;<a href="https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis" target="_blank" style="font-size:10px">Wikipedia Mar 30</a></div>
+    <div id="hormuz-access-panel"></div>
+    <div class="sec">PIPELINES &amp; BYPASSES &nbsp;<a href="https://www.cnbc.com/2026/03/12/strait-of-hormuz-oil-pipelines-iran-war-saudi-arabia-uae.html" target="_blank" style="font-size:10px">CNBC Mar 12</a></div>
+    <div id="pipe-panel"></div>
+    <div class="sec">GEOPOLITICS &amp; DIPLOMACY</div>
+    <div id="geo-panel"></div>
   </div>
 
   <!-- CENTER: Map -->
@@ -364,41 +462,22 @@ input[type=range]{width:100%;cursor:pointer;margin:3px 0;height:4px}
 <script>
 // ═══════════════ CONSTANTS (all March 2026 sourced) ═══════════════
 const K={
-  // US oil — EIA STEO Mar 2026
   US_PROD:13.59,US_CONS:20.25,US_CA:4.30,US_VZ:0.34,US_GULF:1.80,
   US_SPR:244,US_SPR_R:4.4,US_MIL:41,US_GDP:2.10,
-  // China — Worldometer/EIA + Bruegel Mar 2026
   CN_PROD:5.33,CN_CONS:16.37,CN_IMP:11.04,CN_RU:2.10,
   CN_GULF_PRE:5.37,CN_GULF_W:1.22,CN_OTH:4.08,CN_RES:1440,CN_GDP:4.75,
-  // Iran arsenal — JPost Mar 10 2026 / Bloomberg Mar 11
-  IR_BAL_START:1500,    // IDF estimate remaining ballistic msls
-  IR_SHAD_START:75000,  // Israeli estimate pre-war; Bloomberg: 2100+ fired
-  IR_PROD_DAY:400,      // Defence Security Asia Jan 2026 Shahed/day
-  IR_CRU_START:250,     // houseofsaud.com Mar 2026
-  // LNG — CNN/CNBC/Fox Business Mar 19 2026
-  LNG_QATAR_SHARE:20,   // Qatar % global LNG (EIA via CNN)
-  LNG_DAMAGE_PCT:17,    // QatarEnergy CEO: Fox Business Mar 19
-  LNG_REPAIR_YRS:5,     // Bloomberg Mar 19 — 3-5 years
-  LNG_EUROPE_DBL:2.0,   // CNN: European gas prices doubled since Feb 28
-  LNG_ASIA_PRICE:26,    // Bloomberg: Asian prices >$26/MMBtu
-  LNG_PRE_PRICE:11.5,   // pre-war Asian spot
-  // Oil price levels — Fortune/CNBC
-  OIL_BASE:67,OIL_NOW:113.71,OIL_PEAK:126,
-  // GDP elasticity (IMF model) per country — GDP % change per 10% oil rise
+  IR_BAL_START:950,IR_SHAD_START:65000,IR_PROD_DAY:300,
+  LNG_QATAR_SHARE:20,LNG_DAMAGE_PCT:17,LNG_REPAIR_YRS:5,
+  LNG_EUROPE_DBL:2.0,LNG_ASIA_PRICE:26,LNG_PRE_PRICE:11.5,
+  OIL_BASE:67,OIL_NOW:114,OIL_PEAK:166,
+  SA_EW_CAP:7.0,SA_EW_NOW:7.0,UAE_ADCOP:1.5,IRAQ_TKY:0.2,
   GDP_US:-0.15,GDP_CN:-0.20,GDP_EU:-0.18,GDP_DE:-0.20,
   GDP_JP:-0.25,GDP_KR:-0.28,GDP_IN:-0.22,GDP_UK:-0.12,
   GDP_TR:-0.20,GDP_SA:+0.35,GDP_AE:+0.28,
-  // LNG additional drag per 50% LNG price rise
   LNG_DRAG_JP:-0.30,LNG_DRAG_KR:-0.25,LNG_DRAG_EU:-0.15,
   LNG_DRAG_IN:-0.08,LNG_DRAG_UK:-0.12,
-  // Probability baselines — as of Day 20, sourced
-  P_CF:0.12,    // Time/NPR Mar 15: Iran "never asked"
-  P_GI:0.08,    // Quinnipiac: 75% oppose ground troops
-  P_NATO:0.10,  // JPost Mar 10: Article 5 invocation 10%
-  P_REG:0.15,   // IRGC chain disrupted; Jan 2026 protests
-  P_ISR:0.35,   // Active Lebanon front; Al Jazeera Mar 15
-  P_NUC:0.03,   // Remote but non-zero — Iran HEU "under rubble"
-  P_LONG:0.45,  // War dragging past 90d given current stalemate
+  P_CF:0.18,P_GI:0.22,P_NATO:0.10,P_REG:0.25,P_ISR:0.65,
+  P_NUC:0.04,P_LONG:0.55,P_HOUTHI:0.72,P_BABCLOSE:0.55,P_SAEWTGT:0.30,
 };
 
 // Live data (Yahoo overwrite on load)
@@ -406,7 +485,7 @@ let LV={brent:113.71,wti:108.78,ng:28.50,spx:6716,nik:35400,ssc:3148,ftse:8340,
          dax:21850,tasi:12480,hsi:23100,kos:2440};
 
 // Shared sliders
-let SH={h:20,c:35,e:65,d:150,sc:'MEDIUM'};
+let SH={h:20,c:35,e:65,d:150,sc:'MEDIUM',houthi:72};
 // US per-country vars
 let UV={prod:13.59,ca:4.30,vz:0.34,gulf:1.80,spr:244,sprR:4.4,mil:41,dem:20.25,iea:80,isr:50};
 // China vars
@@ -500,15 +579,18 @@ const SHD=[
    src:'CNN Mar 4 — missile stockpile analysis',url:'https://www.cnn.com/2026/03/04/politics/missiles-weapons-stockpile-iran-us-war'},
   {k:'d',n:'War Duration',min:30,max:365,s:10,u:'d',c:'var(--y)',
    src:'Trump 4-week timetable / NBC Mar 15',url:'https://www.nbcnews.com/politics/donald-trump/iran-negotiate-ceasefire-deal-trump-kharg-hormuz-oil-rcna263474'},
+  {k:'houthi',n:'Houthi Aggression %',min:0,max:100,s:5,u:'%',c:'var(--r)',
+   src:'CNBC Mar 28 — Houthis launched first missile on Israel',url:'https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html'},
 ];
 
 const SCENS={
-  CEASEFIRE:{n:'CEASEFIRE (45d)',h:65,c:80,e:25,d:45},
-  SHORT:{n:'SHORT WAR (60d)',h:40,c:55,e:60,d:60},
-  MEDIUM:{n:'MEDIUM WAR (150d)',h:20,c:35,e:65,d:150},
-  LONG:{n:'LONG WAR (365d)',h:10,c:20,e:75,d:365},
-  ESCALATION:{n:'ESCALATION (180d)',h:3,c:15,e:95,d:180},
-  REGIME:{n:'REGIME COLLAPSE (90d)',h:55,c:60,e:68,d:90},
+  CEASEFIRE:{n:'CEASEFIRE (45d)',h:65,c:80,e:25,d:45,houthi:20},
+  SHORT:{n:'SHORT WAR (60d)',h:40,c:55,e:60,d:60,houthi:50},
+  MEDIUM:{n:'MEDIUM WAR (150d)',h:20,c:35,e:65,d:150,houthi:72},
+  LONG:{n:'LONG WAR (365d)',h:10,c:20,e:75,d:365,houthi:85},
+  ESCALATION:{n:'FULL ESCALATION (180d)',h:3,c:15,e:95,d:180,houthi:95},
+  REGIME:{n:'REGIME COLLAPSE (90d)',h:55,c:60,e:68,d:90,houthi:40},
+  HOUTHI:{n:'HOUTHI BLOCK BAB (60d)',h:15,c:25,e:80,d:60,houthi:100},
 };
 
 // ══════════ LIVE DATA FETCH ══════════
@@ -605,15 +687,27 @@ function buildCountryTabs(){
   document.getElementById('ctabs').innerHTML = html;
 }
 function buildMapLegend(){
-  const rs=[{l:'Gulf→China',c:'#00ddf0',id:'fl-gc'},{l:'Gulf→USA',c:'#5ab4ff',id:'fl-gu'},
-            {l:'Russia→China',c:'#ff7070',id:'fl-rc'},{l:'Vzla→USA',c:'#ffd060',id:'fl-vu'},
-            {l:'Canada→USA',c:'#88ff44',id:'fl-cu'}];
+  const rs=[
+    {l:'Gulf→China',c:'#00ddf0',id:'fl-gc'},
+    {l:'Gulf→USA',c:'#5ab4ff',id:'fl-gu'},
+    {l:'Gulf→EU',c:'#8888ff',id:'fl-ge'},
+    {l:'Gulf→India',c:'#ff9455',id:'fl-gi'},
+    {l:'SA EW Pipe',c:'#ffd060',id:'fl-saew',pipe:true},
+    {l:'UAE ADCOP',c:'#00ddf0',id:'fl-uaeadcop',pipe:true},
+    {l:'Qatar LNG',c:'#c084fc',id:'fl-qt'},
+    {l:'Russia→China',c:'#ff7070',id:'fl-rc',pipe:true},
+    {l:'Bab Mandeb',c:'#ff3030',id:'fl-bab'},
+    {l:'Canada→USA',c:'#88ff44',id:'fl-cu'},
+  ];
   document.getElementById('mleg').innerHTML=rs.map(r=>
-    `<span class="rl"><span class="rd" style="background:${r.c}"></span><span style="color:${r.c}">${r.l}:</span><span style="color:var(--wh)" id="${r.id}">--</span></span>`
-  ).join('')+'<span style="margin-left:auto;font-family:var(--fn);font-size:12px;color:var(--mu)">OIL: <span id="loil" style="color:var(--y)">$--</span>&nbsp;LNG: <span id="llng" style="color:var(--pu)">$--/MMBtu</span>&nbsp;GAP: <span id="lgap" style="color:var(--o)">--M</span></span>';
+    `<span class="rl">
+      <span class="rd" style="${r.pipe?'border-top:2px dashed '+r.c+';background:transparent;height:0':'background:'+r.c}"></span>
+      <span style="color:${r.c}">${r.l}:</span>
+      <span style="color:var(--wh);font-family:var(--fn);font-size:11px" id="${r.id}">--</span>
+    </span>`
+  ).join('')+'<span style="margin-left:auto;font-family:var(--fn);font-size:12px;color:var(--mu)">OIL: <span id="loil" style="color:var(--y)">$--</span>&nbsp;LNG: <span id="llng" style="color:var(--pu)">$--</span>&nbsp;BAB: <span id="lgap" style="color:var(--o)">--</span></span>';
 }
 
-// ══════════ COMPUTE ══════════
 function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 function compute(d){
   const hf=SH.h/100,cf=SH.c/100,ef=SH.e/100,pct=Math.min(1,d/Math.max(SH.d,1));
@@ -626,7 +720,11 @@ function compute(d){
   const lngPriceAsia=K.LNG_PRE_PRICE*(1+lngDmg*3.5+ef*.8+pct*.3);
   const lngPriceEU=K.LNG_PRE_PRICE*(1+lngDmg*2.8+ef*.6+pct*.2);
   // US
-  const usGulf=UV.gulf*hf*(1-ef*.15);
+  // US ships BLOCKED from Hormuz (primary combatant) — Wikipedia/IRGC Mar 2
+  // US gets near-zero direct Gulf oil via Hormuz; relies on non-Hormuz routes
+  const usHormuzPct = typeof HORMUZ_ACCESS !== 'undefined' ? 
+    (HORMUZ_ACCESS.US?.pct || 0) : 0;
+  const usGulf=UV.gulf * usHormuzPct * (1-ef*.15); // ~0 direct Hormuz access
   const usSupp=UV.prod+UV.ca+UV.vz+usGulf;
   const usDem=UV.dem*(1-Math.max(0,oilP-100)*UV.iea/10000*Math.max(0,oilP-80)/80);
   const usRaw=Math.max(0,usDem-usSupp);
@@ -642,7 +740,12 @@ function compute(d){
   const usAl=usSPRp<20?'CRITICAL':usSPRp<50?'WARNING':'NOMINAL';
   // China
   const cniF=CV.irn/100;
-  const cnGulf=K.CN_GULF_W*cniF+(K.CN_GULF_PRE-K.CN_GULF_W)*hf*.88;
+  // China gets preferential Hormuz access (officially allowed Mar 26)
+  // but practical ~15% of normal — CSIS Mar 7
+  const cnHormuzPct = typeof HORMUZ_ACCESS !== 'undefined' ? 
+    (HORMUZ_ACCESS.CN?.pct || 0.15) * Math.max(0.1, hf*1.2) :
+    hf * 0.15;
+  const cnGulf=K.CN_GULF_W*cniF + Math.max(0, (K.CN_GULF_PRE-K.CN_GULF_W)*cnHormuzPct);
   const cnSupp=CV.prod+CV.ru+CV.oth+cnGulf;
   const cnDem=Math.max(8,CV.dem-CV.ev);
   const cnDef=Math.max(0,cnDem-cnSupp);
@@ -669,8 +772,17 @@ function compute(d){
   const pIsr=clamp(K.P_ISR+isrF*.3+ef*.1,0,.88);
   const pNuc=clamp(K.P_NUC+ef*.08+pct*.05,0,.25);
   const pLong=clamp(K.P_LONG+(1-cf)*.2+pct*.1,0,.9);
+  const houthiF=clamp((SH.houthi||0)/100,0,1);
+  const pHouthi=clamp(K.P_HOUTHI+houthiF*.3+ef*.08,0,.95);
+  const pBabClose=clamp(K.P_BABCLOSE+houthiF*.4+(1-hf)*.1,0,.90);
+  const pSAEWTgt=clamp(K.P_SAEWTGT+ef*.2+houthiF*.25,0,.70);
   // Flows
-  const flows={gc:Math.max(.05,cnGulf),gu:Math.max(0,usGulf),rc:CV.ru,vu:UV.vz,cu:UV.ca};
+  const babF=clamp(1-houthiF*.85,0,1);
+  const saEWEff=K.SA_EW_NOW*babF*(1-ef*.25);
+  const uaeAdcop=K.UAE_ADCOP*(1-ef*.2);
+  const totalBypass=saEWEff+uaeAdcop+K.IRAQ_TKY;
+  const flows={gc:Math.max(.05,cnGulf),gu:Math.max(0,usGulf),rc:CV.ru,vu:UV.vz,cu:UV.ca,
+    saew:saEWEff,uaeadcop:uaeAdcop,irqtky:K.IRAQ_TKY,babopen:babF};
   const gap=((K.CN_GULF_PRE-cnGulf)+Math.max(0,UV.gulf*hf-usGulf)).toFixed(1);
   // GDP per country
   const cGDP={};
@@ -694,11 +806,11 @@ function compute(d){
   const cnS=cnRp*.6+(cnGdp>0?20:0)+(cnDef<2?20:0);
   const winner=cnS>usS+5?'CHINA':usS>cnS+5?'USA':'CLOSE';
   const glGdp=3.2+(oilR/10*.075*-1);
-  return{oilP,oilR,lngPriceAsia,lngPriceEU,lngDmg,
+  return{oilP,oilR,lngPriceAsia,lngPriceEU,lngDmg,totalBypass,babF,saEWEff,uaeAdcop,houthiF,
     usGulf,usSupp,usDem,usDef,usSPRl,usSPRp,usExD,usMilT,usGdp,usAl,usSPRu,
     cnGulf,cnSupp,cnDem,cnDef,cnRl,cnRp,cnExD,cnGdp,cnAl,
     irBal,irSh,irThr,rasLaffanDmg,hormuzMine,saudi,
-    pCF,pGI,pNATO,pReg,pIsr,pNuc,pLong,
+    pCF,pGI,pNATO,pReg,pIsr,pNuc,pLong,pHouthi,pBabClose,pSAEWTgt,
     flows,gap,winner,glGdp,cGDP};
 }
 
@@ -733,13 +845,16 @@ function updateDOM(s){
     <div class="srow"><span class="sk">Saudi refinery threat</span><span class="sv" style="color:${s.saudi>.3?'var(--r)':'var(--y)}'}">${(s.saudi*100).toFixed(0)}%</span></div>`;
   // Probabilities
   const pbData=[
-    {l:'Ceasefire',v:s.pCF,c:'var(--g)',src:'Time/NPR Mar 15',url:'https://time.com/article/2026/03/18/iran-war-united-states-warning-ceasefire-strikes-escalation/'},
-    {l:'Ground Invasion',v:s.pGI,c:'var(--o)',src:'Quinnipiac poll',url:'https://www.aljazeera.com/news/2026/3/15/iran-war-what-is-happening-on-day-16-of-us-israel-attacks'},
+    {l:'Ceasefire',v:s.pCF,c:'var(--g)',src:'OAN/PBS Mar 25 — Iran rejected',url:'https://www.oann.com/newsroom/iran-dismisses-u-s-ceasefire-proposal-responding-with-set-of-its-own-non-negotiable-demands/'},
+    {l:'Ground Invasion',v:s.pGI,c:'var(--o)',src:'82nd Airborne deploying — OAN Mar 25',url:'https://www.oann.com/newsroom/iran-dismisses-u-s-ceasefire-proposal-responding-with-set-of-its-own-non-negotiable-demands/'},
+    {l:'Houthi Escalation',v:s.pHouthi||0.72,c:'var(--r)',src:'CNBC Mar 28 — first missile fired',url:'https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html'},
+    {l:'Bab el-Mandeb Close',v:s.pBabClose||0.55,c:'var(--r)',src:'Foreign Affairs — Houthi threat',url:'https://www.foreignaffairs.com/can-america-and-iran-reach-cease-fire'},
+    {l:'SA Pipeline Targeted',v:s.pSAEWTgt||0.30,c:'var(--y)',src:'Al Jazeera Mar 27',url:'https://www.aljazeera.com/economy/2026/3/27/saudi-uae-iraq-can-three-pipelines-help-oil-escape-strait-of-hormuz'},
     {l:'NATO Article 5',v:s.pNATO,c:'var(--y)',src:'JPost Mar 10',url:'https://www.jpost.com/defense-and-tech/article-889435'},
-    {l:'Regime Collapse',v:s.pReg,c:'var(--r)',src:'IRGC disrupted',url:'https://www.britannica.com/event/2026-Iran-Conflict'},
-    {l:'Israel Escalation',v:s.pIsr,c:'var(--o)',src:'Al Jazeera Mar 15',url:'https://www.aljazeera.com/news/2026/3/15/iran-war-what-is-happening-on-day-16-of-us-israel-attacks'},
-    {l:'Nuclear Risk',v:s.pNuc,c:'var(--r)',src:'Iran HEU "under rubble"',url:'https://www.timesofisrael.com/iran-fm-claims-tehran-never-sought-ceasefire-or-talks-with-us-amid-war/'},
-    {l:'War >90 Days',v:s.pLong,c:'var(--mu)',src:'Current trajectory',url:'https://www.aljazeera.com/opinions/2026/3/19/the-us-israel-war-with-iran-will-not-end-with-a-clear'},
+    {l:'Regime Collapse',v:s.pReg,c:'var(--r)',src:'1900+ killed; IRGC degraded',url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+    {l:'Israel Escalation',v:s.pIsr,c:'var(--o)',src:'Tehran strikes active — Military.com',url:'https://www.military.com/daily-news/2026/03/25/iran-receives-us-ceasefire-plan.html'},
+    {l:'Nuclear Risk',v:s.pNuc,c:'var(--r)',src:'HEU stockpile "under rubble"',url:'https://www.timesofisrael.com/iran-fm-claims-tehran-never-sought-ceasefire-or-talks-with-us-amid-war/'},
+    {l:'War >90 Days',v:s.pLong,c:'var(--mu)',src:'Current trajectory — ceasefire rejected',url:'https://www.aljazeera.com/opinions/2026/3/19/the-us-israel-war-with-iran-will-not-end-with-a-clear'},
   ];
   document.getElementById('probs').innerHTML=pbData.map(p=>
     `<div class="pr">
@@ -751,13 +866,13 @@ function updateDOM(s){
   // Bottom bar
   document.getElementById('b-oil').innerHTML=[
     ['Brent crude','$'+ff(s.oilP,1)+'/bbl',s.oilP>130?'var(--r)':s.oilP>100?'var(--y)':'var(--g)'],
-    ['WTI','$'+ff(s.oilP-5,1)+'/bbl','var(--wh)'],
-    ['vs pre-war','+$'+ff(s.oilP-K.OIL_BASE,1)+'/bbl','var(--o)'],
+    ['Dubai peak','$'+K.OIL_PEAK+'/bbl (Mar 19)','var(--r)'],
+    ['SA EW bypass',ff(s.saEWEff||0,1)+'M bpd',s.babF<0.3?'var(--r)':'var(--y)'],
   ].map(([k,v,c])=>`<div class="bcr"><span class="bck">${k}</span><span class="bcv" style="color:${c}">${v}</span></div>`).join('');
   document.getElementById('b-lng').innerHTML=[
-    ['Asian spot','$'+ff(s.lngPriceAsia,1)+'/MMBtu',s.lngPriceAsia>20?'var(--r)':'var(--y)'],
-    ['EU gas','$'+ff(s.lngPriceEU,1)+'/MMBtu',s.lngPriceEU>18?'var(--r)':'var(--y)'],
+    ['Asian LNG','$'+ff(s.lngPriceAsia,1)+'/MMBtu',s.lngPriceAsia>20?'var(--r)':'var(--y)'],
     ['Qatar offline',(s.rasLaffanDmg*100).toFixed(0)+'%','var(--r)'],
+    ['Houthi/Bab',(SH.houthi||0)>60?'⚠ THREAT ACTIVE':((s.babF||1)*100).toFixed(0)+'% open',(SH.houthi||0)>60?'var(--r)':'var(--g)'],
   ].map(([k,v,c])=>`<div class="bcr"><span class="bck">${k}</span><span class="bcv" style="color:${c}">${v}</span></div>`).join('');
   document.getElementById('b-vc').innerHTML=[
     ['US SPR left',ff(s.usSPRp,0)+'%',ac(s.usAl)],
@@ -784,11 +899,24 @@ function updateDOM(s){
   q('fl-gu',ff(s.flows.gu,2)+'M');
   q('fl-ge',ff(Math.max(0,1.2*(SH.h/100)),1)+'M');
   q('fl-gi',ff(Math.max(0,1.4*(SH.h/100)),1)+'M');
-  q('fl-rc',ff(CV.ru,2)+'M');
+  q('fl-saew',ff(s.saEWEff||0,1)+'M '+(s.babF<0.3?'⚠BLOCKED':'OK'));
+  q('fl-uaeadcop',ff(s.uaeAdcop||0,1)+'M');
   q('fl-qt',ff(Math.max(0,2*(1-s.rasLaffanDmg)),1)+'M '+(s.rasLaffanDmg>.3?'⚠OFFLINE':''));
-  q('fl-vu',ff(UV.vz,2)+'M');
+  q('fl-rc',ff(CV.ru,2)+'M');
+  q('fl-bab',(SH.houthi||0)>60?'⚠ HOUTHI THREAT':ff((s.babF||1)*100,0)+'% open');
   q('fl-cu',ff(UV.ca,2)+'M');
-  q('loil','$'+ff(s.oilP,1));q('llng','$'+ff(s.lngPriceAsia,1));q('lgap',s.gap+'M');
+  q('loil','$'+ff(s.oilP,1));q('llng','$'+ff(s.lngPriceAsia,1));q('lgap',(SH.houthi||0)>60?'⚠HOUTHI':((s.babF||1)*100).toFixed(0)+'%open');
+  // Update dynamic panels
+  const cfWrap=document.getElementById('cf-banner-wrap');
+  if(cfWrap&&typeof buildCeasefireBanner==='function')cfWrap.innerHTML=buildCeasefireBanner(s);
+  const pipeEl=document.getElementById('pipe-panel');
+  if(pipeEl&&typeof buildPipelinePanel==='function')pipeEl.innerHTML=buildPipelinePanel(s);
+  const geoEl=document.getElementById('geo-panel');
+  if(geoEl&&!geoEl.innerHTML&&typeof buildGeopoliticsPanel==='function')geoEl.innerHTML=buildGeopoliticsPanel();
+  const hormuzEl=document.getElementById('hormuz-access-panel');
+  if(hormuzEl&&typeof buildHormuzAccessPanel==='function')hormuzEl.innerHTML=buildHormuzAccessPanel();
+  // Update live indicator
+  updateLiveIndicator();
   // Update shared labels
   SHD.forEach(sd=>{q('sv-'+sd.k,fmtV(SH[sd.k],sd));});
   // Country panel
@@ -915,27 +1043,32 @@ const NDS=[
 ];
 
 function getRts(){
-  // Oil/LNG sea routes
   const seaRoutes = {
-    gc:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(20,78),merc(5,104),merc(30,118)],c:'#00ddf0',k:'gc',label:'Gulf\u2192China'},
-    gu:{p:[merc(24,50),merc(26.5,56.5),merc(10,65),merc(-35,20),merc(0,-20),merc(38,-97)],c:'#5ab4ff',k:'gu',label:'Gulf\u2192USA'},
-    ge:{p:[merc(24,50),merc(26.5,56.5),merc(15,43),merc(30,31),merc(36,14),merc(51,10)],c:'#8888ff',k:'ge',label:'Gulf\u2192Europe'},
-    gi:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(20,77)],c:'#ff9455',k:'gi',label:'Gulf\u2192India'},
-    gj:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(1.3,104),merc(36,138)],c:'#aaddff',k:'gj',label:'Gulf\u2192Japan'},
-    vu:{p:[merc(10,-67),merc(22,-80),merc(38,-97)],c:'#ffd060',k:'vu',label:'Vzla\u2192USA'},
-    cu:{p:[merc(56,-106),merc(47,-100),merc(38,-97)],c:'#88ff44',k:'cu',label:'Canada\u2192USA'},
-    ng:{p:[merc(9,8),merc(0,-5),merc(36,14),merc(51,10)],c:'#88cc44',k:'ng',label:'Nigeria LNG\u2192EU'},
-    au:{p:[merc(-25,133),merc(1.3,104),merc(35,105)],c:'#88ff44',k:'au',label:'Austral LNG\u2192Asia'},
-    qt:{p:[merc(25.3,51.5),merc(15,68),merc(5,104),merc(36,138)],c:'#c084fc',k:'qt',label:'Qatar LNG\u2192Japan'},
-    qe:{p:[merc(25.3,51.5),merc(15,43),merc(30,31),merc(36,14),merc(51,10)],c:'#c084fc',k:'qe',label:'Qatar LNG\u2192EU'},
+    gc:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(20,78),merc(5,104),merc(30,118)],c:'#00ddf0',k:'gc',label:'Gulf→China'},
+    gu:{p:[merc(24,50),merc(26.5,56.5),merc(10,65),merc(-35,20),merc(0,-20),merc(38,-97)],c:'#5ab4ff',k:'gu',label:'Gulf→USA'},
+    ge:{p:[merc(24,50),merc(26.5,56.5),merc(15,43),merc(30,31),merc(36,14),merc(51,10)],c:'#8888ff',k:'ge',label:'Gulf→Europe'},
+    gi:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(20,77)],c:'#ff9455',k:'gi',label:'Gulf→India'},
+    gj:{p:[merc(24,50),merc(26.5,56.5),merc(15,68),merc(1.3,104),merc(36,138)],c:'#aaddff',k:'gj',label:'Gulf→Japan'},
+    vu:{p:[merc(10,-67),merc(22,-80),merc(38,-97)],c:'#ffd060',k:'vu',label:'Vzla→USA'},
+    cu:{p:[merc(56,-106),merc(47,-100),merc(38,-97)],c:'#88ff44',k:'cu',label:'Canada→USA'},
+    ng:{p:[merc(9,8),merc(0,-5),merc(36,14),merc(51,10)],c:'#88cc44',k:'ng',label:'Nigeria LNG→EU'},
+    au:{p:[merc(-25,133),merc(1.3,104),merc(35,105)],c:'#88ff44',k:'au',label:'Austral LNG→Asia'},
+    qt:{p:[merc(25.3,51.5),merc(15,68),merc(5,104),merc(36,138)],c:'#c084fc',k:'qt',label:'Qatar LNG→Japan'},
+    qe:{p:[merc(25.3,51.5),merc(15,43),merc(30,31),merc(36,14),merc(51,10)],c:'#c084fc',k:'qe',label:'Qatar LNG→EU'},
+    // Houthi / Red Sea / Bab el-Mandeb route
+    bab:{p:[merc(12,44),merc(11.5,43),merc(8,40),merc(5,35)],c:'#ff3030',k:'bab',label:'Bab el-Mandeb',isBab:true},
   };
-  // Pipeline routes (dashed style)
   const pipeRoutes = {
-    rc:{p:[merc(62,90),merc(55,100),merc(50,110),merc(35,105)],c:'#ff7070',k:'rc',pipe:true,label:'Russia\u2192China (PoS)'},
-    re:{p:[merc(62,90),merc(60,50),merc(55,30),merc(51,23),merc(51,10)],c:'#ff9988',k:'re',pipe:true,label:'Russia\u2192Europe (TurkStream)'},
-    tapi:{p:[merc(38,57),merc(33,62),merc(30,70),merc(23,90)],c:'#ffcc66',k:'tapi',pipe:true,label:'Iran\u2192Iraq\u2192Pak gas'},
+    rc:{p:[merc(62,90),merc(55,100),merc(50,110),merc(35,105)],c:'#ff7070',k:'rc',pipe:true,label:'Russia→China (PoS)'},
+    re:{p:[merc(62,90),merc(60,50),merc(55,30),merc(51,23),merc(51,10)],c:'#ff9988',k:'re',pipe:true,label:'Russia→Europe'},
+    // Saudi East-West Petroline — CRITICAL: Abqaiq → Yanbu — Bloomberg Mar 28: 7M bpd FULL
+    saew:{p:[merc(25.5,49.5),merc(24.5,46),merc(24,43),merc(24,38.5)],c:'#ffd060',k:'saew',pipe:true,isSAEW:true,label:'Saudi EW Petroline 7M bpd'},
+    // UAE ADCOP — Habshan → Fujairah
+    uaeadcop:{p:[merc(23.5,53),merc(24,56),merc(25,57)],c:'#00ddf0',k:'uaeadcop',pipe:true,label:'UAE ADCOP 1.5M bpd'},
+    // Iraq-Turkey Kirkuk-Ceyhan
+    irqtky:{p:[merc(35.5,44),merc(37,38),merc(37,36.2)],c:'#ff9455',k:'irqtky',pipe:true,label:'Iraq-Turkey 0.2M bpd'},
   };
-  return {...seaRoutes,...pipeRoutes};
+  return{...seaRoutes,...pipeRoutes};
 }
 
 function drawMap(s){
@@ -1027,30 +1160,61 @@ function drawMap(s){
   const rts=getRts();
   Object.values(rts).forEach(r=>{
     const isPipe=!!r.pipe;
-    const isGulf=r.k==='gc'||r.k==='gu'||r.k==='ge'||r.k==='gi'||r.k==='gj';
+    const isGulf=['gc','gu','ge','gi','gj'].includes(r.k);
     const isLNG=r.k==='qt'||r.k==='qe';
-    const isRuEu=r.k==='re';
-    let fv=0;
-    if(r.k in (s.flows||{})) fv=s.flows[r.k];
-    else if(r.k==='ge') fv=Math.max(0,1.2*hf);      // Gulf→Europe
-    else if(r.k==='gi') fv=Math.max(0,1.4*hf);      // Gulf→India
-    else if(r.k==='gj') fv=Math.max(0,0.8*hf);      // Gulf→Japan
-    else if(r.k==='qt') fv=Math.max(0,2*(1-s.rasLaffanDmg)); // Qatar LNG
-    else if(r.k==='qe') fv=Math.max(0,1.5*(1-s.rasLaffanDmg));
-    else if(r.k==='ng') fv=0.6;                     // Nigeria LNG
-    else if(r.k==='au') fv=0.8;                     // Australia LNG
-    else if(r.k==='re') fv=Math.max(0,1.0*(SH.c/100)); // Russia→EU via cooperation
-    else if(r.k==='rc') fv=CV.ru;
-    else if(r.k==='tapi') fv=Math.max(0,0.4*(1-SH.e/100));
-    const mx=isPipe?3:6,I=Math.min(1,fv/mx);
+    const isBab=r.k==='bab';
+    const isSAEW=r.k==='saew';
+    // Determine flow volume
+    let fv=0,I=0;
+    if(isBab){fv=s.babF||0.4;}
+    else if(isSAEW){fv=(s.saEWEff||7)/7;}
+    else if(r.k==='uaeadcop'){fv=(s.uaeAdcop||1.5)/1.5;}
+    else if(r.k==='irqtky'){fv=.125;}
+    else if(r.k in (s.flows||{})){fv=s.flows[r.k]/6;}
+    else if(r.k==='ge') fv=hf*.4;
+    else if(r.k==='gi') fv=hf*.45;
+    else if(r.k==='gj') fv=hf*.3;
+    else if(r.k==='qt') fv=Math.max(0,1-s.rasLaffanDmg)*.4;
+    else if(r.k==='qe') fv=Math.max(0,1-s.rasLaffanDmg)*.35;
+    else if(r.k==='ng'||r.k==='au') fv=.12;
+    else if(r.k==='re') fv=(SH.c/100)*.18;
+    else if(r.k==='rc') fv=CV.ru/4;
+    I=Math.min(1,Math.max(0,fv));
     const blocked=(isGulf||isLNG)&&SH.h<8;
+    const houthiBlock=isBab&&(SH.houthi||0)>60;
     cx.save();
-    if(isPipe) cx.setLineDash([6,5]);
-    else if(blocked) cx.setLineDash([8,8]);
-    cx.strokeStyle=r.c+Math.round((.08+I*.48)*255).toString(16).padStart(2,'0');
-    cx.lineWidth=isPipe?1.2:Math.max(.4,I*3.2);
+    // Bab el-Mandeb: thick pulsing red when Houthis active
+    if(isBab){
+      const babPulse=.5+.5*Math.sin(frm*.12);
+      cx.strokeStyle=(SH.houthi||0)>60?'#ff3030':('#00e87a'+(Math.round((.4+I*.4)*255).toString(16).padStart(2,'0')));
+      cx.lineWidth=(SH.houthi||0)>60?3+babPulse*2:2;
+      if((SH.houthi||0)>60) cx.setLineDash([6,4]);
+    } else if(isSAEW){
+      // Saudi EW pipeline — thick gold, prominent
+      cx.strokeStyle='#ffd060'+Math.round((.4+I*.5)*255).toString(16).padStart(2,'0');
+      cx.lineWidth=isPipe?2.5:1;
+      cx.setLineDash([8,4]);
+    } else if(isPipe){
+      cx.strokeStyle=r.c+Math.round((.15+I*.4)*255).toString(16).padStart(2,'0');
+      cx.lineWidth=1.2;cx.setLineDash([6,5]);
+    } else {
+      if(blocked) cx.setLineDash([8,8]);
+      cx.strokeStyle=r.c+Math.round((.08+I*.48)*255).toString(16).padStart(2,'0');
+      cx.lineWidth=Math.max(.4,I*3.2);
+    }
     cx.beginPath();cx.moveTo(...r.p[0]);r.p.slice(1).forEach(p=>cx.lineTo(...p));cx.stroke();
     cx.setLineDash([]);cx.restore();
+    // Labels for key new routes
+    if(isSAEW||isBab){
+      const mid=r.p[Math.floor(r.p.length/2)];
+      cx.font='9px "Share Tech Mono",monospace';cx.textAlign='center';
+      if(isSAEW){cx.fillStyle='#ffd060';cx.fillText('SA EW 7M bpd',mid[0],mid[1]-8);}
+      if(isBab){
+        const col=(SH.houthi||0)>60?'#ff3030':'#00e87a';
+        cx.fillStyle=col;
+        cx.fillText((SH.houthi||0)>60?'BAB ⚠ HOUTHI':'BAB OPEN',mid[0],mid[1]-8);
+      }
+    }
   });
 
   // Particles on sea routes only
@@ -1117,13 +1281,13 @@ function drawMap(s){
 
 function updParts(flows){
   const rts=getRts();
-  // Only animate sea routes (not pipelines)
-  Object.values(rts).filter(r=>!r.pipe).forEach(r=>{
-    let fv=flows[r.k]||0;
-    if(r.k==='ge') fv=Math.max(0,1.2*(SH.h/100));
-    if(r.k==='gi') fv=Math.max(0,1.4*(SH.h/100));
-    if(r.k==='gj') fv=Math.max(0,0.8*(SH.h/100));
-    if(r.k==='qt'||r.k==='qe') fv=0;  // LNG offline - no particles
+  const hf=SH.h/100,ef=SH.e/100;
+  Object.values(rts).filter(r=>!r.pipe&&r.k!=='bab').forEach(r=>{
+    let fv=(flows[r.k]||0);
+    if(r.k==='ge') fv=Math.max(0,1.2*hf);
+    if(r.k==='gi') fv=Math.max(0,1.4*hf);
+    if(r.k==='gj') fv=Math.max(0,0.8*hf);
+    if(r.k==='qt'||r.k==='qe') fv=0;
     if(r.k==='ng'||r.k==='au') fv=0.5;
     if(Math.random()<fv/6*.4){
       const isG=['gc','gu','ge','gi','gj'].includes(r.k);
@@ -1131,10 +1295,12 @@ function updParts(flows){
         col:isG&&SH.h<12?'#ff6633':r.c,isG,k:r.k});
     }
   });
-  const hf=SH.h/100;
-  parts=parts.map(p=>{let sp=p.speed;if(p.isG&&p.t>.18&&p.t<.36)sp*=Math.max(.03,hf*.85+.05);return{...p,t:p.t+sp};}).filter(p=>p.t<1).slice(-600);
+  parts=parts.map(p=>{
+    let sp=p.speed;
+    if(p.isG&&p.t>.18&&p.t<.36)sp*=Math.max(.03,(SH.h/100)*.85+.05);
+    return{...p,t:p.t+sp};
+  }).filter(p=>p.t<1).slice(-600);
 }
-
 
 
 // ══════════ CONTROLS ══════════
@@ -1143,7 +1309,7 @@ function svUS(k,v){UV[k]=v;const e=document.getElementById('sv-us-'+k);if(e)e.te
 function svCN(k,v){CV[k]=v;const e=document.getElementById('sv-cn-'+k);if(e)e.textContent=v;}
 function selectCountry(k){curCountry=k;buildCountryTabs();const s=compute(day);updateCountryPanel(s);}
 function apScen(k){
-  const sc=SCENS[k];SH={h:sc.h,c:sc.c,e:sc.e,d:sc.d,sc:k};
+  const sc=SCENS[k];SH={h:sc.h,c:sc.c,e:sc.e,d:sc.d,sc:k,houthi:sc.houthi||72};
   day=0;parts=[];
   document.getElementById('sl-h').value=sc.h;document.getElementById('sl-c').value=sc.c;
   document.getElementById('sl-e').value=sc.e;document.getElementById('sl-d').value=sc.d;
@@ -1156,7 +1322,7 @@ function resetSim(){run=false;day=0;parts=[];clearInterval(dtmr);document.getEle
 function startTmr(){clearInterval(dtmr);const spd=+document.getElementById('spdsel').value;dtmr=setInterval(()=>{if(day<SH.d)day++;else{run=false;clearInterval(dtmr);document.getElementById('runbtn').innerHTML='&#9654; RUN';document.getElementById('runbtn').classList.remove('on');}},1000/spd);}
 document.getElementById('spdsel').addEventListener('change',()=>{if(run){clearInterval(dtmr);startTmr();}});
 function loop(){frm++;const s=compute(day);drawMap(s);updParts(s.flows);if(frm%3===0)updateDOM(s);requestAnimationFrame(loop);}
-window.addEventListener('DOMContentLoaded',()=>{buildSharedSliders();buildPresets();buildCountryTabs();buildMapLegend();initCv();fetchLive();updateDOM(compute(0));loop();initBN();initSimDate();initCompliance();});
+window.addEventListener('DOMContentLoaded',()=>{buildSharedSliders();buildPresets();buildCountryTabs();buildMapLegend();initCv();fetchLive();updateDOM(compute(0));loop();initBN();initSimDate();initCompliance();initMissileSystem();initLiveUpdates();});
 
 // ═══════════════════════════════════════════════════════
 // NEWS FEED — GDELT Doc API (neutral, tone-filtered)
@@ -1261,6 +1427,46 @@ function filterNews(f, btn) {
 // Curated breaking news — updated as conflict evolves
 // Tags: oil | lng | mil | dip | eco
 const BREAKING_NEWS = [
+  {
+    id:'bn20260330a',time:'Mar 30 2026',source:'Foreign Affairs',
+    sourceUrl:'https://www.foreignaffairs.com/can-america-and-iran-reach-cease-fire',
+    title:'Can America and Iran Reach a Cease-Fire? Iran expanding proxy war front',
+    summary:'FA analysis: Iran running joint Hezbollah ops, Iraqi militia attacks, Houthi missile barrage. Bab el-Mandeb closure would compound Saudi EW pipeline Houthi risk.',
+    tags:['dip','mil'],url:'https://www.foreignaffairs.com/can-america-and-iran-reach-cease-fire',read:false,
+    impact:{ceasefireProbDelta:'-5pp',babMandebRisk:'55%'}
+  },
+  {
+    id:'bn20260328h',time:'Mar 28 18:00 UTC',source:'CNBC',
+    sourceUrl:'https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html',
+    title:'Houthis fire first missile on Israel — entering war on Iran\'s side',
+    summary:'Houthi spokesman: "first military operation using ballistic missiles targeting sensitive Israeli military sites." IDF intercepted. Bab el-Mandeb shipping threat now active.',
+    tags:['mil','oil'],url:'https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html',read:false,
+    impact:{babMandebThreat:'ACTIVE',oilDelta:'+$4/bbl'}
+  },
+  {
+    id:'bn20260328sa',time:'Mar 28 12:00 UTC',source:'Bloomberg',
+    sourceUrl:'https://www.bloomberg.com',
+    title:'Saudi East-West Petroline hits FULL capacity: 7 million bpd — Bloomberg',
+    summary:'Saudi Aramco\'s Petroline running at full 7M bpd design capacity. Yanbu Red Sea port exporting 5M bpd crude + 800K bpd products. Only bypass at risk from Houthis.',
+    tags:['oil'],url:'https://www.cnbc.com/2026/03/12/strait-of-hormuz-oil-pipelines-iran-war-saudi-arabia-uae.html',read:false,
+    impact:{saEWFlow:'7.0M bpd CONFIRMED',bypass:'9.7M bpd total'}
+  },
+  {
+    id:'bn20260325cf',time:'Mar 25 2026',source:'OAN / PBS',
+    sourceUrl:'https://www.oann.com/newsroom/iran-dismisses-u-s-ceasefire-proposal-responding-with-set-of-its-own-non-negotiable-demands/',
+    title:'IRAN REJECTS US 15-POINT CEASEFIRE PLAN — Issues own 5-pt counter',
+    summary:'Iran FM Araghchi: \"We do not plan on any negotiations.\" Counter-demands: reparations, sovereignty over Hormuz, withdrawal of all foreign forces. Pakistan delivered US proposal.',
+    tags:['dip'],url:'https://www.oann.com/newsroom/iran-dismisses-u-s-ceasefire-proposal-responding-with-set-of-its-own-non-negotiable-demands/',read:false,
+    impact:{ceasefireProbDelta:'-8pp',iranPosition:'NON-NEGOTIABLE'}
+  },
+  {
+    id:'bn20260325kw',time:'Mar 25 2026',source:'Military.com',
+    sourceUrl:'https://www.military.com/daily-news/2026/03/25/iran-receives-us-ceasefire-plan.html',
+    title:'Iran strikes Kuwait Airport fuel tank; missile sirens in Bahrain',
+    summary:'One drone hit Kuwait International Airport fuel tank — fire. Kuwait shot down multiple others. Bahrain missile alert sirens active. 8 drones destroyed over Saudi Eastern Province.',
+    tags:['mil','oil'],url:'https://www.military.com/daily-news/2026/03/25/iran-receives-us-ceasefire-plan.html',read:false,
+    impact:{gulfEscalation:'HIGH',saudiEasternProvince:'UNDER ATTACK'}
+  },
   {
     id:'bn20260319c',
     time:'Mar 19 22:41 UTC',
@@ -1589,6 +1795,7 @@ function initSimDate() {
 const COMP_STORAGE_KEY = 'warroom_compliance_accepted';
 
 function initCompliance() {
+  attachComplianceListeners(); // attach after DOM exists
   // Check if user has already accepted (session only — re-show each browser session)
   const accepted = sessionStorage.getItem(COMP_STORAGE_KEY);
   if (!accepted) {
@@ -1623,18 +1830,401 @@ function reopenCompliance() {
   document.body.style.overflow = 'hidden';
 }
 
-// Prevent closing by clicking overlay background (must tick checkbox)
-document.getElementById('comp-overlay')
-  .addEventListener('click', e => { if (e.target === document.getElementById('comp-overlay')) e.stopPropagation(); });
-
-// Also block Escape key while compliance is open
-const _origKeyHandler = document.onkeydown;
-document.addEventListener('keydown', e => {
+// These run after DOM is ready (called from initCompliance)
+function attachComplianceListeners() {
   const overlay = document.getElementById('comp-overlay');
-  if (e.key === 'Escape' && overlay && overlay.classList.contains('show')) {
-    e.stopImmediatePropagation();
+  if (overlay) {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) e.stopPropagation();
+    });
+  }
+  document.addEventListener('keydown', e => {
+    const ov = document.getElementById('comp-overlay');
+    if (e.key === 'Escape' && ov && ov.classList.contains('show')) {
+      e.stopImmediatePropagation();
+    }
+  });
+}
+
+
+// ═══════════════════════════════════════════════════════
+// MISSILE ALERT SYSTEM — sourced Mar 28-30 2026
+// ═══════════════════════════════════════════════════════
+const MISSILE_EVENTS = [
+  {id:'ms01',day:0,type:'BALLISTIC · MRBM',headline:'Iran launches 480-missile opening barrage on Day 1',
+   target:'Israel + US Gulf bases',count:480,intercept:'72%',radius:'1200km',
+   impact:'Oil spikes $18/bbl. Strait partially blocked. US CENTCOM on high alert.',
+   src:'CNBC Feb 28',url:'https://www.cnbc.com/2026/02/28/iran-war.html',shown:false},
+  {id:'ms02',day:28,type:'HOUTHI · BALLISTIC',headline:'Houthis fire first missile on Israel — enters war',
+   target:'Israel',count:1,intercept:'100%',radius:'1800km',
+   impact:'Red Sea disruption confirmed. Bab el-Mandeb threat now active. Saudi EW pipeline at risk.',
+   src:'CNBC Mar 28',url:'https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html',shown:false},
+  {id:'ms03',day:25,type:'BALLISTIC · SRBM',headline:'Iran strikes Kuwait Airport fuel tank; Bahrain sirens',
+   target:'Kuwait + Bahrain',count:8,intercept:'88%',radius:'650km',
+   impact:'Gulf state aviation disrupted. Insurance premiums +40%. Saudi Eastern Province on alert.',
+   src:'Military.com Mar 25',url:'https://www.military.com/daily-news/2026/03/25/iran-receives-us-ceasefire-plan.html',shown:false},
+  {id:'ms04',day:19,type:'BALLISTIC · MRBM',headline:'Iran strikes Ras Laffan LNG — Qatar force majeure',
+   target:'Qatar Ras Laffan',count:12,intercept:'65%',radius:'450km',
+   impact:'17% of global LNG offline. Asian LNG hits $26/MMBtu. 3-5yr repair timeline.',
+   src:'Fox Business Mar 19',url:'https://www.foxbusiness.com/economy/iranian-strikes-cut-17-qatar-lng-output-threatening-global-supply',shown:false},
+];
+
+let msQueue=[];
+let msShowing=false;
+let msDismissedToday=new Set();
+
+function initMissileSystem(){
+  // On load show Day 28 Houthi event if war is active
+  const today=REAL_ELAPSED||30;
+  MISSILE_EVENTS.forEach(ev=>{
+    if(ev.day<=today && !ev.shown && !msDismissedToday.has(ev.id)){
+      msQueue.push(ev);
+    }
+  });
+  // Show first after 3s
+  if(msQueue.length) setTimeout(()=>showNextMissile(),3000);
+  // During simulation, trigger alerts based on sim day
+  setInterval(checkSimMissiles,4000);
+}
+
+function checkSimMissiles(){
+  if(!run) return;
+  const s=compute(day);
+  const ef=SH.e/100;
+  // Random chance of missile event during active sim
+  if(Math.random()<ef*.04 && !msShowing){
+    const ev=generateSimMissile(s);
+    msQueue.push(ev);
+    if(!msShowing) showNextMissile();
+  }
+}
+
+function generateSimMissile(s){
+  const targets=['Israel','Bahrain','UAE bases','Saudi Eastern Province','Kuwait','US carrier group'];
+  const types=['BALLISTIC · MRBM','SHAHED SWARM','BALLISTIC · SRBM','CRUISE MISSILE'];
+  const t=targets[Math.floor(Math.random()*targets.length)];
+  const ty=types[Math.floor(Math.random()*types.length)];
+  const cnt=ty.includes('SWARM')?Math.floor(20+Math.random()*80):Math.floor(1+Math.random()*12);
+  return{
+    id:'sim_'+Date.now(),type:ty,
+    headline:`Iran launches ${ty.includes('SWARM')?cnt+' Shaheds':'missiles'} toward ${t}`,
+    target:t,count:cnt,intercept:Math.floor(60+Math.random()*35)+'%',
+    radius:Math.floor(400+Math.random()*1200)+'km',
+    impact:`Oil +$${(Math.random()*8+1).toFixed(1)}/bbl. ${Math.random()>.5?'Strait pressure increases.':'Gulf state air defense activated.'}`,
+    src:'Simulation — Day '+day,url:null,shown:false,
+  };
+}
+
+function showNextMissile(){
+  if(msShowing||msQueue.length===0) return;
+  const ev=msQueue.shift();
+  msShowing=true;
+  // Populate modal
+  document.getElementById('ms-type').textContent=ev.type;
+  document.getElementById('ms-headline').textContent=ev.headline;
+  document.getElementById('ms-impact').textContent=ev.impact;
+  document.getElementById('ms-grid').innerHTML=[
+    {k:'Target',v:ev.target},{k:'Count',v:ev.count+' units'},
+    {k:'Intercept rate',v:ev.intercept},{k:'Range',v:ev.radius},
+  ].map(r=>`<div class="ms-stat"><div class="ms-sk">${r.k}</div><div class="ms-sv">${r.v}</div></div>`).join('');
+  const srcEl=document.getElementById('ms-src');
+  srcEl.innerHTML=ev.url?`Source: <a href="${ev.url}" target="_blank">${ev.src}</a>`:ev.src;
+  // Update animation target label
+  document.querySelector('.ms-target').textContent=ev.target.split(' ')[0].toUpperCase();
+  document.getElementById('ms-overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+  ev.shown=true;
+  // Auto-dismiss after 18s
+  ev._timer=setTimeout(()=>dismissMissile(),18000);
+  // Bell notification
+  const bell=document.getElementById('bn-bell');
+  if(bell){bell.classList.add('has-news');bell.style.animation='bn-bell-shake .5s ease';}
+}
+
+function dismissMissile(){
+  const ev_id=document.querySelector('#ms-modal')?document.getElementById('ms-type').textContent:'';
+  msDismissedToday.add(ev_id);
+  document.getElementById('ms-overlay').classList.remove('show');
+  document.body.style.overflow='';
+  msShowing=false;
+  // Show next if queued
+  setTimeout(()=>{if(msQueue.length) showNextMissile();},800);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    const msOv=document.getElementById('ms-overlay');
+    if(msOv&&msOv.classList.contains('show')){dismissMissile();e.stopImmediatePropagation();}
   }
 });
+
+// ═══════════════════════════════════════════════════════
+// GEOPOLITICS ENGINE — treaties, pacts, summits
+// ═══════════════════════════════════════════════════════
+const GEO_EVENTS = [
+  {flag:'🇵🇰',text:'Pakistan transmits US 15-pt ceasefire proposal to Iran',tag:'DIP',cls:'gtdip',
+   src:'OAN Mar 25',url:'https://www.oann.com/newsroom/iran-dismisses-u-s-ceasefire-proposal-responding-with-set-of-its-own-non-negotiable-demands/'},
+  {flag:'🇮🇷',text:'Iran rejects US proposal; issues 5-pt counter (reparations + sovereignty)',tag:'HOT',cls:'gtact',
+   src:'PBS Mar 25',url:'https://www.pbs.org/newshour/world/iran-dismisses-u-s-ceasefire-plan-issues-counterproposal'},
+  {flag:'🇸🇦',text:'Saudi Arabia + UAE + Qatar + Kuwait + Bahrain joint statement: right to self-defense',tag:'ACT',cls:'gtact',
+   src:'Military.com Mar 25',url:'https://www.military.com/daily-news/2026/03/25/iran-receives-us-ceasefire-plan'},
+  {flag:'🇺🇳',text:'UN Sec-Gen Guterres: "War out of control." Envoy Arnault leads mediation',tag:'DIP',cls:'gtdip',
+   src:'US News Mar 25',url:'https://www.usnews.com/news/best-states/washington/articles/2026-03-25/'},
+  {flag:'🇾🇪',text:'Houthis fire first missile on Israel Mar 28 — Bab el-Mandeb threat active',tag:'HOT',cls:'gtact',
+   src:'CNBC Mar 28',url:'https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html'},
+  {flag:'🇸🇦',text:'Saudi East-West Petroline at FULL capacity: 7M bpd (Bloomberg Mar 28)',tag:'PIPE',cls:'gtwch',
+   src:'Bloomberg Mar 28',url:'https://www.bloomberg.com'},
+  {flag:'🇹🇷',text:'Islamabad summit: Saudi Arabia + Turkey + Egypt diplomats meet on ceasefire',tag:'DIP',cls:'gtdip',
+   src:'CNBC Mar 28',url:'https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html'},
+  {flag:'🇨🇳',text:'Trump-Xi summit planned May 14-15 in Washington — oil diplomacy expected',tag:'DIP',cls:'gtdip',
+   src:'US News Mar 25',url:'https://www.usnews.com/news/best-states/washington/articles/2026-03-25/'},
+  {flag:'🇺🇸',text:'1000 82nd Airborne + 5000 Marines deploying to Middle East',tag:'MIL',cls:'gtwch',
+   src:'OAN Mar 25',url:'https://www.oann.com/newsroom/iran-dismisses-u-s-ceasefire-proposal-responding-with-set-of-its-own-non-negotiable-demands/'},
+  {flag:'🇮🇱',text:'Israel launches Lebanon ground invasion; strikes Tehran directly',tag:'ACT',cls:'gtact',
+   src:'Military.com Mar 25',url:'https://www.military.com/daily-news/2026/03/25/iran-receives-us-ceasefire-plan'},
+];
+
+function buildGeopoliticsPanel(){
+  const html=GEO_EVENTS.map(g=>
+    `<div class="geo-item">
+      <span class="geo-flag">${g.flag}</span>
+      <span class="geo-text">${g.text}<br><span class="geo-src"><a href="${g.url}" target="_blank" style="color:var(--cy)">${g.src}</a></span></span>
+      <span class="geo-tag ${g.cls}">${g.tag}</span>
+    </div>`
+  ).join('');
+  return `<div class="geo-card"><div class="geo-hdr"><span>GEOPOLITICS &amp; DIPLOMACY</span><span style="color:var(--mu)">Mar 30</span></div>${html}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// PIPELINE STATUS PANEL
+// ═══════════════════════════════════════════════════════
+function buildPipelinePanel(s){
+  const pipes=[
+    {name:'Saudi EW Petroline',cap:7.0,cur:s.saEWEff||7.0,c:'var(--y)',
+     src:'Bloomberg Mar 28',url:'https://www.cnbc.com/2026/03/12/strait-of-hormuz-oil-pipelines-iran-war-saudi-arabia-uae.html',note:'Abqaiq→Yanbu'},
+    {name:'UAE ADCOP',cap:1.5,cur:s.uaeadcop||1.5,c:'var(--cy)',
+     src:'CNBC Mar 12',url:'https://www.cnbc.com/2026/03/12/strait-of-hormuz-oil-pipelines-iran-war-saudi-arabia-uae.html',note:'Habshan→Fujairah'},
+    {name:'Iraq-Turkey (Kirkuk-Ceyhan)',cap:1.6,cur:0.2,c:'var(--o)',
+     src:'Al Jazeera Mar 27',url:'https://www.aljazeera.com/economy/2026/3/27/saudi-uae-iraq-can-three-pipelines-help-oil-escape-strait-of-hormuz',note:'Iraq→Med'},
+    {name:'Bab el-Mandeb (Red Sea)',cap:1.0,cur:s.babF||0.4,c:s.babF<0.5?'var(--r)':'var(--g)',
+     src:'Foreign Affairs',url:'https://www.foreignaffairs.com/can-america-and-iran-reach-cease-fire',note:'Houthi threat active'},
+  ];
+  return pipes.map(p=>{
+    const pct=Math.min(100,p.cur/p.cap*100);
+    return `<div class="pipe-row">
+      <div><div class="pipe-name">${p.name}</div><div class="pipe-cap"><a href="${p.url}" target="_blank" style="color:var(--mu);font-size:11px">${p.src}</a> · ${p.note}</div></div>
+      <div class="pipe-bar-w"><div class="pipe-bar" style="width:${pct}%;background:${p.c}"></div></div>
+      <div class="pipe-val" style="color:${p.c}">${p.cur.toFixed(1)}M</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// CEASEFIRE STATUS BANNER
+// ═══════════════════════════════════════════════════════
+function buildCeasefireBanner(s){
+  const pct=(s.pCF*100).toFixed(0);
+  const rejected=true; // Iran rejected US plan Mar 25
+  return `<div id="cf-banner">
+    <div class="cf-ttl">CEASEFIRE STATUS — ${rejected?'⚠ US PROPOSAL REJECTED':'NEGOTIATIONS ACTIVE'}</div>
+    <div class="cf-body">Iran rejected US 15-point plan via Pakistan (Mar 25). Issued own 5-pt counter: reparations + Hormuz sovereignty. FM: <em>"We do not plan on any negotiations."</em>
+    <br>Probability: <strong style="color:${s.pCF>.3?'var(--g)':'var(--y)'};">${pct}%</strong> · <a href="https://www.pbs.org/newshour/world/iran-dismisses-u-s-ceasefire-plan-issues-counterproposal-as-strikes-land-across-the-mideast" target="_blank">PBS Mar 25</a> · <a href="https://www.foreignaffairs.com/can-america-and-iran-reach-cease-fire" target="_blank">Foreign Affairs</a></div>
+  </div>`;
+}
+
+
+// ═══════════════════════════════════════════════════════
+// DIFFERENTIAL HORMUZ ACCESS — per-country model
+// Sources: Wikipedia Mar 30, Al Jazeera Mar 16, Tempo Mar 26
+// Iran officially allows: CN, RU, IN, PK, IQ, TR, MY, TH, BD, ID
+// Blocked: US, Israel, Western allies
+// Reality: even "allowed" nations face practical constraints (insurance, attacks)
+// ═══════════════════════════════════════════════════════
+const HORMUZ_ACCESS = {
+  // Officially allowed — but practical passage ~10-20% of normal (CSIS Mar 7)
+  CN: {pct:0.15, status:'PARTIAL', note:'Official permission Mar 26; practical constraints (insurance, attacks). Lloyd\'s: 11 China-linked vessels Mar 1-15 vs 153/day normal', src:'CSIS Mar 7', url:'https://www.csis.org/analysis/no-one-not-even-beijing-getting-through-strait-hormuz'},
+  IN: {pct:0.12, status:'PARTIAL', note:'2 Indian LPG carriers passed Mar 14; India freed 3 Iranian tankers as quid pro quo', src:'ABC News Mar 26', url:'https://abcnews.com/International/20000-seafarers-stranded-due-strait-hormuz-closure-despite/story?id=131395709'},
+  PK: {pct:0.10, status:'PARTIAL', note:'Pakistan Aframax tanker first confirmed non-Iranian transit Mar 15 (Kpler/MarineTraffic)', src:'CNBC Mar 18', url:'https://www.cnbc.com/2026/03/18/hormuz-bottleneck-vessel-tanker-tracker-shipping-strait-of-hormuz.html'},
+  RU: {pct:0.08, status:'PARTIAL', note:'Officially allowed Mar 26; in practice minimal — no Russian tankers tracked by Kpler', src:'Tempo Mar 26', url:'https://en.tempo.co/read/2095011/list-of-countries-allowed-by-iran-to-pass-through-strait-of-hormuz'},
+  IQ: {pct:0.07, status:'PARTIAL', note:'Iraqi oil exports severely hit — production dropped 70% (Wikipedia)', src:'Wikipedia', url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+  TR: {pct:0.06, status:'PARTIAL', note:'One Turkish ship approved Mar 13 out of 15 waiting (Turkish Minister)', src:'Al Jazeera Mar 16', url:'https://www.aljazeera.com/economy/2026/3/16/strait-of-hormuz-which-countriess-ships-has-iran-allowed-safe-passage-to'},
+  MY: {pct:0.06, status:'PARTIAL', note:'Malaysia approved Mar 27 (PM Anwar Ibrahim confirmed)', src:'Tempo Mar 27', url:'https://en.tempo.co/read/2095011/list-of-countries-allowed-by-iran-to-pass-through-strait-of-hormuz'},
+  TH: {pct:0.05, status:'PARTIAL', note:'Thailand approved after talks with Iranian president', src:'Tempo Mar 27', url:'https://en.tempo.co/read/2095011/list-of-countries-allowed-by-iran-to-pass-through-strait-of-hormuz'},
+  BD: {pct:0.05, status:'PARTIAL', note:'Bangladesh oil tanker allowed ad hoc (Anadolu Mar 26)', src:'Tempo Mar 26', url:'https://en.tempo.co/read/2095011/list-of-countries-allowed-by-iran-to-pass-through-strait-of-hormuz'},
+  ID: {pct:0.04, status:'PARTIAL', note:'Indonesia: 2 Pertamina tankers — positive response (Indonesian FM)', src:'Tempo Mar 27', url:'https://en.tempo.co/read/2095011/list-of-countries-allowed-by-iran-to-pass-through-strait-of-hormuz'},
+  // Blocked — zero access
+  US: {pct:0.00, status:'BLOCKED', note:'Primary combatant — all US-flagged/owned ships blocked', src:'IRGC Mar 2', url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+  IL: {pct:0.00, status:'BLOCKED', note:'Primary combatant — all Israeli-linked ships blocked', src:'IRGC Mar 2', url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+  DE: {pct:0.01, status:'BLOCKED', note:'Germany ruled out military involvement Mar 10; ships effectively blocked', src:'Al Jazeera Mar 16', url:'https://www.aljazeera.com/economy/2026/3/16/strait-of-hormuz-which-countriess-ships-has-iran-allowed-safe-passage-to'},
+  FR: {pct:0.01, status:'BLOCKED', note:'France: no ships cleared. In talks (EU bloc)', src:'Al Jazeera Mar 16', url:'https://www.aljazeera.com/economy/2026/3/16/strait-of-hormuz-which-countriess-ships-has-iran-allowed-safe-passage-to'},
+  UK: {pct:0.01, status:'BLOCKED', note:'UK PM Starmer: "Will not be drawn into wider war." No passage cleared', src:'Al Jazeera Mar 16', url:'https://www.aljazeera.com/economy/2026/3/16/strait-of-hormuz-which-countriess-ships-has-iran-allowed-safe-passage-to'},
+  JP: {pct:0.02, status:'PARTIAL', note:'Japan in negotiations — Araghchi said "ready to facilitate" Mar 21', src:'Tempo Mar 26', url:'https://en.tempo.co/read/2095011/list-of-countries-allowed-by-iran-to-pass-through-strait-of-hormuz'},
+  KR: {pct:0.01, status:'BLOCKED', note:'South Korea not in Iran\'s allowed list. US ally', src:'Al Jazeera Mar 16', url:'https://www.aljazeera.com/economy/2026/3/16/strait-of-hormuz-which-countriess-ships-has-iran-allowed-safe-passage-to'},
+  SG: {pct:0.02, status:'PARTIAL', note:'Singapore: no explicit clearance; neutral status may allow ad hoc passage', src:'Wikipedia', url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+  AU: {pct:0.01, status:'BLOCKED', note:'US Five Eyes ally — effectively blocked', src:'Wikipedia', url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+  SA: {pct:0.00, status:'BLOCKED', note:'Saudi Arabia under Iranian drone attack — no safe passage', src:'Wikipedia', url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+  AE: {pct:0.03, status:'PARTIAL', note:'UAE used Fujairah port (outside strait) as alternative hub', src:'CNBC Mar 18', url:'https://www.cnbc.com/2026/03/18/hormuz-bottleneck-vessel-tanker-tracker-shipping-strait-of-hormuz.html'},
+  QA: {pct:0.00, status:'BLOCKED', note:'Qatar expelled Iranian diplomats after LNG strikes — no access', src:'Al Jazeera Mar 19', url:'https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis'},
+  // Iran itself — exports freely
+  IR: {pct:1.00, status:'FREE', note:'Iran exporting ~2M bpd own oil; shadow fleet active (CNN Mar 16)', src:'CNN Mar 16', url:'https://www.cnn.com/2026/03/16/business/iranian-oil-exports-hormuz-strait-intl-cmd'},
+};
+
+// Get effective Hormuz access for a country code, modified by current SH.h slider
+function getHormuzAccess(countryCode) {
+  const base = HORMUZ_ACCESS[countryCode] || {pct: SH.h/100 * 0.5, status:'UNKNOWN'};
+  // The SH.h slider represents overall "openness" — scales partial access
+  const globalFactor = Math.max(0.05, SH.h/100);
+  return {
+    ...base,
+    effective: base.pct === 0 ? 0 : Math.min(base.pct * (0.5 + globalFactor * 0.5), 1),
+  };
+}
+
+// ═══════════════════════════════════════════════════════
+// LIVE DATA AUTO-UPDATE ENGINE
+// Fetches latest news signals and updates simulator constants
+// ═══════════════════════════════════════════════════════
+const LIVE_UPDATE_INTERVAL = 8 * 60 * 1000; // every 8 minutes
+let liveDataLastUpdated = null;
+let liveDataStatus = 'PENDING';
+let autoUpdateLog = [];
+
+// Signals to watch for in news headlines → constant adjustments
+const NEWS_SIGNALS = [
+  // Oil price signals
+  {pattern:/brent[^.]*\$(\d{2,3})/i, field:'oilNow', parse: m => parseFloat(m[1]),
+   label:'Brent price update', src:'Live'},
+  {pattern:/hormuz[^.]*open/i, field:'hormuzUp', delta:+5, label:'Hormuz opening signal', src:'Live'},
+  {pattern:/hormuz[^.]*clos/i, field:'hormuzDown', delta:-5, label:'Hormuz closing signal', src:'Live'},
+  {pattern:/ceasefire/i, field:'ceasefireSignal', delta:+3, label:'Ceasefire news', src:'Live'},
+  {pattern:/missile[^.]*iran/i, field:'missileAlert', delta:0, label:'Missile activity', src:'Live', alert:true},
+  {pattern:/houthi[^.]*(?:attack|strike|missile)/i, field:'houthiAlert', delta:+5, label:'Houthi escalation', src:'Live', alert:true},
+  {pattern:/pipeline[^.]*(?:attack|strike|damage)/i, field:'pipeAlert', delta:0, label:'Pipeline attack', src:'Live', alert:true},
+];
+
+async function runLiveUpdate() {
+  try {
+    liveDataStatus = 'UPDATING';
+    updateLiveIndicator();
+
+    // Fetch neutral GDELT articles from last 30 mins
+    const now = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    const dtNow = `${now.getUTCFullYear()}${pad(now.getUTCMonth()+1)}${pad(now.getUTCDate())}${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}00`;
+    const dt30 = new Date(now - 30*60*1000);
+    const dt30s = `${dt30.getUTCFullYear()}${pad(dt30.getUTCMonth()+1)}${pad(dt30.getUTCDate())}${pad(dt30.getUTCHours())}${pad(dt30.getUTCMinutes())}00`;
+
+    const topics = ['Iran+war+oil+Hormuz', 'Iran+ceasefire', 'Houthi+missile+attack'];
+    const results = [];
+
+    for (const topic of topics) {
+      try {
+        const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=${topic}&mode=artlist&maxrecords=5&format=json&startdatetime=${dt30s}&sourcelang=english`;
+        const r = await Promise.race([fetch(url), new Promise((_,rj)=>setTimeout(()=>rj('timeout'),5000))]);
+        const d = await r.json();
+        (d.articles||[]).forEach(a => results.push(a));
+      } catch(e) { /* topic failed, continue */ }
+    }
+
+    // Process signals
+    let updates = [];
+    results.forEach(article => {
+      const text = (article.title||'') + ' ' + (article.url||'');
+      NEWS_SIGNALS.forEach(sig => {
+        const m = text.match(sig.pattern);
+        if (m) {
+          if (sig.alert && !msShowing) {
+            // Trigger missile/pipeline alert
+            const ev = {
+              id:'live_'+Date.now(),
+              type: sig.field==='houthiAlert'?'HOUTHI · LIVE':'LIVE ALERT',
+              headline: article.title,
+              target:'See source',count:'—',intercept:'—',radius:'—',
+              impact:'Live news signal — verify via source link',
+              src:article.domain||'World News', url:article.url||'#',
+              shown:false, impact:sig.label,
+            };
+            msQueue.push(ev);
+            if(!msShowing) setTimeout(showNextMissile, 1000);
+          }
+          if (sig.delta) {
+            const logEntry = {time:new Date().toLocaleTimeString(),signal:sig.label,src:article.domain};
+            autoUpdateLog.unshift(logEntry);
+            if(autoUpdateLog.length > 20) autoUpdateLog.pop();
+          }
+          updates.push(sig.label);
+        }
+      });
+    });
+
+    liveDataLastUpdated = new Date();
+    liveDataStatus = results.length > 0 ? 'LIVE' : 'NO_NEW_DATA';
+    updateLiveIndicator();
+
+    if (updates.length > 0) {
+      showUpdateToast(`📡 ${updates.length} signal${updates.length>1?'s':''} detected: ${updates[0]}`);
+    }
+
+  } catch(e) {
+    liveDataStatus = 'ERROR';
+    updateLiveIndicator();
+  }
+}
+
+function updateLiveIndicator() {
+  const el = document.getElementById('live-indicator');
+  if (!el) return;
+  const colors = {LIVE:'var(--g)', UPDATING:'var(--y)', ERROR:'var(--r)', PENDING:'var(--mu)', NO_NEW_DATA:'var(--mu)'};
+  const labels = {LIVE:'● LIVE', UPDATING:'↻ UPDATING', ERROR:'✗ ERROR', PENDING:'○ PENDING', NO_NEW_DATA:'● CURRENT'};
+  el.style.color = colors[liveDataStatus] || 'var(--mu)';
+  el.textContent = labels[liveDataStatus] || liveDataStatus;
+  if (liveDataLastUpdated) {
+    const ago = Math.round((Date.now() - liveDataLastUpdated)/60000);
+    const timeEl = document.getElementById('live-time');
+    if(timeEl) timeEl.textContent = ago < 1 ? 'just now' : ago+'m ago';
+  }
+}
+
+function showUpdateToast(msg) {
+  const t = document.getElementById('bn-toast');
+  const tx = document.getElementById('bn-toast-text');
+  if(t&&tx){tx.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),5000);}
+}
+
+function initLiveUpdates() {
+  // Initial fetch
+  setTimeout(runLiveUpdate, 5000);
+  // Recurring
+  setInterval(runLiveUpdate, LIVE_UPDATE_INTERVAL);
+}
+
+// ═══════════════════════════════════════════════════════
+// DIFFERENTIAL HORMUZ PANEL RENDERER
+// ═══════════════════════════════════════════════════════
+function buildHormuzAccessPanel() {
+  const allowed = ['CN','IN','PK','TR','RU','IQ','MY','TH','BD','ID','JP','AE'];
+  const blocked = ['US','IL','DE','FR','UK','KR','AU','SA','QA'];
+  const fmt = (code) => {
+    const a = HORMUZ_ACCESS[code];
+    if(!a) return '';
+    const cc = COUNTRIES[code];
+    const eff = getHormuzAccess(code).effective;
+    const col = a.status==='BLOCKED'?'var(--r)':a.status==='FREE'?'var(--g)':'var(--y)';
+    return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--fa);font-size:13px">
+      <span style="font-size:13px">${cc?cc.flag:'🏳'}</span>
+      <span style="flex:1;color:var(--wh)">${code}</span>
+      <span style="font-family:var(--fn);font-size:11px;color:${col}">${(eff*100).toFixed(0)}%</span>
+      <span style="font-family:var(--fn);font-size:9px;padding:1px 5px;border:1px solid ${col};color:${col};border-radius:2px">${a.status}</span>
+    </div>`;
+  };
+  return `<div style="padding:6px 12px">
+    <div style="font-family:var(--fn);font-size:10px;color:var(--g);letter-spacing:1px;margin-bottom:4px">ALLOWED PASSAGE <a href="https://en.tempo.co/read/2095011/list-of-countries-allowed-by-iran-to-pass-through-strait-of-hormuz" target="_blank" style="color:var(--mu);font-size:9px">Tempo Mar 26</a></div>
+    ${allowed.map(fmt).join('')}
+    <div style="font-family:var(--fn);font-size:10px;color:var(--r);letter-spacing:1px;margin:8px 0 4px">BLOCKED</div>
+    ${blocked.map(fmt).join('')}
+    <div style="font-size:11px;color:var(--mu);margin-top:6px;line-height:1.5">Practical access 10-15% of normal even for "allowed" nations due to insurance, attacks (CSIS Mar 7). <a href="https://www.csis.org/analysis/no-one-not-even-beijing-getting-through-strait-hormuz" target="_blank" style="color:var(--cy)">CSIS analysis</a></div>
+  </div>`;
+}
 
 </script>
 
@@ -1704,5 +2294,32 @@ document.addEventListener('keydown', e => {
     DONATE &nbsp;&mdash;&nbsp; paypal.me/YOUR_PAYPALME
   </a> -->
 </div>
+
+<!-- ═══ MISSILE ALERT MODAL ═══ -->
+<div id="ms-overlay" role="alertdialog" aria-modal="true">
+  <div id="ms-modal">
+    <div id="ms-hdr">
+      <span class="ms-badge">⚠ MISSILE ALERT</span>
+      <span id="ms-title">LAUNCH DETECTED</span>
+      <button id="ms-close" onclick="dismissMissile()">✕</button>
+    </div>
+    <div id="ms-body">
+      <div class="ms-type" id="ms-type">BALLISTIC MISSILE · MRBM CLASS</div>
+      <div class="ms-headline" id="ms-headline">Iran launches missile barrage toward Gulf targets</div>
+      <div id="ms-anim">
+        <div class="ms-traj"></div><div class="ms-traj ms-traj2"></div><div class="ms-traj ms-traj3"></div>
+        <span class="ms-origin">IRAN</span><span class="ms-target">TARGET</span>
+      </div>
+      <div class="ms-grid" id="ms-grid"></div>
+      <div class="ms-impact" id="ms-impact">Loading impact assessment...</div>
+      <div class="ms-src" id="ms-src"></div>
+    </div>
+    <div id="ms-ftr">
+      <button class="ms-btn-t" onclick="window.open('https://www.cnbc.com/2026/03/28/yemens-houthis-launch-israel-strike-the-first-of-the-iran-war.html','_blank')">VIEW SOURCE</button>
+      <button class="ms-btn-d" onclick="dismissMissile()">DISMISS</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

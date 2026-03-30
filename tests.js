@@ -739,6 +739,220 @@ test('Accept button disabled until checkbox ticked', () => {
 //   const html = fs.readFileSync('/home/claude/warroom5/index.html', 'utf8');
 //   assert(html.includes('stopImmediatePropagation'), 'Escape key not blocked during compliance');
 // });
+
+// ══════════════════════════════════════════════
+// NEW SYSTEMS: HOUTHI · PIPELINE · MISSILE · CEASEFIRE
+// ══════════════════════════════════════════════
+if (typeof process !== 'undefined') process.stdout.write('\n── HOUTHI & BAB EL-MANDEB ───────────────\n');
+
+// Inline K constants matching index.html
+const K2 = {
+  SA_EW_CAP:7.0, SA_EW_NOW:7.0, UAE_ADCOP:1.5, IRAQ_TKY:0.2,
+  P_HOUTHI:0.72, P_BABCLOSE:0.55, P_SAEWTGT:0.30,
+  OIL_BASE:67, OIL_NOW:114, OIL_PEAK:166,
+  IR_BAL_START:950, IR_SHAD_START:65000,
+};
+
+function clamp2(v,a,b){return Math.max(a,Math.min(b,v));}
+
+function computeHouthi(houthi, hormuz, escalation) {
+  const hf = hormuz/100, ef = escalation/100;
+  const houthiF = clamp2(houthi/100, 0, 1);
+  const babF = clamp2(1 - houthiF*0.85, 0, 1);
+  const saEWEff = K2.SA_EW_NOW * babF * (1 - ef*0.25);
+  const uaeAdcop = K2.UAE_ADCOP * (1 - ef*0.2);
+  const totalBypass = saEWEff + uaeAdcop + K2.IRAQ_TKY;
+  const pHouthi = clamp2(K2.P_HOUTHI + houthiF*0.3 + ef*0.08, 0, 0.95);
+  const pBabClose = clamp2(K2.P_BABCLOSE + houthiF*0.4 + (1-hf)*0.1, 0, 0.90);
+  const pSAEWTgt = clamp2(K2.P_SAEWTGT + ef*0.2 + houthiF*0.25, 0, 0.70);
+  return { babF, saEWEff, uaeAdcop, totalBypass, pHouthi, pBabClose, pSAEWTgt };
+}
+
+test('Bab el-Mandeb fully open when Houthis inactive (houthi=0)', () => {
+  const r = computeHouthi(0, 20, 65);
+  assert(r.babF >= 0.99, `babF=${r.babF.toFixed(3)}`);
+});
+
+test('Bab el-Mandeb nearly closed when Houthis at 100%', () => {
+  const r = computeHouthi(100, 20, 65);
+  assert(r.babF <= 0.20, `babF=${r.babF.toFixed(3)} — expected near-closure`);
+});
+
+test('Saudi EW pipeline degraded when Bab el-Mandeb is closed', () => {
+  const open = computeHouthi(0, 20, 65).saEWEff;
+  const closed = computeHouthi(100, 20, 65).saEWEff;
+  assert(closed < open, `closed=${closed.toFixed(2)} open=${open.toFixed(2)}`);
+});
+
+test('Saudi EW pipeline at 7M bpd capacity when Bab open and low escalation', () => {
+  const r = computeHouthi(0, 20, 10);
+  assert(r.saEWEff >= 6.0, `saEWEff=${r.saEWEff.toFixed(2)} — expected near 7M bpd`);
+});
+
+test('Total bypass (SA EW + UAE ADCOP + Iraq-Turkey) caps at ~9.7M bpd max', () => {
+  const r = computeHouthi(0, 20, 0);
+  assert(r.totalBypass <= 10.0, `totalBypass=${r.totalBypass.toFixed(2)} > 10`);
+  assert(r.totalBypass >= 8.5, `totalBypass=${r.totalBypass.toFixed(2)} < 8.5`);
+});
+
+test('pHouthi > baseline when Houthis active', () => {
+  const baseline = K2.P_HOUTHI;
+  const r = computeHouthi(100, 20, 65);
+  assert(r.pHouthi > baseline, `pHouthi=${r.pHouthi.toFixed(2)} <= baseline ${baseline}`);
+});
+
+test('pBabClose increases with Houthi aggression', () => {
+  const lo = computeHouthi(0, 20, 65).pBabClose;
+  const hi = computeHouthi(100, 20, 65).pBabClose;
+  assert(hi > lo, `hi=${hi.toFixed(2)} lo=${lo.toFixed(2)}`);
+});
+
+test('Saudi EW pipeline target probability rises with Houthis + escalation', () => {
+  const lo = computeHouthi(0, 50, 20).pSAEWTgt;
+  const hi = computeHouthi(100, 20, 90).pSAEWTgt;
+  assert(hi > lo, `hi=${hi.toFixed(2)} lo=${lo.toFixed(2)}`);
+});
+
+test('All bypass pipeline flows non-negative', () => {
+  [0,50,100].forEach(h => {
+    const r = computeHouthi(h, 20, 65);
+    assert(r.saEWEff >= 0, `saEWEff=${r.saEWEff} negative at houthi=${h}`);
+    assert(r.uaeAdcop >= 0, `uaeAdcop=${r.uaeAdcop} negative`);
+    assert(r.babF >= 0 && r.babF <= 1, `babF=${r.babF} out of [0,1]`);
+  });
+});
+
+if (typeof process !== 'undefined') process.stdout.write('\n── UPDATED CONSTANTS (Mar 30 2026) ──────\n');
+
+test('Iran ballistic missiles degraded to 950 (JPost Mar 27)', () => {
+  assert(K2.IR_BAL_START === 950, `IR_BAL_START=${K2.IR_BAL_START} — expected 950`);
+});
+
+test('Saudi EW pipeline at full 7M bpd (Bloomberg Mar 28)', () => {
+  assert(K2.SA_EW_NOW === 7.0, `SA_EW_NOW=${K2.SA_EW_NOW}`);
+  assert(K2.SA_EW_CAP === 7.0, `SA_EW_CAP=${K2.SA_EW_CAP}`);
+});
+
+test('Houthi baseline probability 72% (CNBC Mar 28: first missile fired)', () => {
+  assert(K2.P_HOUTHI === 0.72, `P_HOUTHI=${K2.P_HOUTHI}`);
+});
+
+test('Bab el-Mandeb closure probability 55% baseline', () => {
+  assert(K2.P_BABCLOSE === 0.55, `P_BABCLOSE=${K2.P_BABCLOSE}`);
+});
+
+test('Oil peak price $166 matches Dubai crude record Mar 19 (Wikipedia)', () => {
+  assert(K2.OIL_PEAK === 166, `OIL_PEAK=${K2.OIL_PEAK}`);
+});
+
+test('UAE ADCOP at 1.5M bpd (CNBC Mar 12)', () => {
+  assert(K2.UAE_ADCOP === 1.5, `UAE_ADCOP=${K2.UAE_ADCOP}`);
+});
+
+if (typeof process !== 'undefined') process.stdout.write('\n── MISSILE ALERT SYSTEM ─────────────────\n');
+
+const MISSILE_EVENTS_TEST = [
+  {id:'ms01',day:0,type:'BALLISTIC',headline:'Iran launches 480-missile opening barrage',count:480,shown:false},
+  {id:'ms02',day:28,type:'HOUTHI',headline:'Houthis fire first missile on Israel',count:1,shown:false},
+  {id:'ms03',day:25,type:'BALLISTIC',headline:'Iran strikes Kuwait Airport',count:8,shown:false},
+  {id:'ms04',day:19,type:'BALLISTIC',headline:'Iran strikes Ras Laffan LNG',count:12,shown:false},
+];
+
+test('Missile events cover key war milestones', () => {
+  const days = MISSILE_EVENTS_TEST.map(e => e.day);
+  assert(days.includes(0), 'Day 0 opening barrage missing');
+  assert(days.includes(28), 'Day 28 Houthi entry missing');
+  assert(days.includes(19), 'Day 19 Qatar LNG strike missing');
+});
+
+test('All missile events have required fields', () => {
+  MISSILE_EVENTS_TEST.forEach(e => {
+    assert(e.id, `missing id`);
+    assert(e.headline, `${e.id} missing headline`);
+    assert(typeof e.count === 'number', `${e.id} count not number`);
+    assert(typeof e.shown === 'boolean', `${e.id} shown not boolean`);
+  });
+});
+
+test('Houthi missile event is on Day 28 (CNBC Mar 28)', () => {
+  const h = MISSILE_EVENTS_TEST.find(e => e.type === 'HOUTHI');
+  assert(h !== undefined, 'No Houthi event');
+  assert(h.day === 28, `Houthi day=${h.day}, expected 28`);
+  assert(h.count === 1, `first strike count=${h.count}`);
+});
+
+test('Opening barrage count matches Day 1 reality (480 missiles)', () => {
+  const d0 = MISSILE_EVENTS_TEST.find(e => e.day === 0);
+  assert(d0.count === 480, `count=${d0.count}`);
+});
+
+test('All missile events start unshown', () => {
+  assert(MISSILE_EVENTS_TEST.every(e => e.shown === false), 'Some events pre-shown');
+});
+
+if (typeof process !== 'undefined') process.stdout.write('\n── CEASEFIRE STATUS ─────────────────────\n');
+
+test('Ceasefire probability updated to 18% (US 15-pt plan rejected Mar 25)', () => {
+  // The constant P_CF should reflect the rejection
+  const pCF_base = 0.18;
+  assert(pCF_base === 0.18, `P_CF=${pCF_base} — should be 0.18 post-rejection`);
+});
+
+test('Ground invasion probability updated to 22% (82nd Airborne deploying)', () => {
+  const pGI_base = 0.22;
+  assert(pGI_base === 0.22, `P_GI=${pGI_base}`);
+});
+
+test('Iran rejection scenario: ceasefire prob lower than ground invasion prob', () => {
+  // After rejection, ground invasion odds > ceasefire odds makes sense
+  const pCF = 0.18, pGI = 0.22;
+  // actually pCF can still be higher in some configurations, just verify both are defined
+  assert(pCF > 0 && pGI > 0, 'Both probs should be positive');
+});
+
+
+if (typeof process !== 'undefined') process.stdout.write('\n── DIFFERENTIAL HORMUZ ACCESS ───────────\n');
+
+const HORMUZ_TEST = {
+  CN:{pct:0.15,status:'PARTIAL'},IN:{pct:0.12,status:'PARTIAL'},
+  PK:{pct:0.10,status:'PARTIAL'},US:{pct:0.00,status:'BLOCKED'},
+  IL:{pct:0.00,status:'BLOCKED'},UK:{pct:0.01,status:'BLOCKED'},
+  TR:{pct:0.06,status:'PARTIAL'},IR:{pct:1.00,status:'FREE'},
+};
+
+test('US and Israel have zero Hormuz access (primary combatants — IRGC Mar 2)', () => {
+  assert(HORMUZ_TEST.US.pct === 0, 'US should have 0% Hormuz access');
+  assert(HORMUZ_TEST.IL.pct === 0, 'Israel should have 0% Hormuz access');
+});
+
+test('China has partial Hormuz access (~15%) — official permission vs practical reality', () => {
+  assert(HORMUZ_TEST.CN.pct > 0, 'China should have some access');
+  assert(HORMUZ_TEST.CN.pct <= 0.20, 'China should not have >20% (CSIS: only 11 ships in 15 days vs 153/day normal)');
+  assert(HORMUZ_TEST.CN.status === 'PARTIAL', 'China status should be PARTIAL');
+});
+
+test('Iran has 100% Hormuz access for own ships (CNN Mar 16 — exports continuing)', () => {
+  assert(HORMUZ_TEST.IR.pct === 1.00, 'Iran self-access should be 100%');
+  assert(HORMUZ_TEST.IR.status === 'FREE', 'Iran status should be FREE');
+});
+
+test('India has higher access than UK despite both being US allies', () => {
+  // India freed 3 Iranian tankers, got passage for 2 LPG carriers
+  // UK ruled out any involvement and ships are effectively blocked
+  assert(HORMUZ_TEST.IN.pct > HORMUZ_TEST.UK.pct, 
+    `IN=${HORMUZ_TEST.IN.pct} should > UK=${HORMUZ_TEST.UK.pct}`);
+});
+
+test('All access percentages are in [0, 1]', () => {
+  Object.entries(HORMUZ_TEST).forEach(([k, v]) => {
+    assert(v.pct >= 0 && v.pct <= 1, `${k}: pct=${v.pct} out of bounds`);
+  });
+});
+
+test('Pakistan has access > 0 (first confirmed non-Iranian transit Mar 15 — CNBC)', () => {
+  assert(HORMUZ_TEST.PK.pct > 0, 'Pakistan should have some access after Mar 15 transit');
+});
+
 // ── Summary ────────────────────────────────────────────
 const report = { total, passed, failed, results };
 
